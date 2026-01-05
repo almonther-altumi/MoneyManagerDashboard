@@ -1,0 +1,30 @@
+.analytics-card {
+    background: var(--bg);
+    border-radius: 24px;
+    /* Reduced from 32px */
+    padding: 24px;
+    /* Reduced from 32px */
+    border: 1px solid var(--border-muted);
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    min-height: 400px;
+    /* Reduced from 450px */
+    transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.chart-wrapper {
+    position: relative;
+    flex: 1;
+    width: 100%;
+}
+
+.analytics-header h3 {
+    margin: 0;
+    font-size: 18px;
+    /* Reduced from 20px */
+    font-weight: 800;
+    color: var(--text);
+    letter-spacing: -0.5px;
+}

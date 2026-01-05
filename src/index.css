@@ -1,0 +1,279 @@
+:root {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  line-height: 1.5;
+  font-weight: 500;
+
+  color-scheme: light dark;
+
+  /* Premium Light Palette (Pure & Architectural) */
+  --bg-dark: #F0F2F5;
+  --bg: #F8F9FA;
+  --bg-light: #FFFFFF;
+  --text: #1A1D1F;
+  --text-muted: #6F767E;
+  --highlight: rgba(0, 0, 0, 0.03);
+  --border: #E6E8EC;
+  --border-muted: rgba(0, 0, 0, 0.06);
+  --primary: #1A1D1F;
+  --secondary: #2A85FF;
+  --danger: #FF6A55;
+  --warning: #FFBC99;
+  --success: #83BF6E;
+  --info: #B1E5FC;
+  --glass: rgba(255, 255, 255, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.3);
+  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+  --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.02);
+}
+
+[data-theme='dark'] {
+  /* High-End Dark Palette (Obsidian & Electric Blue) */
+  --bg-dark: #0B0E11;
+  --bg: #111418;
+  --bg-light: #000000;
+  --text: #F8F9FA;
+  --text-muted: #9A9FA5;
+  --highlight: rgba(255, 255, 255, 0.04);
+  --border: #1F2228;
+  --border-muted: rgba(255, 255, 255, 0.08);
+  --primary: #FFFFFF;
+  --secondary: #3F8CFF;
+  --glass: rgba(17, 20, 24, 0.6);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+  --shadow-lg: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+a {
+  font-weight: 500;
+  color: var(--highlight);
+  text-decoration: inherit;
+}
+
+a:hover {
+  color: #565667;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background-color: var(--bg-light);
+  overflow-x: hidden;
+}
+
+.app-root {
+  overflow-x: hidden;
+}
+
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: hsl(0, 0%, 10%);
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+
+button {
+  border-radius: 10px;
+  border: 1px solid var(--muted-border);
+  padding: 0.55em 1em;
+  font-size: 0.95em;
+  font-weight: 600;
+  font-family: inherit;
+  background-color: var(--primary);
+  color: var(--bg-light);
+  cursor: pointer;
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(14, 165, 164, 0.12)
+}
+
+button:hover {
+  border-color: #646cff;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #F9F8F6;
+  }
+}
+
+/* Global High-Performance Loading Bar (Minimalist) */
+.unified-refresh-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: rgba(0, 0, 0, 0.05);
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  overflow: hidden;
+}
+
+.refresh-active .unified-refresh-overlay {
+  opacity: 1;
+}
+
+.core-loader {
+  width: 100%;
+  height: 100%;
+  background: var(--secondary);
+  box-shadow: 0 0 10px var(--secondary);
+  transform: translateX(-100%);
+}
+
+.refresh-active .core-loader {
+  animation: loading-bar-progress 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+@keyframes loading-bar-progress {
+  0% {
+    transform: translateX(-100%);
+  }
+
+  50% {
+    transform: translateX(-30%);
+  }
+
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* Minimalist Sync Indicator */
+.status-label {
+  position: fixed;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-20px);
+  background: var(--bg-light);
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text);
+  border: 1px solid var(--border-muted);
+  box-shadow: var(--shadow-lg);
+  z-index: 10000;
+  opacity: 0;
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.status-label::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  background: var(--secondary);
+  border-radius: 50%;
+  animation: pulse-dot 1s infinite alternate;
+}
+
+@keyframes pulse-dot {
+  from {
+    opacity: 0.4;
+    transform: scale(0.8);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
+
+.refresh-active .status-label {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+.content-blur {
+  transition: opacity 0.3s ease;
+}
+
+.refresh-active .content-blur {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+/* --- Global Responsiveness Engine --- */
+
+@media (max-width: 1024px) {
+  :root {
+    --header-height: 80px;
+  }
+
+  .reports-page-root,
+  .income-page-root,
+  .expense-page-root,
+  .debts-page-root,
+  .home-page-root {
+    padding: 24px !important;
+  }
+
+  h1 {
+    font-size: 2.2em;
+  }
+
+  h2 {
+    font-size: 1.8em;
+  }
+}
+
+@media (max-width: 768px) {
+
+  .reports-stats-row,
+  .income-stats-row,
+  .expense-stats-row,
+  .debts-stats-row {
+    grid-template-columns: 1fr !important;
+  }
+
+  .charts-grid,
+  .main-dashboard-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .status-label {
+    width: 80%;
+    text-align: center;
+    justify-content: center;
+  }
+}
+
+/* Custom Scrollbar for Luxury Feel */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-muted);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}

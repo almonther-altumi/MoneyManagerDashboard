@@ -1,0 +1,113 @@
+.right-sidebar {
+  width: 320px;
+  /* Reduced from 360px */
+  /* background: var(--bg); */
+  /* border-left: 1px solid var(--border-muted); */
+  padding: 32px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: none;
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  z-index: 10;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.right-sidebar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.right-sidebar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.right-sidebar .card {
+  background: var(--bg-light);
+  border-radius: 24px;
+  /* Reduced from 32px */
+  padding: 20px;
+  /* Reduced from 28px */
+  border: 1px solid var(--border-muted);
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  transition: all 0.3s ease;
+}
+
+.right-sidebar .card:hover {
+  box-shadow: var(--shadow-lg);
+  border-color: var(--secondary);
+}
+
+.right-sidebar .card h3 {
+  font-size: 11px;
+  /* Smaller label */
+  font-weight: 800;
+  margin: 0;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Goals Styling Fixes */
+.goals-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.goal-item {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.goal-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.progress-container {
+  width: 100%;
+  height: 6px;
+  /* Slimmer */
+  background: var(--border-muted);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--secondary);
+  border-radius: 10px;
+  transition: width 1s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Currency Rates Modernization */
+.rate-item-modern {
+  padding: 12px 16px;
+  /* More compact */
+  gap: 12px;
+}
+
+.rate-val {
+  font-size: 16px;
+}
+
+.rate-title {
+  font-size: 11px;
+}
+
+/* Responsiveness */
+@media (max-width: 1400px) {
+  .right-sidebar {
+    display: none;
+  }
+}

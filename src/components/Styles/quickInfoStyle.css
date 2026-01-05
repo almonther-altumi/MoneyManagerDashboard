@@ -1,0 +1,101 @@
+.profit-section {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 24px;
+    margin-bottom: 24px;
+}
+
+.summeryMoneyBox {
+    background: var(--bg);
+    padding: 24px;
+    border-radius: 24px;
+    border: 1px solid var(--border-muted);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+}
+
+.summeryMoneyBox:hover {
+    transform: translateY(-4px);
+    border-color: var(--secondary);
+    box-shadow: var(--shadow-lg);
+}
+
+.profit-icon {
+    width: 48px;
+    height: 48px;
+    padding: 12px;
+    border-radius: 14px;
+    background: var(--bg-light);
+    color: var(--secondary);
+    border: 1px solid var(--border-muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.summeryMoneyBox:hover .profit-icon {
+    background: var(--primary);
+    color: var(--bg-light);
+    border-color: var(--primary);
+    transform: scale(1.05);
+}
+
+.profit-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.profit-amount {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--text);
+    margin: 0;
+    letter-spacing: -1px;
+}
+
+.profit-description {
+    font-size: 10px;
+    font-weight: 800;
+    color: var(--text-muted);
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Specific Accent Variants */
+.summeryMoneyBox.green .profit-icon {
+    color: var(--success);
+}
+
+.summeryMoneyBox.blue .profit-icon {
+    color: var(--secondary);
+}
+
+.summeryMoneyBox.purple .profit-icon {
+    color: #A461D8;
+}
+
+.summeryMoneyBox.red .profit-icon {
+    color: var(--danger);
+}
+
+@media (max-width: 1200px) {
+    .profit-section {
+        gap: 16px;
+    }
+
+    .summeryMoneyBox {
+        padding: 20px;
+    }
+
+    .profit-amount {
+        font-size: 20px;
+    }
+}

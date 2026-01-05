@@ -1,0 +1,79 @@
+.home-page-root {
+    background-color: var(--bg-light);
+    min-height: 100vh;
+}
+
+.home-layout-wrapper {
+    display: flex;
+    width: 100%;
+}
+
+.dashboard-content {
+    flex: 1;
+    padding: 30px 48px;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.dashboard-intro {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.dashboard-intro h1 {
+    font-size: 42px;
+    font-weight: 800;
+    margin: 0;
+    color: var(--text);
+    letter-spacing: -2px;
+}
+
+.dashboard-intro p {
+    color: var(--text-muted);
+    font-size: 18px;
+    font-weight: 500;
+    margin: 0;
+}
+
+.main-dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+    gap: 32px;
+}
+
+.dashboard-primary-column,
+.dashboard-secondary-column {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+/* Fix for small screens when columns wrap */
+@media (max-width: 1400px) {
+    .dashboard-content {
+        padding: 40px;
+    }
+}
+
+@media (max-width: 1200px) {
+    .main-dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .dashboard-content {
+        padding: 30px 24px;
+    }
+
+    .dashboard-intro h1 {
+        font-size: 32px;
+    }
+}
+
+@media (max-width: 768px) {
+    .main-dashboard-grid {
+        gap: 24px;
+    }
+}

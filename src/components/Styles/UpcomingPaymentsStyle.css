@@ -1,0 +1,418 @@
+.upcoming-payments-card {
+    background: var(--bg);
+    border-radius: 24px;
+    padding: 22px;
+    /* Synchronized padding */
+    border: 1px solid var(--border-muted);
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.payments-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 4px;
+}
+
+.header-info h3 {
+    margin: 0;
+    font-size: 16px;
+    /* High density scale */
+    font-weight: 800;
+    color: var(--text);
+    letter-spacing: -0.5px;
+}
+
+.header-info p {
+    margin: 2px 0 0 0;
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.header-actions-group {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.view-all-text-btn {
+    background: none;
+    border: none;
+    color: var(--secondary);
+    font-size: 10px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.2s;
+    opacity: 0.7;
+}
+
+.view-all-text-btn:hover {
+    opacity: 1;
+    transform: translateY(-1px);
+}
+
+.add-schedule-btn {
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    border: none;
+    background: var(--highlight);
+    color: var(--text);
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.add-schedule-btn:hover {
+    background: var(--secondary);
+    color: white;
+    transform: scale(1.05);
+}
+
+.payments-timeline {
+    display: flex;
+    flex-direction: column;
+}
+
+.payment-timeline-item {
+    display: flex;
+    gap: 16px;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.payment-timeline-item:hover {
+    transform: translateX(4px);
+}
+
+.timeline-node {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 14px;
+    /* Centering anchor */
+}
+
+.node-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--border-muted);
+    border: 2px solid var(--bg);
+    z-index: 2;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    margin-top: 6px;
+}
+
+.node-line {
+    width: 2px;
+    flex: 1;
+    background: linear-gradient(to bottom, var(--border-muted), transparent);
+    margin: -2px 0;
+    opacity: 0.4;
+}
+
+.payment-timeline-item:last-child .node-line {
+    display: none;
+}
+
+.payment-content {
+    flex: 1;
+    padding-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.payment-main-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.payment-identity {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.payment-icon-small {
+    width: 40px;
+    /* Standardized to RecentTransactions icon size */
+    height: 40px;
+    background: var(--bg-light);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    border: 1px solid var(--border-muted);
+}
+
+.payment-text h4 {
+    margin: 0;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text);
+}
+
+.payment-text span {
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--text-muted);
+}
+
+.payment-finance {
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.payment-val {
+    font-size: 15px;
+    /* High density scale */
+    font-weight: 800;
+    color: var(--text);
+    letter-spacing: -0.5px;
+}
+
+.status-pill {
+    font-size: 8px;
+    font-weight: 800;
+    text-transform: uppercase;
+    padding: 2px 6px;
+    border-radius: 4px;
+    background: var(--highlight);
+    color: var(--text-muted);
+    letter-spacing: 0.5px;
+    align-self: flex-end;
+}
+
+.status-pill.urgent {
+    color: var(--danger);
+    background: rgba(255, 106, 85, 0.1);
+}
+
+.status-pill.pending {
+    color: var(--secondary);
+    background: rgba(63, 140, 255, 0.1);
+}
+
+.mark-settled-btn {
+    align-self: flex-start;
+    background: transparent;
+    border: 1px solid var(--border-muted);
+    color: var(--text-muted);
+    padding: 4px 10px;
+    border-radius: 8px;
+    font-size: 10px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.mark-settled-btn:hover {
+    background: var(--highlight);
+    border-color: var(--secondary);
+    color: var(--secondary);
+}
+
+/* State: Completed */
+.payment-timeline-item.completed {
+    opacity: 0.4;
+}
+
+.payment-timeline-item.completed .node-dot {
+    background: var(--success);
+    box-shadow: 0 0 12px rgba(131, 191, 110, 0.4);
+}
+
+.payment-timeline-item.completed .payment-val {
+    text-decoration: line-through;
+}
+
+.payment-timeline-item.completed .mark-settled-btn {
+    background: var(--success);
+    border-color: var(--success);
+    color: white;
+}
+
+/* State: Urgent */
+.payment-timeline-item.urgent .node-dot {
+    background: var(--danger);
+    box-shadow: 0 0 8px rgba(255, 106, 85, 0.3);
+}
+
+.empty-obligations {
+    text-align: center;
+    padding: 24px 0;
+}
+
+.empty-sparkle {
+    font-size: 24px;
+    margin-bottom: 8px;
+}
+
+.empty-obligations p {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-muted);
+}
+
+/* Luxury Modal Engine */
+.luxury-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(10, 12, 15, 0.85);
+    backdrop-filter: blur(16px);
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 0.3s ease-out;
+}
+
+.luxury-modal-content {
+    background: var(--bg);
+    width: 90%;
+    max-width: 400px;
+    border-radius: 24px;
+    padding: 28px;
+    border: 1px solid var(--border-muted);
+    box-shadow: 0 40px 100px rgba(0, 0, 0, 0.6);
+    animation: modalSlideUp 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.modal-header h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+}
+
+.close-modal {
+    background: var(--highlight);
+    border: none;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 10px;
+    color: var(--text-muted);
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.close-modal:hover {
+    background: var(--danger);
+    color: white;
+}
+
+.modal-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.modal-form .input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.modal-form .input-row {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 12px;
+}
+
+.modal-form label {
+    font-size: 10px;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    letter-spacing: 0.5px;
+}
+
+.modal-form input {
+    background: var(--bg-light);
+    border: 1px solid var(--border-muted);
+    padding: 10px 14px;
+    border-radius: 12px;
+    color: var(--text);
+    font-size: 14px;
+    font-weight: 700;
+    outline: none;
+    transition: all 0.2s ease;
+}
+
+.modal-form input:focus {
+    border-color: var(--secondary);
+    background: var(--bg);
+    box-shadow: 0 0 0 4px rgba(63, 140, 255, 0.1);
+}
+
+.commit-btn {
+    margin-top: 8px;
+    background: var(--primary);
+    color: var(--bg-light);
+    border: none;
+    padding: 14px;
+    border-radius: 14px;
+    font-weight: 800;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.commit-btn:hover {
+    background: var(--secondary);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes modalSlideUp {
+    from {
+        transform: translateY(30px) scale(0.98);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+}

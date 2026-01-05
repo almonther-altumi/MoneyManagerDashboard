@@ -1,0 +1,43 @@
+#root {
+  margin: 0;
+  padding: 0;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--text);
+}
+
+.app-root {
+  min-height: 100vh;
+  background-color: var(--bg);
+  color: var(--text);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 1rem;
+  margin-top: 1rem;
+  align-items: start;
+}
+
+.left {
+  min-width: 260px;
+}
+
+.right {
+  min-width: 0;
+}
+
+@media(max-width:880px) {
+  .container {
+    grid-template-columns: 1fr;
+  }
+}

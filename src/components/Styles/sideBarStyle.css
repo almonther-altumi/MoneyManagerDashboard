@@ -1,0 +1,107 @@
+.sidebar {
+    width: 280px;
+    height: 100vh;
+    background: var(--bg);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    padding: 32px 24px;
+    transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    box-shadow: 20px 0 50px rgba(0, 0, 0, 0.02);
+}
+
+.sidebar.closed {
+    transform: translateX(-100%);
+    opacity: 0;
+}
+
+.sidebar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 60px;
+    padding: 0 16px;
+}
+
+.sidebar-title {
+    font-size: 14px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--text-muted);
+}
+
+.sidebar-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.sidebar-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.sidebar-menu-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 20px;
+    border-radius: 20px;
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.sidebar-menu-item h3 {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text-muted);
+}
+
+.sidebar-icon {
+    width: 24px;
+    height: 24px;
+    color: var(--text-muted);
+}
+
+.sidebar-menu-item:hover {
+    background: var(--highlight);
+    transform: translateX(5px);
+}
+
+.sidebar-menu-item:hover h3,
+.sidebar-menu-item:hover .sidebar-icon {
+    color: var(--text);
+}
+
+.sidebar-menu-item.active {
+    background: var(--primary);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar-menu-item.active h3,
+.sidebar-menu-item.active .sidebar-icon {
+    color: var(--bg-light);
+}
+
+.close-sidebar-button {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 12px;
+    transition: all 0.3s;
+}
+
+.close-sidebar-button:hover {
+    background: var(--highlight);
+    color: var(--text);
+}
+
+/* Floating Toggle Button (if any) could go here */
