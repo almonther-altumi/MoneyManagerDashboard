@@ -297,7 +297,7 @@ const IncomeTable = forwardRef((props, ref) => {
                                         onKeyDown={(e) => handleKeyPress(e, 'amount')}
                                         ref={(el) => inputRefs.current['amount'] = el}
                                     />
-                                </td>
+                                </td> 
                                 <td className="row-actions">
                                     <button className="action-icon-btn save" onClick={AddIncome} title="Save Row">✓</button>
                                     <button className="action-icon-btn cancel" onClick={() => setIsAddingNew(false)} title="Cancel">✕</button>
@@ -345,8 +345,27 @@ const IncomeTable = forwardRef((props, ref) => {
                         )}
                     </tbody>
                 </table>
+                
             </div>
+        
+         <style>{`
+                .table-input {
+                    background: var(--bg-dark);
+                    border: 1px solid var(--border-muted);
+                    color: var(--text);
+                    padding: 8px 12px;
+                    border-radius: 8px;
+                    width: 100%;
+                    font-size: 14px;
+                    outline: none;
+                }
+                .table-input:focus { border-color: var(--secondary); }
+                .amount-cell { font-weight: 800; color: var(--danger); }
+                .row-actions { display: flex; gap: 8px; }
+            `}</style>
         </>
+
+        
     );
 });
 

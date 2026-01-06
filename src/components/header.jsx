@@ -8,6 +8,7 @@ import avatar from "../assets/hassan_avatar.svg";
 import Email_Icon from './Icons/Header_Icons/EmailIcon';
 import ThemeIcon from './Icons/Header_Icons/ThemeIcon';
 
+// eslint-disable-next-line no-unused-vars
 function Header({ user, toggleSidebar, isSidebarOpen }) {
     const location = useLocation();
     const navigate = useNavigate();
@@ -15,18 +16,24 @@ function Header({ user, toggleSidebar, isSidebarOpen }) {
         return localStorage.getItem('theme') === 'dark';
     });
 
-    useEffect(() => {
-        if (isDarkMode) {
-            document.documentElement.setAttribute('data-theme', 'dark');
-            localStorage.setItem('theme', 'dark');
-        } else {
-            document.documentElement.removeAttribute('data-theme');
-            localStorage.setItem('theme', 'light');
-        }
-    }, [isDarkMode]);
+    // useEffect(() => {
+    //     if (isDarkMode) {
+    //         document.documentElement.setAttribute('data-theme', 'dark');
+    //         localStorage.setItem('theme', 'dark');
+    //     } else {
+    //         document.documentElement.removeAttribute('data-theme');
+    //         localStorage.setItem('theme', 'light');
+    //     }
+    // }, [isDarkMode]);
 
+    useEffect(() => {
+            document.getElementById('root').classList.toggle('dark-mode');
+            localStorage.setItem('theme', 'dark');
+       
+    }, [isDarkMode]);
     const toggleTheme = () => {
         setIsDarkMode(!isDarkMode);
+        
     };
 
     // Default/Fallback user (Mock)
@@ -75,8 +82,8 @@ function Header({ user, toggleSidebar, isSidebarOpen }) {
             </div>
 
             <nav className="header-actions">
-                <button className="icon-btn" onClick={handleMailClick} title="Open Gmail">
-                    <Email_Icon width={iconSize} height={iconSize} />
+                <button className="icon-btn theme-toggle" onClick={handleMailClick} title="Open Gmail">
+                    <Email_Icon isDark={isDarkMode} width={iconSize} height={iconSize} />
                 </button>
 
                 <button className="icon-btn theme-toggle" onClick={toggleTheme} title={isDarkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}>
@@ -102,7 +109,7 @@ function Header({ user, toggleSidebar, isSidebarOpen }) {
                 }
 
                 .menu-toggle-btn {
-                    background: var(--highlight);
+                    background: var(--d);
                     border: 1px solid var(--border-muted);
                     color: var(--text);
                     width: 44px;

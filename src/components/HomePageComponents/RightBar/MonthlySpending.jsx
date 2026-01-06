@@ -2,6 +2,8 @@
 import './RightSidebar.css'
 import React, { useState, useEffect } from 'react';
 import { Pie } from "react-chartjs-2";
+import { collection, getDocs, query, where, Timestamp } from "firebase/firestore";
+
 import {
   Chart as ChartJS,
   ArcElement,
@@ -18,7 +20,29 @@ function MonthlySpending() {
   const [limit, setLimit] = useState(2000);
   const [isEditing, setIsEditing] = useState(false);
   const [tempLimit, setTempLimit] = useState(2000);
+  
+  async function fetchMonthlySpent(user) {
+    const now = new Date();
 
+      
+    const startOfMonth = new Date(now.getFullYear() , now.getMonth() , 1);
+    const endOfMonth = new Date(now.getFullYear() , now.getMonth() + 1 , 1);
+  
+    const expensesRef = collection(db , "users" , user.uid , "expenses")
+    const q = query (
+      expensesRef , 
+      where("date" , ">=", Timestamp.fromDate(startOfMonth)),
+      where("date" , "<" ,Timestamp.fromDate(endOfMonth))
+    )
+    const snapshot = await getDocs(q);
+    let total = 0;
+    snapshot.forEach((doc) => {
+      total += Number(doc.data().amount || 0)
+    }) 
+
+    setSpent(total)
+  
+  }
   useEffect(() => {
     const fetchBudget = async (user) => {
       const budgetRef = doc(db, "users", user.uid, "settings", "budget");
@@ -33,7 +57,10 @@ function MonthlySpending() {
     };
 
     const unsubscribe = auth.onAuthStateChanged((user) => {
-      if (user) fetchBudget(user);
+      if (user) {
+        fetchBudget(user);
+        fetchMonthlySpent(user)
+      }
     });
     return () => unsubscribe();
   }, []);
@@ -93,7 +120,7 @@ function MonthlySpending() {
       <div className="pie-wrapper">
         <Pie data={data} options={options} />
         <div className="pie-center-label">
-          <span className="percent">{Math.round((spent / limit) * 100)}%</span>
+          <span className="percent">{limit > 0 ? Math.round((spent / limit) * 100) : 0}%</span>
           <span className="label">Used</span>
         </div>
       </div>
@@ -140,6 +167,9 @@ function MonthlySpending() {
         }
 
         .edit-trigger-icon {
+            display:flex;
+            justify-content: center;
+            align-items : center;
             background: var(--highlight);
             border: none;
             width: 32px;

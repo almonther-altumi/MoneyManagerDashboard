@@ -26,6 +26,7 @@
 .icon-btn {
     width: 44px;
     height: 44px;
+    padding: 0;
     background: var(--bg);
     border: 1px solid var(--border-muted);
     border-radius: 14px;
@@ -44,10 +45,7 @@
     box-shadow: var(--shadow);
 }
 
-.icon-btn svg {
-    width: 20px;
-    height: 20px;
-}
+
 
 .divider {
     width: 1px;

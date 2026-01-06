@@ -114,3 +114,9 @@
     font-size: 12px;
     font-weight: 700;
 }
+
+@media screen and (max-width : 1350px) {
+    .card-container{
+        width: 94%;
+    }
+}

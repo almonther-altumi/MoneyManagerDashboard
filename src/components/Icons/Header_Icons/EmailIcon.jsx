@@ -1,1 +1,22 @@
-import React from "react";  const EnvelopeIcon = (props) => (  <svg  xmlns="http://www.w3.org/2000/svg" width={36} height={36} fill={"var(--icon)"}  viewBox="0 0 24 24" {...props} >{/* Boxicons v3.0.6 https://boxicons.com | License  https://docs.boxicons.com/free */}<path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2m0 2v.51l-8 6.22-8-6.22V6zM4 18V9.04l7.39 5.74c.18.14.4.21.61.21s.43-.07.61-.21L20 9.03v8.96H4Z"></path></svg>);export default EnvelopeIcon;
+import React from "react";
+
+const EnvelopeIcon = ({ width = 24, height = 24, ...props }) => (
+  <svg
+    width={width}
+    height={height}
+    viewBox="0 0 24 24"
+    fill="currentColor"
+    xmlns="http://www.w3.org/2000/svg"
+    {...props}
+  >
+    <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 
+      1.1.9 2 2 2h16c1.1 0 
+      2-.9 2-2V6c0-1.1-.9-2-2-2
+      m0 2v.51l-8 6.22-8-6.22V6z
+      M4 18V9.04l7.39 5.74c.18.14.4.21.61.21
+      s.43-.07.61-.21L20 9.03v8.96H4Z"
+    />
+  </svg>
+);
+
+export default EnvelopeIcon;

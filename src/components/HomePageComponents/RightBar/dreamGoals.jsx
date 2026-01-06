@@ -95,6 +95,9 @@ function DreamGoals() {
       </div>
 
       <style>{`
+        .goal-actions > button{
+          margin: 5px;
+        }
         .goals-stack {
             display: flex;
             flex-direction: column;

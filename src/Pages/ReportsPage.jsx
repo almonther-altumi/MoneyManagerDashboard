@@ -1,10 +1,13 @@
 
+
 import React, { useState, useEffect } from 'react';
 import '../components/Styles/PagesStyle/ReportPageStyle.css';
 import { collection, getDocs } from 'firebase/firestore';
 import { auth, db } from '../firebase';
-import jsPDF from 'jspdf';
-// import 'jspdf-autotable';
+
+import jsPDF from "jspdf";
+import autoTable from "jspdf-autotable";
+
 
 function ReportsPage() {
     const [isRefreshing, setIsRefreshing] = useState(false);
@@ -88,8 +91,7 @@ function ReportsPage() {
             ["Net Retained Capital", `$${reportData.netSavings.toLocaleString()}`],
             ["Capital Preservation Rate", `${reportData.savingsRate}%`]
         ];
-
-        doc.autoTable({
+        autoTable(doc , {
             startY: 55,
             head: [summaryData[0]],
             body: summaryData.slice(1),
@@ -116,7 +118,7 @@ function ReportsPage() {
                 t.type === 'Income' ? `+$${t.amount.toLocaleString()}` : `-$${t.amount.toLocaleString()}`
             ]);
 
-        doc.autoTable({
+        autoTable(doc,{
             startY: finalY + 5,
             head: [["Date", "Description", "Category", "Type", "Amount"]],
             body: allTransactions,
