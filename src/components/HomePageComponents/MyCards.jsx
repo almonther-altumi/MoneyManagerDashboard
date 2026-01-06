@@ -9,7 +9,7 @@ function MyCards() {
         visa: { pin: "7676", expiry: "12/25" },
         master: { pin: "8899", expiry: "08/26" }
     });
-    const [userName, setUserName] = useState("Hassan Al-Bombat");
+    const [userName, setUserName] = useState("Known User");
     const [editingCard, setEditingCard] = useState(null); // 'visa' or 'master'
     const [tempData, setTempData] = useState({ pin: "", expiry: "", name: "" });
     const [isRefreshing, setIsRefreshing] = useState(false);
@@ -22,8 +22,8 @@ function MyCards() {
             if (cardSnap.exists()) {
                 const data = cardSnap.data();
                 setCardData({
-                    visa: { pin: data.visaPin || "7676", expiry: data.visaExpiry || "12/25" },
-                    master: { pin: data.masterPin || "8899", expiry: data.masterExpiry || "08/26" }
+                    visa: { pin: data.visaPin || "1234", expiry: data.visaExpiry || "12/25" },
+                    master: { pin: data.masterPin || "1234", expiry: data.masterExpiry || "08/26" }
                 });
             }
             const profileRef = doc(db, "users", user.uid, "settings", "profile");
@@ -105,7 +105,7 @@ function MyCards() {
                     </div>
 
                     <div className="card-number">
-                        **** **** ****
+                         <h3 className='stars'>**** **** ****</h3>
                         {editingCard === 'visa' ? (
                             <input
                                 type="text"
@@ -168,7 +168,7 @@ function MyCards() {
                     </div>
 
                     <div className="card-number">
-                        **** **** ****
+                        <h3 className='stars'>**** **** ****</h3>
                         {editingCard === 'master' ? (
                             <input
                                 type="text"

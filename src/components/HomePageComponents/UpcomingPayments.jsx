@@ -9,6 +9,8 @@ import '../Styles/UpcomingPaymentsStyle.css';
 
 const UpcomingPayments = ({ debts = [], onDataChange }) => {
     const [completedItems, setCompletedItems] = useState([]);
+    const [updatingIds, setUpdatingIds] = useState([]);
+    const [deletingIds, setDeletingIds] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [newData, setNewData] = useState({
         name: "",
@@ -25,9 +27,11 @@ const UpcomingPayments = ({ debts = [], onDataChange }) => {
             showNotification("You must be signed in", "error");
             return;
         }
-
         const isCurrentlyCompleted = completedItems.includes(id);
-        // optimistic UI
+        if (updatingIds.includes(id)) return; // already in-flight
+
+        // optimistic UI + mark in-flight
+        setUpdatingIds(prev => [...prev, id]);
         setCompletedItems(prev =>
             isCurrentlyCompleted ? prev.filter(item => item !== id) : [...prev, id]
         );
@@ -35,11 +39,9 @@ const UpcomingPayments = ({ debts = [], onDataChange }) => {
         try {
             const ref = doc(db, "users", user.uid, "debts", id);
             if (!isCurrentlyCompleted) {
-                // mark settled
                 await updateDoc(ref, { settled: true, progress: 100, remaining: 0 });
                 showNotification("Payment marked as settled", "success");
             } else {
-                // unmark settled
                 await updateDoc(ref, { settled: false, progress: 0 });
                 showNotification("Payment marked as unsettled", "info");
             }
@@ -51,6 +53,8 @@ const UpcomingPayments = ({ debts = [], onDataChange }) => {
             setCompletedItems(prev =>
                 isCurrentlyCompleted ? [...prev, id] : prev.filter(item => item !== id)
             );
+        } finally {
+            setUpdatingIds(prev => prev.filter(i => i !== id));
         }
     };
 
@@ -109,6 +113,9 @@ const UpcomingPayments = ({ debts = [], onDataChange }) => {
             return;
         }
 
+        if (deletingIds.includes(id)) return;
+        setDeletingIds(prev => [...prev, id]);
+
         try {
             await deleteDoc(doc(db, "users", user.uid, "debts", id));
             showNotification("Obligation deleted", "success");
@@ -118,6 +125,8 @@ const UpcomingPayments = ({ debts = [], onDataChange }) => {
         } catch (err) {
             console.error(err);
             showNotification("Failed to delete obligation", "error");
+        } finally {
+            setDeletingIds(prev => prev.filter(i => i !== id));
         }
     }
 
@@ -176,10 +185,34 @@ const UpcomingPayments = ({ debts = [], onDataChange }) => {
                                 </div>
 
                                 <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
-                                    <button className="mark-settled-btn" onClick={() => toggleComplete(item.id)}>
-                                        {isCompleted ? 'Settled ✓' : 'Mark as Settled'}
-                                    </button>
-                                    <button className="delete-btn" onClick={() => handleDelete(item.id)} title="Delete obligation">✖</button>
+                                    {
+                                        (() => {
+                                            const isUpdating = updatingIds.includes(item.id);
+                                            const isDeleting = deletingIds.includes(item.id);
+                                            return (
+                                                <>
+                                                    <button
+                                                        className={`mark-settled-btn ${isCompleted ? 'settled' : ''}`}
+                                                        onClick={() => toggleComplete(item.id)}
+                                                        disabled={isUpdating || isDeleting}
+                                                        aria-pressed={isCompleted}
+                                                    >
+                                                        {isUpdating ? <span className="btn-spinner" /> : (isCompleted ? 'Settled ✓' : 'Mark as Settled')}
+                                                    </button>
+
+                                                    <button
+                                                        className="delete-btn"
+                                                        onClick={() => handleDelete(item.id)}
+                                                        title="Delete obligation"
+                                                        aria-label={`Delete ${item.name}`}
+                                                        disabled={isDeleting || isUpdating}
+                                                    >
+                                                        {isDeleting ? <span className="btn-spinner" /> : '✖'}
+                                                    </button>
+                                                </>
+                                            );
+                                        })()
+                                    }
                                 </div>
                             </div>
                         </div>

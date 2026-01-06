@@ -96,7 +96,7 @@ function IncomePage() {
                     <div className="stat-card">
                         <span className="label">Monthly Total</span>
                         <span className="amount">${totalIncome.toLocaleString()}</span>
-                        <span className="trend up">▲ Real-time</span>
+                        <span className="trend-up">▲ Real-time</span>
                     </div>
                     <EditableStatCard
                         label="Projected Revenue"
@@ -108,7 +108,7 @@ function IncomePage() {
                     <div className="stat-card">
                         <span className="label">Growth Rate</span>
                         <span className="amount">14.8%</span>
-                        <span className="trend">YOY Comparison</span>
+                        <span className="trend">Your Comparison</span>
                     </div>
                 </div>
 

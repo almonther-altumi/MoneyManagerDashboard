@@ -142,7 +142,7 @@ function DebtsPage() {
                     <div className="table-header">
                         <h3>Portfolio Ledger</h3>
                         <button className="add-btn-debt" onClick={handleAddNewDebt}>
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M12 5V19M5 12H19" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
                             </svg>
                             Register Liability

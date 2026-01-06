@@ -300,3 +300,6 @@ button:hover {
 ::-webkit-scrollbar-thumb:hover {
   background: var(--text-muted);
 }
+h3{
+  color: var(--text);
+}

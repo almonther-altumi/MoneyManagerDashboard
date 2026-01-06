@@ -187,3 +187,8 @@ tbody tr:hover {
 .action-icon-btn.edit:hover {
     color: var(--secondary);
 }
+
+.trend-up, .trend
+{
+    color: var(--text-muted);
+}

@@ -252,6 +252,49 @@
 }
 .delete-btn:active { transform: translateY(-1px); }
 
+/* Mark-settled improved visuals */
+.mark-settled-btn {
+    height: 36px;
+    padding: 0 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border-radius: 10px;
+    background: linear-gradient(90deg, rgba(99,102,241,0.12), rgba(59,130,246,0.08));
+    border: 1px solid rgba(100,116,255,0.08);
+    color: var(--text);
+    font-weight: 800;
+    cursor: pointer;
+    transition: transform 160ms cubic-bezier(.2,.9,.2,1), box-shadow 160ms ease, background 160ms ease;
+}
+.mark-settled-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(99,102,241,0.08); }
+.mark-settled-btn.settled {
+    background: linear-gradient(90deg, rgba(34,197,94,0.12), rgba(16,185,129,0.06));
+    border: 1px solid rgba(34,197,94,0.12);
+    color: var(--success);
+}
+
+/* small spinner inside buttons */
+.btn-spinner {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 2px solid rgba(255,255,255,0.12);
+    border-top-color: var(--primary);
+    animation: spin 800ms linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.delete-btn[disabled], .mark-settled-btn[disabled] {
+    opacity: 0.6;
+    cursor: default;
+    transform: none;
+}
+
+
 
 /* State: Completed */
 .payment-timeline-item.completed {
