@@ -1,7 +1,7 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { collection, addDoc } from "firebase/firestore";
+import { collection, addDoc, doc, deleteDoc, updateDoc } from "firebase/firestore";
 import { db, auth } from "../../firebase";
 import Notification from "../Notification";
 import { useNotification } from "../../hooks/useNotification";
@@ -19,10 +19,39 @@ const UpcomingPayments = ({ debts = [], onDataChange }) => {
     const { notification, showNotification, hideNotification } = useNotification();
     const navigate = useNavigate();
 
-    const toggleComplete = (id) => {
+    const toggleComplete = async (id) => {
+        const user = auth.currentUser;
+        if (!user) {
+            showNotification("You must be signed in", "error");
+            return;
+        }
+
+        const isCurrentlyCompleted = completedItems.includes(id);
+        // optimistic UI
         setCompletedItems(prev =>
-            prev.includes(id) ? prev.filter(item => item !== id) : [...prev, id]
+            isCurrentlyCompleted ? prev.filter(item => item !== id) : [...prev, id]
         );
+
+        try {
+            const ref = doc(db, "users", user.uid, "debts", id);
+            if (!isCurrentlyCompleted) {
+                // mark settled
+                await updateDoc(ref, { settled: true, progress: 100, remaining: 0 });
+                showNotification("Payment marked as settled", "success");
+            } else {
+                // unmark settled
+                await updateDoc(ref, { settled: false, progress: 0 });
+                showNotification("Payment marked as unsettled", "info");
+            }
+            if (onDataChange) onDataChange();
+        } catch (err) {
+            console.error(err);
+            showNotification("Failed to update payment status", "error");
+            // revert optimistic UI on failure
+            setCompletedItems(prev =>
+                isCurrentlyCompleted ? [...prev, id] : prev.filter(item => item !== id)
+            );
+        }
     };
 
     const getStatus = (debt) => {
@@ -35,7 +64,8 @@ const UpcomingPayments = ({ debts = [], onDataChange }) => {
         return "scheduled";
     };
 
-    const getIcon = (name) => {
+    const getIcon = (name = "none") => {
+
         const n = name.toLowerCase();
         if (n.includes('card') || n.includes('visa')) return '💳';
         if (n.includes('bank') || n.includes('loan')) return '🏦';
@@ -56,6 +86,7 @@ const UpcomingPayments = ({ debts = [], onDataChange }) => {
                 remaining: Number(newData.amount),
                 nextPayment: newData.date,
                 progress: 0,
+                settled: false,
                 createdAt: new Date()
             });
 
@@ -68,6 +99,34 @@ const UpcomingPayments = ({ debts = [], onDataChange }) => {
             showNotification("Failed to register obligation", "error");
         }
     };
+
+    const handleDelete = async (id) => {
+        const ok = window.confirm('Delete this obligation? This action cannot be undone.');
+        if (!ok) return;
+        const user = auth.currentUser;
+        if (!user) {
+            showNotification("You must be signed in", "error");
+            return;
+        }
+
+        try {
+            await deleteDoc(doc(db, "users", user.uid, "debts", id));
+            showNotification("Obligation deleted", "success");
+            // remove locally if present
+            setCompletedItems(prev => prev.filter(i => i !== id));
+            if (onDataChange) onDataChange();
+        } catch (err) {
+            console.error(err);
+            showNotification("Failed to delete obligation", "error");
+        }
+    }
+
+    // initialize completedItems from incoming debts (persisted settled state)
+    useEffect(() => {
+        if (!debts || debts.length === 0) return;
+        const settledIds = debts.filter(d => d.settled).map(d => d.id);
+        setCompletedItems(settledIds);
+    }, [debts]);
 
     const payments = debts.map(debt => ({
         id: debt.id,
@@ -116,9 +175,12 @@ const UpcomingPayments = ({ debts = [], onDataChange }) => {
                                     </div>
                                 </div>
 
-                                <button className="mark-settled-btn" onClick={() => toggleComplete(item.id)}>
-                                    {isCompleted ? 'Settled ✓' : 'Mark as Settled'}
-                                </button>
+                                <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+                                    <button className="mark-settled-btn" onClick={() => toggleComplete(item.id)}>
+                                        {isCompleted ? 'Settled ✓' : 'Mark as Settled'}
+                                    </button>
+                                    <button className="delete-btn" onClick={() => handleDelete(item.id)} title="Delete obligation">✖</button>
+                                </div>
                             </div>
                         </div>
                     );
@@ -135,7 +197,7 @@ const UpcomingPayments = ({ debts = [], onDataChange }) => {
                 <div className="luxury-modal-overlay" onClick={() => setIsModalOpen(false)}>
                     <div className="luxury-modal-content" onClick={e => e.stopPropagation()}>
                         <div className="modal-header">
-                            <h3>Register Obligation</h3>
+                            <h3 style={{color:"var(--text)"}}>Register Obligation</h3>
                             <button className="close-modal" onClick={() => setIsModalOpen(false)}>✕</button>
                         </div>
                         <form onSubmit={handleAddObligation} className="modal-form">

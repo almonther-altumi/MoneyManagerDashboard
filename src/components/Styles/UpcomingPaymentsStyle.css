@@ -229,6 +229,30 @@
     color: var(--secondary);
 }
 
+/* Modern simple delete button */
+.delete-btn {
+    width: 36px;
+    height: 36px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    border: 1px solid transparent;
+    background: transparent;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 0.16s ease;
+    font-size: 14px;
+}
+.delete-btn:hover {
+    background: rgba(255, 106, 85, 0.08);
+    color: var(--danger);
+    transform: translateY(-2px);
+    border-color: rgba(255, 106, 85, 0.12);
+}
+.delete-btn:active { transform: translateY(-1px); }
+
+
 /* State: Completed */
 .payment-timeline-item.completed {
     opacity: 0.4;

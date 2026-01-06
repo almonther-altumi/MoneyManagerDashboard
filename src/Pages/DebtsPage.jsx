@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState, useRef } from 'react';
 import '../components/Styles/PagesStyle/DebtsPageStyle.css';
 import DebtsTable from '../components/DebtsPageComponents/DebtsTable';
@@ -16,12 +15,14 @@ function DebtsPage() {
     const [monthlyRepayment, setMonthlyRepayment] = useState(2400);
     const [isRefreshing, setIsRefreshing] = useState(false);
 
+    // إضافة دين جديد عبر الجدول
     const handleAddNewDebt = () => {
         if (debtsTableRef.current) {
             debtsTableRef.current.addNewRow();
         }
     };
 
+    // جلب احصاءات الديون
     const fetchDebtStats = async () => {
         const user = auth.currentUser;
         if (!user) return;
@@ -56,6 +57,7 @@ function DebtsPage() {
         }
     };
 
+    // جلب مبلغ السداد الشهري
     const fetchRepaymentAmount = async (user) => {
         try {
             const settingsRef = doc(db, "users", user.uid, "settings", "stats");
@@ -68,6 +70,7 @@ function DebtsPage() {
         }
     };
 
+    // حفظ مبلغ السداد الشهري
     const handleSaveRepayment = async (newValue) => {
         const user = auth.currentUser;
         if (!user) return;
@@ -100,7 +103,7 @@ function DebtsPage() {
     return (
         <div className={`debts-page-root ${isRefreshing ? 'refresh-active' : ''}`}>
 
-            {/* Unified High-Performance Loading Bar */}
+            {/* Overlay loading */}
             <div className="unified-refresh-overlay">
                 <div className="core-loader"></div>
             </div>
@@ -134,6 +137,7 @@ function DebtsPage() {
                     </div>
                 </div>
 
+                {/* الجدول */}
                 <div className="debts-table-container">
                     <div className="table-header">
                         <h3>Portfolio Ledger</h3>
@@ -145,6 +149,7 @@ function DebtsPage() {
                         </button>
                     </div>
 
+                    {/* تمرير ref لدعم إضافة صف جديد مباشرة */}
                     <DebtsTable ref={debtsTableRef} onDataChange={fetchDebtStats} />
                 </div>
             </div>
