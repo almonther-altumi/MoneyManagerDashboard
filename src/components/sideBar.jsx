@@ -30,6 +30,7 @@ const SideBar = ({ isOpen, toggleSidebar }) => {
         }
     ];
 
+    
     return (
         <aside className={`sidebar ${isOpen ? '' : 'closed'}`}>
             <div className="sidebar-header">

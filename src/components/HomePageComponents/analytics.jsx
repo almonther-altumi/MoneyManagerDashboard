@@ -1,6 +1,6 @@
-
-import { Line } from "react-chartjs-2"
-import '../Styles/analyticsStyle.css'
+import { Line } from "react-chartjs-2";
+import { useMemo } from "react";
+import '../Styles/analyticsStyle.css';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -9,122 +9,118 @@ import {
   Legend,
   LineElement,
   PointElement,
+  Filler
 } from "chart.js";
 
 ChartJS.register(
   CategoryScale,
   LinearScale,
   LineElement,
-  Tooltip,
   PointElement,
-  Legend
+  Tooltip,
+  Legend,
+  Filler
 );
 
 function Analytics({ data }) {
   const { income = [], expenses = [] } = data || {};
 
-  const labels = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  const labels = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
 
-  const incomeByMonth = new Array(12).fill(0);
-  const expenseByMonth = new Array(12).fill(0);
+  const chartData = useMemo(() => {
+    const incomeByMonth = new Array(12).fill(0);
+    const expenseByMonth = new Array(12).fill(0);
 
-  income.forEach(item => {
-    const date = item.date?.toDate ? item.date.toDate() : new Date(item.date);
-    const month = date.getMonth();
-    if (month >= 0 && month < 12) {
-      incomeByMonth[month] += (Number(item.amount) || 0);
-    }
-  });
+    income.forEach(item => {
+      const date = item.date?.toDate ? item.date.toDate() : new Date(item.date);
+      incomeByMonth[date.getMonth()] += Number(item.amount) || 0;
+    });
 
-  expenses.forEach(item => {
-    const date = item.date?.toDate ? item.date.toDate() : new Date(item.date);
-    const month = date.getMonth();
-    if (month >= 0 && month < 12) {
-      expenseByMonth[month] += (Number(item.amount) || 0);
-    }
-  });
+    expenses.forEach(item => {
+      const date = item.date?.toDate ? item.date.toDate() : new Date(item.date);
+      expenseByMonth[date.getMonth()] += Number(item.amount) || 0;
+    });
 
-  const chartData = {
-    labels: labels,
-    datasets: [
-      {
-        label: 'Income',
-        data: incomeByMonth,
-        borderColor: '#1db954', // Green
-        backgroundColor: '#1db954',
-        tension: 0.4,
-        pointRadius: 3,
-        pointHoverRadius: 6
-      },
-      {
-        label: 'Expense',
-        data: expenseByMonth,
-        borderColor: '#ea4335', // Red
-        backgroundColor: '#ea4335',
-        tension: 0.4,
-        pointRadius: 3,
-        pointHoverRadius: 6
-      }
-    ]
-  };
+    return {
+      labels,
+      datasets: [
+        {
+          label: "Income",
+          data: incomeByMonth,
+          borderColor: "#1d7db9",
+          fill: true,
+          tension: 0.45,
+          pointRadius: 3,
+          pointHoverRadius: 6,
+          backgroundColor: (context) => {
+            const ctx = context.chart.ctx;
+            const gradient = ctx.createLinearGradient(0, 0, 0, 300);
+            gradient.addColorStop(0, "rgba(29,151,185,0.4)");
+            gradient.addColorStop(1, "rgba(29,151,185,0.05)");
+            return gradient;
+          }
+        },
+        {
+          label: "Expense",
+          data: expenseByMonth,
+          borderColor: "#ea4335",
+          fill: true,
+          tension: 0.45,
+          pointRadius: 3,
+          pointHoverRadius: 6,
+          backgroundColor: (context) => {
+            const ctx = context.chart.ctx;
+            const gradient = ctx.createLinearGradient(0, 0, 0, 300);
+            gradient.addColorStop(0, "rgba(234,67,53,0.4)");
+            gradient.addColorStop(1, "rgba(234,67,53,0.05)");
+            return gradient;
+          }
+        }
+      ]
+    };
+  }, [income, expenses]);
 
   const options = {
     responsive: true,
     maintainAspectRatio: false,
+    interaction: { mode: 'index', intersect: false },
     plugins: {
       legend: {
         position: 'top',
         labels: {
           usePointStyle: true,
-          boxWidth: 8,
-          color: '#5f6368',
-          font: { size: 12, family: 'Inter' }
+          boxWidth: 8
         }
       },
       tooltip: {
-        backgroundColor: 'rgba(32, 33, 36, 0.9)',
-        padding: 10,
-        cornerRadius: 8,
+        backgroundColor: 'rgba(32,33,36,0.9)',
+        cornerRadius: 8
       }
     },
     scales: {
       y: {
-        grid: {
-          color: '#f1f3f4',
-          borderDash: [5, 5]
-        },
-        ticks: {
-          color: '#9aa0a6',
-          font: { size: 11 }
-        }
+        grid: { color: '#f1f3f4' },
+        ticks: { font: { size: 11 } }
       },
       x: {
-        grid: {
-          display: false
-        },
-        ticks: {
-          color: '#9aa0a6',
-          font: { size: 11 }
-        }
+        grid: { display: false },
+        ticks: { font: { size: 11 } }
       }
-    },
-    interaction: {
-      mode: 'index',
-      intersect: false,
-    },
+    }
   };
 
   return (
     <section className="analytics-card">
-      <div className="analytics-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <h3>Analytics Overview</h3>
-      </div>
-
+      <h3>Analytics Overview</h3>
       <div className="chart-wrapper">
-        <Line data={chartData} options={options} />
+        <Line
+          key={`${income.length}-${expenses.length}`}
+          data={chartData}
+          options={options}
+        />
       </div>
     </section>
-  )
+  );
 }
 
 export default Analytics;

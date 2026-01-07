@@ -83,7 +83,7 @@ function Header({ user, toggleSidebar, isSidebarOpen }) {
 
             <nav className="header-actions">
                 <button className="icon-btn theme-toggle" onClick={handleMailClick} title="Open Gmail">
-                    <Email_Icon isDark={isDarkMode} width={iconSize} height={iconSize} />
+                    <Email_Icon  width={iconSize} height={iconSize} />
                 </button>
 
                 <button className="icon-btn theme-toggle" onClick={toggleTheme} title={isDarkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}>

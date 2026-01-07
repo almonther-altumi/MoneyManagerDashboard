@@ -30,6 +30,24 @@ export default function App() {
 
   const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
 
+ useEffect(() => {
+  const handleResize = () => {
+    if (window.innerWidth <= 1029) {
+      setIsSidebarOpen(false);
+    } else {
+      setIsSidebarOpen(true);
+    }
+  };
+
+  handleResize(); // فحص أولي عند تحميل الصفحة
+  window.addEventListener("resize", handleResize);
+
+  return () => window.removeEventListener("resize", handleResize);
+}, []);
+
+
+
+
   return (
     <div className={`app-root ${isSidebarOpen ? 'sidebar-open' : 'sidebar-closed'}`}>
       <BrowserRouter>
