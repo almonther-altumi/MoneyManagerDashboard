@@ -6,10 +6,10 @@ import { doc, getDoc, setDoc } from "firebase/firestore";
 
 function MyCards() {
     const [cardData, setCardData] = useState({
-        visa: { pin: "7676", expiry: "12/25" },
-        master: { pin: "8899", expiry: "08/26" }
+        visa: { pin: "1234", expiry: "12/25" },
+        master: { pin: "1234", expiry: "08/26" }
     });
-    const [userName, setUserName] = useState("Known User");
+    const [userName, setUserName] = useState("unKnown user");
     const [editingCard, setEditingCard] = useState(null); // 'visa' or 'master'
     const [tempData, setTempData] = useState({ pin: "", expiry: "", name: "" });
     const [isRefreshing, setIsRefreshing] = useState(false);
@@ -29,7 +29,7 @@ function MyCards() {
             const profileRef = doc(db, "users", user.uid, "settings", "profile");
             const profileSnap = await getDoc(profileRef);
             if (profileSnap.exists()) {
-                setUserName(profileSnap.data().name || "Hassan Al-Bombat");
+                setUserName(profileSnap.data().name || "unknown user");
             }
         } catch (error) {
             console.error("Error fetching card/profile data:", error);
