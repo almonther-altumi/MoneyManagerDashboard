@@ -49,7 +49,7 @@ function Header({ user, toggleSidebar, isSidebarOpen }) {
         displayName: user.displayName,
         photoURL: user.photoURL,
         email: user.email,
-        role: "Owner"
+        role: "Beta"
     } : defaultUser;
 
     const getTitle = () => {

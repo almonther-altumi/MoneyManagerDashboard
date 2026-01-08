@@ -20,7 +20,7 @@ const ReportPDF = React.forwardRef((props , ref) => {
         {/* Header */}
       <h1 style={{ textAlign: "center" }}>Statistics Report</h1>
       <p>Date: {new Date().toLocaleDateString()}</p>
-      <p>Account: (Owner)</p>
+      <p>Account: (Beta)</p>
 
       <hr />
 
