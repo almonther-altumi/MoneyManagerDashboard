@@ -16,8 +16,17 @@ import { auth, db } from '../firebase';
 import '../components/Styles/MyCardsStyle.css';
 import '../components/Styles/quickInfoStyle.css';
 import '../components/HomePageComponents/RightBar/RightSidebar.css';
+import Notification from '../components/Notification';
 
 const HomePage = () => {
+  function internetChecker()
+  {
+    if(window.onoffline)
+      {
+        Notification("now" ,);
+      }    
+  }
+  internetChecker()
   const [financialData, setFinancialData] = useState({
     income: [],
     expenses: [],

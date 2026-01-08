@@ -17,6 +17,10 @@ import NotFoundPage from './Pages/NotFoundPage'
 import HomePage from './Pages/HomePage'
 import LoginPage from './Pages/LoginPage'
 
+import TermsOfService from "./pages/TermsOfService";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+
+
 export default function App() {
   const [user, setUser] = useState(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -69,6 +73,9 @@ export default function App() {
               <Route path="/reports" element={<ReportsPage />} />
               <Route path="/settings" element={<SettingsPage />} />
               <Route path="/login" element={<LoginPage onLogin={setUser} />} />
+              <Route path="/terms" element={<TermsOfService />} />
+              <Route path="/privacy" element={<PrivacyPolicy />} />
+
               <Route path="*" element={<NotFoundPage />} />
             </Routes>
           </main>

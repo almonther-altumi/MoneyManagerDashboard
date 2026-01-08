@@ -97,7 +97,7 @@ const LoginPage = () => {
         )}
 
         <div className="login-footer">
-          By signing in, you agree to our <span>Terms of Service</span> and <span>Privacy Policy</span>.
+          By signing in, you agree to our <span onClick={() => navigate("/terms")}>Terms of Service</span> and <span onClick={() => navigate("/privacy")}>Privacy Policy</span>.
         </div>
       </div>
     </div>
