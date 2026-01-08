@@ -105,8 +105,7 @@ const UpcomingPayments = ({ debts = [], onDataChange }) => {
     };
 
     const handleDelete = async (id) => {
-        const ok = window.confirm('Delete this obligation? This action cannot be undone.');
-        if (!ok) return;
+        
         const user = auth.currentUser;
         if (!user) {
             showNotification("You must be signed in", "error");

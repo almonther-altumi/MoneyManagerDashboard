@@ -1,6 +1,7 @@
 
 import React from 'react';
 import '../Styles/RecentTransactionsStyle.css';
+import { useNavigate } from 'react-router-dom';
 
 function RecentTransactions({ income = [], expenses = [] }) {
     // Combine and sort by date
@@ -22,12 +23,12 @@ function RecentTransactions({ income = [], expenses = [] }) {
             status: "Completed"
         }))
     ].sort((a, b) => b.date - a.date).slice(0, 5);
-
+    const navigate = useNavigate();
     return (
         <section className="transactions-card">
             <div className="card-header">
-                <h3>Recent Transactions</h3>
-                <button className="view-all-btn">View All</button>
+                <h3>Recent Transactions</h3>  
+                <button className="view-all-btn" onClick={() => navigate('/income')}>View All</button>
             </div>
 
             <div className="transactions-list">
