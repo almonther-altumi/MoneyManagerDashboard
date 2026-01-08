@@ -1,5 +1,5 @@
 import "./RightBar/RightSidebar.css";
-import DreamGoals from "./RightBar/DreamGoals";
+import DreamGoals from "./RightBar/dreamGoals";
 import MonthlySpending from "./RightBar/MonthlySpending";
 import CurrencyRates from "./RightBar/CurrencyRates";
 
