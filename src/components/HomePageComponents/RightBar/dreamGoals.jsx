@@ -3,10 +3,13 @@ import React, { useState, useEffect } from 'react';
 import { db, auth } from "../../../firebase";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 
+import { useTranslation } from 'react-i18next';
+
 function DreamGoals() {
+  const { t } = useTranslation();
   const [goals, setGoals] = useState([
-    { id: 'car', name: 'Premium Segment Vehicle', current: 2000, target: 100000, icon: 'car' },
-    { id: 'house', name: 'Primary Estate Acquisition', current: 15000, target: 300000, icon: 'house' }
+    { id: 'car', name: 'premium_segment_vehicle', current: 2000, target: 100000, icon: 'car' },
+    { id: 'house', name: 'primary_estate_acquisition', current: 15000, target: 300000, icon: 'house' }
   ]);
   const [editingId, setEditingId] = useState(null);
   const [tempData, setTempData] = useState({ current: 0, target: 0 });
@@ -26,7 +29,7 @@ function DreamGoals() {
         })));
       }
     };
-    const unsubscribe = auth.onAuthStateChanged((u) => u && fetchGoals());
+    const unsubscribe = auth.onAuthStateChanged((u) => u && fetchGoals());// subscrive
     return () => unsubscribe();
   }, []);
 
@@ -49,7 +52,7 @@ function DreamGoals() {
   return (
     <section className="card dream-card luxury-card">
       <div className="budget-header-box">
-        <h3>Capital Aspirations</h3>
+        <h3>{t('dream.title')}</h3>
       </div>
 
       <div className="goals-stack">
@@ -58,7 +61,7 @@ function DreamGoals() {
           return (
             <div className="goal-item" key={goal.id}>
               <div className="goal-info-row">
-                <span className="goal-label">{goal.name}</span>
+                <span className="goal-label">{t(`dream.${goal.name === 'premium_segment_vehicle' ? 'car' : 'house'}`)}</span>
                 {editingId === goal.id ? (
                   <div className="goal-actions">
                     <button onClick={() => handleSave(goal.id)}>✓</button>
@@ -85,7 +88,7 @@ function DreamGoals() {
                   </div>
                   <div className="goal-metrics">
                     <span>${Number(goal.current).toLocaleString()}</span>
-                    <span>{percent}% Complete</span>
+                    <span>{t('dream.complete', { percent })} {percent}%</span>
                   </div>
                 </>
               )}

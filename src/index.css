@@ -14,22 +14,17 @@
   --warning: hsl(52 19% 57%);
   --success: hsl(146 17% 59%);
   --info: hsl(217 28% 65%);
-  /* oklch */
-  --bg-dark: oklch(0.1 0.025 264);
-  --bg: oklch(0.15 0.025 264);
-  --bg-light: oklch(0.2 0.025 264);
-  --text: oklch(0.96 0.05 264);
-  --text-muted: oklch(0.76 0.05 264);
-  --highlight: oklch(0.5 0.05 264);
-  --border: oklch(0.4 0.05 264);
-  --border-muted: oklch(0.3 0.05 264);
-  --primary: oklch(0.76 0.1 264);
-  --secondary: oklch(0.76 0.1 84);
-  --danger: oklch(0.7 0.05 30);
-  --warning: oklch(0.7 0.05 100);
-  --success: oklch(0.7 0.05 160);
-  --info: oklch(0.7 0.05 260);
+
+  /* Premium Glass Variables (Dark Default) */
+  --glass-bg: rgba(18, 18, 24, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-text: #ffffff;
+  --glass-text-muted: rgba(255, 255, 255, 0.5);
+  --glass-row-hover: rgba(255, 255, 255, 0.06);
+  --glass-input-hover: rgba(255, 255, 255, 0.05);
+
 }
+
 #root.dark-mode {
   /* hsl (fallback color) */
   --bg-dark: hsl(220 59% 91%);
@@ -46,25 +41,19 @@
   --warning: hsl(52 23% 34%);
   --success: hsl(147 19% 36%);
   --info: hsl(217 22% 41%);
-  /* oklch */
-  --bg-dark: oklch(0.92 0.025 264);
-  --bg: oklch(0.96 0.025 264);
-  --bg-light: oklch(1 0.025 264);
-  --text: oklch(0.15 0.05 264);
-  --text-muted: oklch(0.4 0.05 264);
-  --highlight: oklch(1 0.05 264);
-  --border: oklch(0.6 0.05 264);
-  --border-muted: oklch(0.7 0.05 264);
-  --primary: oklch(0.4 0.1 264);
-  --secondary: oklch(0.4 0.1 84);
-  --danger: oklch(0.5 0.05 30);
-  --warning: oklch(0.5 0.05 100);
-  --success: oklch(0.5 0.05 160);
-  --info: oklch(0.5 0.05 260);
+
+  /* Premium Glass Variables (Light Mode) */
+  --glass-bg: rgba(255, 255, 255, 0.75);
+  --glass-border: rgba(0, 0, 0, 0.08);
+  --glass-text: #1a1a1a;
+  --glass-text-muted: rgba(0, 0, 0, 0.5);
+  --glass-row-hover: rgba(0, 0, 0, 0.04);
+  --glass-input-hover: rgba(0, 0, 0, 0.03);
+
 }
 
-html{
-  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+html {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 a {
@@ -136,107 +125,7 @@ button:hover {
   }
 }
 
-/* Global High-Performance Loading Bar (Minimalist) */
-.unified-refresh-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 4px;
-  background: rgba(0, 0, 0, 0.05);
-  z-index: 9999;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  overflow: hidden;
-}
 
-.refresh-active .unified-refresh-overlay {
-  opacity: 1;
-}
-
-.core-loader {
-  width: 100%;
-  height: 100%;
-  background: var(--secondary);
-  box-shadow: 0 0 10px var(--secondary);
-  transform: translateX(-100%);
-}
-
-.refresh-active .core-loader {
-  animation: loading-bar-progress 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-}
-
-@keyframes loading-bar-progress {
-  0% {
-    transform: translateX(-100%);
-  }
-
-  50% {
-    transform: translateX(-30%);
-  }
-
-  100% {
-    transform: translateX(100%);
-  }
-}
-
-/* Minimalist Sync Indicator */
-.status-label {
-  position: fixed;
-  top: 10px;
-  left: 50%;
-  transform: translateX(-50%) translateY(-20px);
-  background: var(--bg-light);
-  padding: 6px 16px;
-  border-radius: 20px;
-  font-size: 11px;
-  font-weight: 700;
-  color: var(--text);
-  border: 1px solid var(--border-muted);
-  box-shadow: var(--shadow-lg);
-  z-index: 10000;
-  opacity: 0;
-  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.status-label::before {
-  content: '';
-  width: 6px;
-  height: 6px;
-  background: var(--secondary);
-  border-radius: 50%;
-  animation: pulse-dot 1s infinite alternate;
-}
-
-@keyframes pulse-dot {
-  from {
-    opacity: 0.4;
-    transform: scale(0.8);
-  }
-
-  to {
-    opacity: 1;
-    transform: scale(1.2);
-  }
-}
-
-.refresh-active .status-label {
-  opacity: 1;
-  transform: translateX(-50%) translateY(0);
-}
-
-.content-blur {
-  transition: opacity 0.3s ease;
-}
-
-.refresh-active .content-blur {
-  opacity: 0.6;
-  pointer-events: none;
-}
 
 /* --- Global Responsiveness Engine --- */
 
@@ -300,6 +189,7 @@ button:hover {
 ::-webkit-scrollbar-thumb:hover {
   background: var(--text-muted);
 }
-h3{
+
+h3 {
   color: var(--text);
 }

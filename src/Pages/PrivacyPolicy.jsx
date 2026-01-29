@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import "../components/Styles/PagesStyle/LegalPages.css";
+import "../components/Styles/AnotherPageStyle/LegalPages.css";
 
 const PrivacyPolicy = () => {
   const navigate = useNavigate();

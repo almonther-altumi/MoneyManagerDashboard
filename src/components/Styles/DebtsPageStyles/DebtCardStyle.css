@@ -1,0 +1,239 @@
+.debt-horizontal-card {
+    background: var(--bg);
+    border: 1px solid var(--border-muted);
+    border-radius: 24px;
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    min-height: 100px;
+    height: auto;
+    box-sizing: border-box;
+
+    /* Reduced from 24px to 16px */
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+
+    /* Full Width for Grid Cell */
+    width: 100%;
+    max-width: none;
+    margin: 0;
+}
+
+/* Gradient Border Effect on Hover */
+.debt-horizontal-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 24px;
+    padding: 2px;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    -webkit-mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+}
+
+.debt-horizontal-card:hover::before {
+    opacity: 1;
+}
+
+.debt-horizontal-card:hover {
+    transform: translateY(-4px) scale(1.01);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+    background: var(--bg-light);
+}
+
+.card-left {
+    flex-shrink: 0;
+}
+
+.avatar-circle {
+    width: 60px;
+    /* Reduced from 80px */
+    height: 60px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    /* Reduced from 32px */
+    font-weight: 800;
+    color: white;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.card-center {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 4px;
+    min-width: 0;
+    /* Important for truncation */
+}
+
+.name {
+    margin: 0;
+    font-size: 1.2rem;
+    /* Slightly reduced fits better */
+    font-weight: 800;
+    color: var(--text);
+    letter-spacing: -0.5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.reason {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.card-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 12px;
+    min-width: 140px;
+}
+
+.financial-stack {
+    text-align: right;
+}
+
+.amount-label {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+    font-weight: 700;
+    margin-right: 15px;
+}
+
+.amount-value {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--text);
+}
+
+.progress-section {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
+}
+
+.progress-bar-bg {
+    width: 100%;
+    height: 8px;
+    background: var(--bg-dark);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--secondary), var(--primary));
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(var(--secondary), 0.5);
+}
+
+.progress-text {
+    font-size: 0.8rem;
+    color: var(--text);
+    font-weight: 700;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .debt-horizontal-card {
+        flex-direction: row;
+        align-items: center;
+        padding: 20px;
+        gap: 16px;
+        max-width: none;
+        height: auto;
+        min-height: 90px;
+        box-sizing: border-box;
+    }
+
+    .card-left {
+        flex-shrink: 0;
+    }
+
+    .avatar-circle {
+        width: 48px;
+        height: 48px;
+        font-size: 18px;
+    }
+
+    .card-center {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .name {
+        font-size: 1rem;
+        margin-bottom: 2px;
+    }
+
+    .reason {
+        font-size: 0.75rem;
+    }
+
+    .card-right {
+        flex-shrink: 0;
+        align-items: flex-end;
+        border-top: none;
+        padding-top: 0;
+        gap: 6px;
+        min-width: auto;
+    }
+
+    .financial-stack {
+        text-align: right;
+        margin-bottom: 6px;
+    }
+
+    .amount-label {
+        font-size: 0.65rem;
+        display: block;
+        margin-bottom: 2px;
+    }
+
+    .amount-value {
+        font-size: 1.1rem;
+        display: block;
+    }
+
+    .progress-section {
+        align-items: flex-end;
+        width: 100px;
+    }
+
+    .progress-bar-bg {
+        height: 6px;
+    }
+
+    .progress-text {
+        font-size: 0.7rem;
+    }
+}

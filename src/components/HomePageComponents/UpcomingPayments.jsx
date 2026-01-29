@@ -5,9 +5,11 @@ import { collection, addDoc, doc, deleteDoc, updateDoc } from "firebase/firestor
 import { db, auth } from "../../firebase";
 import Notification from "../Notification";
 import { useNotification } from "../../hooks/useNotification";
-import '../Styles/UpcomingPaymentsStyle.css';
+import '../Styles/HomePageStyles/UpcomingPaymentsStyle.css';
+import { useTranslation } from "react-i18next";
 
 const UpcomingPayments = ({ debts = [], onDataChange }) => {
+    const { t } = useTranslation();
     const [completedItems, setCompletedItems] = useState([]);
     const [updatingIds, setUpdatingIds] = useState([]);
     const [deletingIds, setDeletingIds] = useState([]);
@@ -40,7 +42,7 @@ const UpcomingPayments = ({ debts = [], onDataChange }) => {
             const ref = doc(db, "users", user.uid, "debts", id);
             if (!isCurrentlyCompleted) {
                 await updateDoc(ref, { settled: true, progress: 100, remaining: 0 });
-                showNotification("Payment marked as settled", "success");
+                showNotification(t('upcoming.success_update'), "success");
             } else {
                 await updateDoc(ref, { settled: false, progress: 0 });
                 showNotification("Payment marked as unsettled", "info");
@@ -94,18 +96,18 @@ const UpcomingPayments = ({ debts = [], onDataChange }) => {
                 createdAt: new Date()
             });
 
-            showNotification("Obligation registered successfully", "success");
+            showNotification(t('upcoming.success_add'), "success");
             setIsModalOpen(false);
             setNewData({ name: "", amount: "", date: new Date().toISOString().split('T')[0] });
             if (onDataChange) onDataChange();
         } catch (error) {
             console.error(error);
-            showNotification("Failed to register obligation", "error");
+            showNotification(t('upcoming.error_add'), "error");
         }
     };
 
     const handleDelete = async (id) => {
-        
+
         const user = auth.currentUser;
         if (!user) {
             showNotification("You must be signed in", "error");
@@ -117,7 +119,7 @@ const UpcomingPayments = ({ debts = [], onDataChange }) => {
 
         try {
             await deleteDoc(doc(db, "users", user.uid, "debts", id));
-            showNotification("Obligation deleted", "success");
+            showNotification(t('upcoming.success_delete'), "success");
             // remove locally if present
             setCompletedItems(prev => prev.filter(i => i !== id));
             if (onDataChange) onDataChange();
@@ -149,11 +151,11 @@ const UpcomingPayments = ({ debts = [], onDataChange }) => {
         <section className="upcoming-payments-card">
             <div className="payments-header">
                 <div className="header-info">
-                    <h3>Future Obligations</h3>
-                    <p>Timeline of upcoming settlements</p>
+                    <h3>{t('upcoming.title')}</h3>
+                    <p>{t('upcoming.subtitle')}</p>
                 </div>
                 <div className="header-actions-group">
-                    <button className="view-all-text-btn" onClick={() => navigate('/debts')}>View All</button>
+                    <button className="view-all-text-btn" onClick={() => navigate('/debts')}>{t('upcoming.view_all')}</button>
                     <button className="add-schedule-btn" title="Add Schedule" onClick={() => setIsModalOpen(true)}>+</button>
                 </div>
             </div>
@@ -179,7 +181,7 @@ const UpcomingPayments = ({ debts = [], onDataChange }) => {
                                     </div>
                                     <div className="payment-finance">
                                         <div className="payment-val">${Number(item.amount).toLocaleString()}</div>
-                                        <div className={`status-pill ${item.status}`}>{item.status}</div>
+                                        <div className={`status-pill ${item.status}`}>{t(`upcoming.status_${item.status}`)}</div>
                                     </div>
                                 </div>
 
@@ -196,7 +198,7 @@ const UpcomingPayments = ({ debts = [], onDataChange }) => {
                                                         disabled={isUpdating || isDeleting}
                                                         aria-pressed={isCompleted}
                                                     >
-                                                        {isUpdating ? <span className="btn-spinner" /> : (isCompleted ? 'Settled ✓' : 'Mark as Settled')}
+                                                        {isUpdating ? <span className="btn-spinner" /> : (isCompleted ? `${t('upcoming.settled')} ✓` : t('upcoming.mark_settled'))}
                                                     </button>
 
                                                     <button
@@ -218,8 +220,8 @@ const UpcomingPayments = ({ debts = [], onDataChange }) => {
                     );
                 }) : (
                     <div className="empty-obligations">
-                        <div className="empty-sparkle">✨</div>
-                        <p>No immediate obligations detected.</p>
+                        {/* <div className="empty-sparkle">✨</div> */}
+                        <p>{t('upcoming.no_obligations')}</p>
                     </div>
                 )}
             </div>
@@ -229,12 +231,12 @@ const UpcomingPayments = ({ debts = [], onDataChange }) => {
                 <div className="luxury-modal-overlay" onClick={() => setIsModalOpen(false)}>
                     <div className="luxury-modal-content" onClick={e => e.stopPropagation()}>
                         <div className="modal-header">
-                            <h3 style={{color:"var(--text)"}}>Register Obligation</h3>
+                            <h3 style={{ color: "var(--text)" }}>{t('upcoming.register_obligation')}</h3>
                             <button className="close-modal" onClick={() => setIsModalOpen(false)}>✕</button>
                         </div>
                         <form onSubmit={handleAddObligation} className="modal-form">
                             <div className="input-group">
-                                <label>Description</label>
+                                <label>{t('upcoming.description')}</label>
                                 <input
                                     type="text"
                                     placeholder="e.g. Monthly Rent"
@@ -246,7 +248,7 @@ const UpcomingPayments = ({ debts = [], onDataChange }) => {
                             </div>
                             <div className="input-row">
                                 <div className="input-group">
-                                    <label>Amount ($)</label>
+                                    <label>{t('upcoming.amount')}</label>
                                     <input
                                         type="number"
                                         placeholder="0.00"
@@ -256,7 +258,7 @@ const UpcomingPayments = ({ debts = [], onDataChange }) => {
                                     />
                                 </div>
                                 <div className="input-group">
-                                    <label>Due Date</label>
+                                    <label>{t('upcoming.due_date')}</label>
                                     <input
                                         type="date"
                                         required
@@ -265,7 +267,7 @@ const UpcomingPayments = ({ debts = [], onDataChange }) => {
                                     />
                                 </div>
                             </div>
-                            <button type="submit" className="commit-btn">Instantiate Obligation</button>
+                            <button type="submit" className="commit-btn">{t('upcoming.instantiate_obligation')}</button>
                         </form>
                     </div>
                 </div>

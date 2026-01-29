@@ -73,10 +73,16 @@
     text-transform: uppercase;
     letter-spacing: 1px;
     color: var(--text-muted);
+
+}
+
+.trend-up,
+.trend {
+    color: var(--text-muted);
 }
 
 .stat-card .amount {
-    font-size: 24px;
+    font-size: 14px;
     font-weight: 800;
     color: var(--text);
 }
@@ -188,7 +194,68 @@ tbody tr:hover {
     color: var(--secondary);
 }
 
-.trend-up, .trend
-{
-    color: var(--text-muted);
+
+/* Responsive Table Design */
+@media (max-width: 768px) {
+
+    .income-page-root,
+    .expense-page-root,
+    .debts-page-root {
+        padding: 20px 16px;
+    }
+
+    .income-content-centered,
+    .expense-content-centered,
+    .debts-content-centered {
+        max-width: 100%;
+        padding: 0;
+    }
+
+    .income-header h2,
+    .expense-header h2,
+    .debts-header h2 {
+        font-size: 24px;
+    }
+
+    .income-stats-row,
+    .expense-stats-row,
+    .debts-stats-row {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .table-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+        padding: 20px;
+    }
+
+    .table-header h3 {
+        font-size: 16px;
+    }
+
+    .add-btn-main,
+    .add-btn-expense,
+    .add-btn-debt {
+        width: 100%;
+        justify-content: center;
+        padding: 12px;
+    }
+
+    thead th {
+        padding: 12px 16px;
+        font-size: 10px;
+        white-space: nowrap;
+    }
+
+    tbody td {
+        padding: 12px 16px;
+        font-size: 13px;
+    }
+
+    .action-icon-btn {
+        width: 32px;
+        height: 32px;
+    }
 }

@@ -1,0 +1,200 @@
+.debt-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2100;
+}
+
+.debt-modal-content {
+    background: var(--bg);
+    border-radius: 16px;
+    width: 90%;
+    max-width: 360px;
+    overflow: hidden;
+    border: 1px solid var(--border-muted);
+}
+
+.modal-header-simple {
+    padding: 20px;
+    background: var(--bg-dark);
+    position: relative;
+    border-bottom: 1px solid var(--border-muted);
+}
+
+.modal-header-simple h2 {
+    margin: 0;
+    color: var(--text);
+}
+
+.modal-header-simple .subtitle {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+.close-btn {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+.modal-body-simple {
+    padding: 20px;
+}
+
+.history-list {
+    max-height: 200px;
+    overflow-y: auto;
+    margin-bottom: 20px;
+}
+
+.history-list h4,
+.quick-pay-form h4 {
+    margin: 0 0 10px 0;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    color: var(--text-muted);
+}
+
+/* ... existing styles ... */
+.history-row-simple {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    background: var(--bg);
+    border-radius: 12px;
+    border: 1px solid var(--border-muted);
+}
+
+.row-left {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-right: 12px;
+}
+
+.delete-item-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    cursor: pointer;
+    opacity: 0.5;
+    transition: opacity 0.2s;
+    padding: 4px;
+}
+
+.delete-item-btn:hover {
+    opacity: 1;
+    color: #ef4444;
+    /* Red */
+}
+span.date {
+    color: var(--text);
+}
+
+ span.amount.success
+{
+
+    color:rgb(39, 247, 39);
+}
+
+p.empty-text
+{
+    color: var(--text);
+}
+.modal-actions-footer {
+    margin-top: 24px;
+    border-top: 1px solid var(--border-muted);
+    padding-top: 16px;
+    text-align: center;
+}
+
+.delete-debt-btn {
+    background: transparent;
+    color: #ef4444;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.delete-debt-btn:hover {
+    background: rgba(239, 68, 68, 0.1);
+    border-color: #ef4444;
+}
+
+/* ... existing styles ... */
+.quick-pay-form {
+    background: var(--bg-light);
+    padding: 20px;
+    border-radius: 16px;
+    border: 1px solid var(--border-muted);
+    margin-top: 10px;
+}
+
+.pay-input-group {
+    display: flex;
+    flex-wrap: wrap;
+    /* NEW: Allow wrapping on small modals */
+    gap: 12px;
+    margin-top: 8px;
+}
+
+.pay-input-group input {
+    flex: 1;
+    min-width: 120px;
+    background: var(--bg-dark);
+    /* Darker background for input */
+    border: 1px solid var(--border-muted);
+    padding: 12px;
+    border-radius: 12px;
+    color: #ffffff;
+    /* FORCE WHITE TEXT for visibility in dark mode */
+    font-size: 1rem;
+}
+
+.pay-input-group input::placeholder {
+    color: #888;
+    /* Visible placeholder */
+}
+
+.pay-confirm-btn {
+    background: none;
+    /* Success Green */
+    color: #1bffb3;
+    border: 1px solid #10B981;
+    padding: 0 24px;
+    border-radius: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    width: 100%;
+    height: 35px;
+    transition: transform 0.1s;
+}
+
+.pay-confirm-btn:active {
+    transform: scale(0.96);
+}
+.pay-confirm-btn:hover {
+    background: #00ffaa2e;
+    border: none;
+}
+
+.pay-confirm-btn:disabled {
+    opacity: 0.6;
+    cursor: default;
+}

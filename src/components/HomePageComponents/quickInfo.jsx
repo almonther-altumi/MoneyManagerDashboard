@@ -1,4 +1,5 @@
-import "../Styles/quickInfoStyle.css";
+import "../Styles/HomePageStyles/quickInfoStyle.css";
+import { useTranslation } from "react-i18next";
 
 // Icons
 import Arrow_rise from '../Icons/Profit_Icons/DollarIcon';
@@ -7,10 +8,11 @@ import WalletIcon from '../Icons/Profit_Icons/walletIcon';
 import BankIcon from '../Icons/Profit_Icons/bankIcon';
 
 function QuickInfo({ data }) {
+    const { t } = useTranslation();
     // Safe destructuring
     const { income = [], expenses = [] } = data || {};
 
-   
+
 
     const now = new Date();
     const currentMonth = now.getMonth();
@@ -96,7 +98,7 @@ function QuickInfo({ data }) {
                     <h2 className="profit-amount">
                         ${monthlyIncome.toLocaleString()}
                     </h2>
-                    <p className="profit-description">Income This Month</p>
+                    <p className="profit-description">{t('home.quick_info.income_this_month')}</p>
                 </div>
             </div>
 
@@ -106,7 +108,7 @@ function QuickInfo({ data }) {
                     <h2 className="profit-amount">
                         ${yearlyIncome.toLocaleString()}
                     </h2>
-                    <p className="profit-description">Yearly Income</p>
+                    <p className="profit-description">{t('home.quick_info.yearly_income')}</p>
                 </div>
             </div>
 
@@ -116,7 +118,7 @@ function QuickInfo({ data }) {
                     <h2 className="profit-amount">
                         ${Math.round(avgMonthlyExpense).toLocaleString()}
                     </h2>
-                    <p className="profit-description">Avg. Monthly Expense</p>
+                    <p className="profit-description">{t('home.quick_info.avg_monthly_expense')}</p>
                 </div>
             </div>
 
@@ -126,7 +128,7 @@ function QuickInfo({ data }) {
                     <h2 className="profit-amount">
                         ${Math.round(avgMonthlyIncome).toLocaleString()}
                     </h2>
-                    <p className="profit-description">Avg. Monthly Income</p>
+                    <p className="profit-description">{t('home.quick_info.avg_monthly_income')}</p>
                 </div>
             </div>
 

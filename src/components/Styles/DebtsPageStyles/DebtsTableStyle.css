@@ -1,0 +1,275 @@
+    .table-wrapper {
+        background: var(--bg);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 24px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        margin-top: 20px;
+        overflow-x: auto;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0 12px;
+    }
+
+    th {
+        text-align: left;
+        padding: 0 16px 16px 16px;
+        color: var(--text-muted);
+        font-size: 12px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border-bottom: 1px solid var(--border);
+    }
+
+    td {
+        background: var(--border);
+        color: var(--glass-text);
+        border-top: 1px solid var(--glass-border);
+        border-bottom: 1px solid var(--glass-border);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        font-size: 14px;
+        font-weight: 500;
+    }
+
+    td:first-child {
+        border-top-left-radius: 12px;
+        border-bottom-left-radius: 12px;
+        border-left: 1px solid var(--border);
+    }
+
+    td:last-child {
+        border-top-right-radius: 12px;
+        border-bottom-right-radius: 12px;
+        border-right: 1px solid var(--border);
+    }
+
+    /* Hover Effects */
+    tr:hover td {
+        background: var(--bg-light);
+        border-color: var(--border);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        z-index: 10;
+    }
+
+    /* Inputs Styling */
+    .table-input {
+        background-color: var(--bg-light);
+        border: none;
+        color: var(--text);
+        padding: 10px 14px;
+        border-radius: 8px;
+        width: 100%;
+        font-size: 14px;
+        outline: none;
+        transition: all 0.2s;
+        font-weight: 500;
+    }
+
+    .table-input:hover {
+        background: var(--glass-input-hover);
+        border-color: var(--glass-border);
+    }
+
+    .table-input:focus {
+        background: var(--glass-input-hover);
+        border-color: var(--secondary);
+        box-shadow: 0 0 0 3px rgba(var(--secondary-rgb), 0.15);
+    }
+
+    .table-input::placeholder {
+        color: var(--glass-text-muted);
+    }
+
+    /* Progress Bar Styling */
+    .progress-cell {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .progress-bar-mini {
+        width: 100px;
+        background: var(--glass-input-hover);
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.2);
+    }
+
+    .progress-fill {
+        background: linear-gradient(90deg, #fbbf24, #f59e0b);
+        /* Amber/Orange Gradient */
+        transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 0 10px rgba(251, 191, 36, 0.4);
+    }
+
+    /* Action Buttons */
+    .row-actions {
+        display: flex;
+        gap: 8px;
+        justify-content: center;
+    }
+
+    .action-icon-btn {
+        width: 32px;
+        border-radius: 10px;
+        border: 1px solid var(--glass-border);
+        background: var(--glass-input-hover);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s ease;
+    }
+
+    .action-icon-btn:hover {
+        transform: translateY(-2px);
+        background: var(--glass-row-hover);
+        border-color: var(--glass-text-muted);
+    }
+
+    .action-icon-btn.save {
+        color: #4ade80;
+    }
+
+    .action-icon-btn.save:hover {
+        background: rgba(74, 222, 128, 0.15);
+        box-shadow: 0 4px 12px rgba(74, 222, 128, 0.2);
+    }
+
+    .action-icon-btn.cancel {
+        color: #f87171;
+    }
+
+    .action-icon-btn.cancel:hover {
+        background: rgba(248, 113, 113, 0.15);
+        box-shadow: 0 4px 12px rgba(248, 113, 113, 0.2);
+    }
+
+    .action-icon-btn.edit {
+        color: #60a5fa;
+    }
+
+    .action-icon-btn.edit:hover {
+        background: rgba(96, 165, 250, 0.15);
+        box-shadow: 0 4px 12px rgba(96, 165, 250, 0.2);
+    }
+
+    .action-icon-btn.delete {
+        color: #f87171;
+    }
+
+    .action-icon-btn.delete:hover {
+        background: rgba(248, 113, 113, 0.15);
+        box-shadow: 0 4px 12px rgba(248, 113, 113, 0.2);
+    }
+
+    /* Adding New Row Highlight */
+    .adding-new-row td {
+        background: rgba(var(--secondary-rgb), 0.05) !important;
+        border: 1px solid rgba(var(--secondary-rgb), 0.3) !important;
+        box-shadow: 0 0 20px rgba(var(--secondary-rgb), 0.1);
+    }
+
+    /* Responsive Mobile Card Design */
+    /* Responsive Mobile Card Design */
+    @media (max-width: 768px) {
+        .table-wrapper {
+            padding: 0;
+            margin-top: 20px;
+            background: transparent;
+            border: none;
+            box-shadow: none;
+            backdrop-filter: none;
+            overflow-x: visible;
+            /* Allow cards to take full width */
+        }
+
+        table {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        tbody {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            width: 100%;
+        }
+
+        thead {
+            display: none;
+            /* Cleanest way to hide headers on mobile cards */
+        }
+
+        tr {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        tr:hover td {
+            background: transparent;
+            transform: none;
+            box-shadow: none;
+        }
+
+        td {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0 !important;
+            border: none !important;
+            background: transparent !important;
+            border-radius: 0 !important;
+            width: 100%;
+        }
+
+        /* Create pseudo-labels for data */
+        td::before {
+            content: attr(data-label);
+            font-weight: 600;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        td:last-child {
+            margin-top: 12px;
+            padding-top: 16px !important;
+            border-top: 1px solid var(--border-muted) !important;
+            justify-content: flex-end;
+            gap: 12px;
+        }
+
+        .table-input {
+            text-align: right;
+            width: auto;
+            max-width: 160px;
+            padding: 8px;
+            background: rgba(0, 0, 0, 0.2) !important;
+            /* Slightly darker for contrast */
+        }
+
+        .progress-cell {
+            flex-direction: column;
+            align-items: flex-end;
+            width: 100%;
+            gap: 8px;
+        }
+
+        .progress-bar-mini {
+            width: 100%;
+            max-width: 160px;
+        }
+    }

@@ -1,21 +1,49 @@
 .sidebar {
-    width: 210px;
+    width: 260px;
     height: 100vh;
     background: var(--bg);
     position: fixed;
     top: 0;
-    left: 0;
+    inset-inline-start: 0;
     z-index: 1000;
     display: flex;
     flex-direction: column;
-    padding: 32px 24px;
+    padding: 32px 24px 80px 24px;
+    /* Increased bottom padding to lift "Management" up */
     transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
     box-shadow: 20px 0 50px rgba(0, 0, 0, 0.02);
+    box-sizing: border-box;
+    /* Fix height calculation */
+}
+
+.sidebar-menu {
+display: flex;
+flex-direction: column;
+gap: 40px;
+flex: 1;
+    overflow-y: none;
+/* Enable scroll if screen is short */
+scrollbar-width: none;
+/* Firefox */
+}
+
+.sidebar-menu::-webkit-scrollbar {
+    display: none;
+    /* Chrome/Safari */
 }
 
 .sidebar.closed {
-    transform: translateX(-100%);
     opacity: 0;
+}
+
+/* LTR Hidden State */
+[dir="ltr"] .sidebar.closed {
+    transform: translateX(-100%);
+}
+
+/* RTL Hidden State */
+[dir="rtl"] .sidebar.closed {
+    transform: translateX(100%);
 }
 
 .sidebar-header {
@@ -38,6 +66,12 @@
     display: flex;
     flex-direction: column;
     gap: 40px;
+    flex: 1;
+    /* Take remaining height */
+}
+
+.mt-auto {
+    margin-top: auto;
 }
 
 .sidebar-group {

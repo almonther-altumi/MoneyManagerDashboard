@@ -2,43 +2,40 @@
 import React, { useState, useEffect } from "react";
 import "./Styles/headerStyle.css";
 import { useLocation, useNavigate } from "react-router-dom";
-import avatar from "../assets/hassan_avatar.svg";
+import avatar from "../assets/unKnownUser.svg";
 
-// Icons
+import { useTranslation } from "react-i18next";
+
+// Icons0910207638
 import Email_Icon from './Icons/Header_Icons/EmailIcon';
 import ThemeIcon from './Icons/Header_Icons/ThemeIcon';
+import NotificationMenu from './NotificationMenu';
 
 // eslint-disable-next-line no-unused-vars
 function Header({ user, toggleSidebar, isSidebarOpen }) {
+    const { t } = useTranslation();
     const location = useLocation();
     const navigate = useNavigate();
     const [isDarkMode, setIsDarkMode] = useState(() => {
         return localStorage.getItem('theme') === 'dark';
     });
+    const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
 
-    // useEffect(() => {
-    //     if (isDarkMode) {
-    //         document.documentElement.setAttribute('data-theme', 'dark');
-    //         localStorage.setItem('theme', 'dark');
-    //     } else {
-    //         document.documentElement.removeAttribute('data-theme');
-    //         localStorage.setItem('theme', 'light');
-    //     }
-    // }, [isDarkMode]);
 
     useEffect(() => {
-            document.getElementById('root').classList.toggle('dark-mode');
-            localStorage.setItem('theme', 'dark');
-       
+        document.getElementById('root').classList.toggle('dark-mode');
+        localStorage.setItem('theme', 'dark');
+
+
     }, [isDarkMode]);
     const toggleTheme = () => {
         setIsDarkMode(!isDarkMode);
-        
+
     };
 
     // Default/Fallback user (Mock)
     const defaultUser = {
-        displayName: "LogIn",
+        displayName: t('header.log_in'),
         photoURL: avatar,
         email: "user@example.com",
         role: ""
@@ -49,23 +46,38 @@ function Header({ user, toggleSidebar, isSidebarOpen }) {
         displayName: user.displayName,
         photoURL: user.photoURL,
         email: user.email,
-        role: "Beta"
+        role: user.email === 'monthertumi2025@gmail.com' ? t('header.role_owner') : t('header.role_member')
     } : defaultUser;
 
     const getTitle = () => {
         switch (location.pathname) {
-            case "/": return "Grand Overview";
-            case "/income": return "Liquidity Analytics";
-            case "/expense": return "Expenditure Control";
-            case "/debts": return "Liability Management";
-            case "/reports": return "Fiscal Synthesis";
-            case "/settings": return "Global Preferences";
-            default: return "Money Manager";
+            case "/": return t('header.titles.grand_overview');
+            case "/income": return t('header.titles.liquidity_analytics');
+            case "/expense": return t('header.titles.expenditure_control');
+            case "/debts": return t('header.titles.liability_management');
+            case "/reports": return t('header.titles.fiscal_synthesis');
+            case "/settings": return t('header.titles.global_preferences');
+            default: return t('header.titles.default');
         }
     };
 
+    const [hasNotification, setHasNotification] = useState(() => {
+        return localStorage.getItem('has_notification') === 'true';
+    });
+
+    useEffect(() => {
+        const checkNotification = () => {
+            setHasNotification(localStorage.getItem('has_notification') === 'true');
+        };
+
+        window.addEventListener('notification_update', checkNotification);
+        return () => window.removeEventListener('notification_update', checkNotification);
+    }, []);
+
     const handleMailClick = () => {
-        window.open("https://gmail.com", "_blank");
+        setHasNotification(false);
+        localStorage.removeItem('has_notification');
+        setIsNotificationsOpen(!isNotificationsOpen);
     }
 
     const iconSize = 24;
@@ -82,10 +94,15 @@ function Header({ user, toggleSidebar, isSidebarOpen }) {
             </div>
 
             <nav className="header-actions">
-                <button className="icon-btn theme-toggle" onClick={handleMailClick} title="Open Gmail">
-                    <Email_Icon  width={iconSize} height={iconSize} />
-                </button>
-
+                <div className="notification-container">
+                    <button className="icon-btn theme-toggle" onClick={handleMailClick} title="App News">
+                        <Email_Icon width={iconSize} height={iconSize} />
+                        {hasNotification && <span className="notification-pulse" />}
+                    </button>
+                    {isNotificationsOpen && (
+                        <NotificationMenu onClose={() => setIsNotificationsOpen(false)} />
+                    )}
+                </div>
                 <button className="icon-btn theme-toggle" onClick={toggleTheme} title={isDarkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}>
                     <ThemeIcon isDark={isDarkMode} width={iconSize} height={iconSize} />
                 </button>
@@ -101,53 +118,6 @@ function Header({ user, toggleSidebar, isSidebarOpen }) {
                 </div>
             </nav>
 
-            <style>{`
-                .header-left {
-                    display: flex;
-                    align-items: center;
-                    gap: 20px;
-                }
-
-                .menu-toggle-btn {
-                    background: var(--d);
-                    border: 1px solid var(--border-muted);
-                    color: var(--text);
-                    width: 44px;
-                    height: 44px;
-                    border-radius: 14px;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    cursor: pointer;
-                    transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
-                }
-
-                .menu-toggle-btn:hover {
-                    background: var(--secondary);
-                    color: white;
-                    border-color: var(--secondary);
-                    transform: scale(1.05);
-                }
-
-                @media (min-width: 1025px) {
-                    .menu-toggle-btn {
-                        display: none; /* Hide toggle on large screens if sidebar is always visible */
-                    }
-                    /* Show it if we want manual toggle on desktop */
-                     .sidebar-closed .menu-toggle-btn {
-                        display: flex;
-                    }
-                }
-
-                @media (max-width: 1024px) {
-                    .main-header {
-                        padding: 0 24px;
-                    }
-                    .account-info {
-                        display: none;
-                    }
-                }
-            `}</style>
         </header>
     )
 }

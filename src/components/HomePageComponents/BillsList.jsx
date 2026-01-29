@@ -1,8 +1,10 @@
 
 import React from 'react';
 import '../Styles/BillsListStyle.css';
+import { useTranslation } from "react-i18next";
 
 function BillsList({ debts = [] }) {
+    const { t } = useTranslation();
     // Map debts to bill format
     const bills = debts.map(debt => ({
         id: debt.id,
@@ -16,7 +18,7 @@ function BillsList({ debts = [] }) {
     return (
         <section className="bills-card">
             <div className="bills-header">
-                <h3>Upcoming Payments</h3>
+                <h3>{t('bills.upcoming_payments')}</h3>
                 <button className="add-bill-btn">+</button>
             </div>
 
@@ -41,7 +43,7 @@ function BillsList({ debts = [] }) {
                         </div>
                     </li>
                 )) : (
-                    <p style={{ textAlign: 'center', color: '#999', padding: '20px' }}>No upcoming payments</p>
+                    <p style={{ textAlign: 'center', color: '#999', padding: '20px' }}>{t('bills.no_upcoming')}</p>
                 )}
             </ul>
         </section>

@@ -1,7 +1,9 @@
 import React from 'react'
 import '../Styles/PagesStyle/NotFoundPageStyle.css'
+import { useTranslation } from "react-i18next";
 
 const NotFoundPage = () => {
+  const { t } = useTranslation();
   return (
     <main className="nn-container" role="main">
       <section className="nn-card" aria-labelledby="nn-title">
@@ -9,8 +11,8 @@ const NotFoundPage = () => {
           <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
             <defs>
               <linearGradient id="g1" x1="0%" x2="100%" y1="0%" y2="100%">
-                <stop offset="0%" stopColor="var(--secondary)"/>
-                <stop offset="100%" stopColor="var(--primary)"/>
+                <stop offset="0%" stopColor="var(--secondary)" />
+                <stop offset="100%" stopColor="var(--primary)" />
               </linearGradient>
             </defs>
             <g className="nn-float">
@@ -21,21 +23,21 @@ const NotFoundPage = () => {
           </svg>
         </div>
 
-        <h1 id="nn-title" className="nn-title">404 — Page Not Found</h1>
-        <p className="nn-desc">We can’t find the page you’re looking for. It may have been moved or removed.</p>
+        <h1 id="nn-title" className="nn-title">{t('not_found.title')}</h1>
+        <p className="nn-desc">{t('not_found.desc')}</p>
 
         <div className="nn-actions">
           <button
             className="nn-btn nn-btn-primary"
             onClick={() => (window.location.href = '/')}
           >
-            Go Home
+            {t('not_found.go_home')}
           </button>
           <button
             className="nn-btn"
             onClick={() => window.history.back()}
           >
-            Go Back
+            {t('not_found.go_back')}
           </button>
         </div>
       </section>

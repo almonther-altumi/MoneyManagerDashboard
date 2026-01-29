@@ -1,0 +1,48 @@
+.report-page-root {
+    color: var(--text);
+    min-height: 80vh;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+.report-header h2 {
+    background: linear-gradient(45deg, var(--primary), var(--secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 8px;
+}
+
+.report-form {
+    border: 1px solid var(--border);
+}
+
+.form-group label {
+    color: var(--text);
+}
+
+.form-group select,
+.form-group textarea {
+    background: var(--bg-light) !important;
+    color: var(--text) !important;
+    border: 1px solid var(--border) !important;
+    font-family: inherit;
+    transition: all 0.3s ease;
+}
+
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--primary) !important;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

@@ -1,0 +1,348 @@
+/* Base Layout */
+.luxury-settings-root {
+    min-height: 100vh;
+    padding: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    background: var(--bg-light);
+    transition: all 0.3s ease;
+}
+
+.luxury-settings-container {
+    width: 100%;
+    max-width: 1100px;
+    height: 85vh;
+    display: flex;
+    background: var(--bg);
+    border-radius: 40px;
+    border: 1px solid var(--border-muted);
+    box-shadow: var(--shadow-lg);
+    overflow: hidden;
+    position: relative;
+}
+
+/* Sidebar */
+.settings-sidebar {
+    width: 280px;
+    padding: 40px;
+    background: var(--highlight);
+    border-right: 1px solid var(--border-muted);
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+[dir="rtl"] .settings-sidebar {
+    border-right: none;
+    border-left: 1px solid var(--border-muted);
+}
+
+.sidebar-brand h2 {
+    font-size: 24px;
+    font-weight: 800;
+    margin: 0;
+    color: var(--text);
+    letter-spacing: -1px;
+}
+
+.sidebar-brand p {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin: 4px 0 0 0;
+}
+
+.settings-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 20px;
+    border-radius: 18px;
+    border: none;
+    background: transparent;
+    color: var(--text-muted);
+    font-weight: 700;
+    font-size: 14px;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+[dir="rtl"] .nav-item {
+    text-align: right;
+}
+
+.nav-item:hover {
+    background: var(--bg-light);
+    color: var(--text);
+}
+
+.nav-item.active {
+    background: var(--bg-light);
+    color: var(--secondary);
+    box-shadow: var(--shadow);
+}
+
+.nav-icon {
+    font-size: 18px;
+}
+
+/* Main Content */
+.settings-main {
+    flex: 1;
+    padding: 60px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.settings-view header {
+    margin-bottom: 40px;
+}
+
+.settings-view h3 {
+    font-size: 22px;
+    font-weight: 800;
+    margin: 0;
+    color: var(--text);
+    letter-spacing: -0.5px;
+}
+
+.settings-view header p {
+    font-size: 14px;
+    color: var(--text-muted);
+    margin: 8px 0 0 0;
+}
+
+.setting-group {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.luxury-setting-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 25px;
+    border-bottom: 1px solid var(--border-muted);
+}
+
+.luxury-setting-row:last-child {
+    border-bottom: none;
+}
+
+.luxury-setting-row .info h4 {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text);
+}
+
+.luxury-setting-row .info p {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin: 4px 0 0 0;
+    max-width: 320px;
+}
+
+.luxury-setting-row select {
+    background: var(--highlight);
+    border: 1px solid var(--border-muted);
+    color: var(--text);
+    padding: 10px 20px;
+    border-radius: 14px;
+    font-weight: 600;
+    outline: none;
+    cursor: pointer;
+    min-width: 180px;
+}
+
+/* Toggles */
+.luxury-toggle {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 28px;
+}
+
+.luxury-toggle input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.luxury-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--border-muted);
+    transition: .4s cubic-bezier(0.23, 1, 0.32, 1);
+    border-radius: 34px;
+}
+
+.luxury-slider:before {
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 20px;
+    left: 4px;
+    bottom: 4px;
+    background: white;
+    transition: .4s cubic-bezier(0.23, 1, 0.32, 1);
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+[dir="rtl"] .luxury-slider:before {
+    left: auto;
+    right: 4px;
+}
+
+input:checked+.luxury-slider {
+    background: var(--secondary);
+}
+
+input:checked+.luxury-slider:before {
+    transform: translateX(22px);
+}
+
+[dir="rtl"] input:checked+.luxury-slider:before {
+    transform: translateX(-22px);
+}
+
+/* Footer */
+.settings-footer {
+    margin-top: auto;
+    padding-top: 40px;
+}
+
+.luxury-save-btn {
+    padding: 16px 32px;
+    background: var(--primary);
+    color: var(--bg-light);
+    border: none;
+    border-radius: 18px;
+    font-weight: 800;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.luxury-save-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Modifiers */
+
+
+/* Responsive Design */
+@media (max-width: 900px) {
+    .luxury-settings-root {
+        padding: 20px 10px;
+        align-items: flex-start;
+    }
+
+    .luxury-settings-container {
+        flex-direction: column;
+        height: auto;
+        min-height: unset;
+        border-radius: 24px;
+    }
+
+    .settings-sidebar {
+        width: 100%;
+        height: auto;
+        padding: 24px;
+        flex-direction: column;
+        align-items: flex-start;
+        border-right: none;
+        border-bottom: 1px solid var(--border-muted);
+        gap: 20px;
+    }
+
+    [dir="rtl"] .settings-sidebar {
+        border-left: none;
+    }
+
+    .sidebar-brand h2 {
+        font-size: 20px;
+    }
+
+    .settings-nav {
+        width: 100%;
+        flex-direction: row;
+        gap: 12px;
+        overflow-x: auto;
+        padding-bottom: 8px;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .nav-item {
+        flex: 0 0 auto;
+        padding: 10px 16px;
+        white-space: nowrap;
+    }
+
+    .settings-main {
+        padding: 32px 20px;
+        overflow-y: visible;
+    }
+
+    .luxury-setting-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+        padding-bottom: 24px;
+    }
+
+    .luxury-setting-row .info p {
+        max-width: 100%;
+    }
+
+    .luxury-setting-row select {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .luxury-setting-row .luxury-toggle {
+        align-self: flex-start;
+    }
+}
+
+@media (max-width: 480px) {
+    .settings-sidebar {
+        padding: 20px 16px;
+    }
+
+    .sidebar-brand h2 {
+        font-size: 18px;
+    }
+
+    .settings-nav {
+        gap: 8px;
+    }
+
+    .nav-item {
+        padding: 8px 12px;
+        font-size: 13px;
+    }
+
+    .nav-icon {
+        font-size: 16px;
+    }
+
+    .settings-main {
+        padding: 24px 16px;
+    }
+}

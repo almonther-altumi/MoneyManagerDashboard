@@ -1,11 +1,18 @@
-import React, { useEffect, useState, useRef, forwardRef, useImperativeHandle } from "react";
-import { collection, deleteDoc, getDocs, addDoc, updateDoc, doc } from "firebase/firestore";
+import React, { useState, useRef, forwardRef, useImperativeHandle } from "react";
+import { collection, deleteDoc, addDoc, updateDoc, doc } from "firebase/firestore";
 import { db, auth } from "../../firebase";
 import Notification from "../Notification";
 import { useNotification } from "../../hooks/useNotification";
+import { useTranslation } from "react-i18next";
+import { useFinancialData } from "../../contexts/FinancialContext";
+
+import "../Styles/TableStyle.css"
 
 const ExpenseTable = forwardRef((props, ref) => {
-  const [expenseData, setExpenseData] = useState([]);
+  const { t } = useTranslation();
+  // Access global context data
+  const { expenses: expenseData, refreshData } = useFinancialData();
+
   const [isAddingNew, setIsAddingNew] = useState(false);
   const [newRowData, setNewRowData] = useState({
     date: "",
@@ -27,48 +34,78 @@ const ExpenseTable = forwardRef((props, ref) => {
   const { notification, showNotification, hideNotification } = useNotification();
   const inputRefs = useRef({});
 
-  // Fetch expense data
-  const fetchExpenseData = async () => {
-    const user = auth.currentUser;
-    if (!user) return;
+  // Helper to format date
+  const formatDisplayDate = (dateVal) => {
+    if (!dateVal) return "";
+    try {
+      let d;
+      if (dateVal.toDate) {
+        d = dateVal.toDate();
+      } else if (typeof dateVal === 'string') {
+        d = new Date(dateVal);
+      } else {
+        d = new Date(dateVal);
+      }
 
-    const expenseCollectionRef = collection(db, "users", user.uid, "expenses");
-    getDocs(expenseCollectionRef)
-      .then((querySnapshot) => {
-        const expenseList = querySnapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-          date: doc.data().date?.toDate
-            ? doc.data().date.toDate().toLocaleDateString()
-            : new Date(doc.data().date).toLocaleDateString(),
-        }));
-        setExpenseData(expenseList);
-      })
-      .catch(err => console.error("Error fetching expenses:", err));
+      if (isNaN(d.getTime())) return dateVal;
+
+      return d.toLocaleDateString(undefined, {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit'
+      });
+    } catch {
+      return dateVal;
+    }
   };
 
   // Add new expense
   const AddExpense = async () => {
     try {
+
+      // check if user is logged in or not 
       const user = auth.currentUser;
       if (!user) {
-        showNotification("User not logged in", "error");
+        showNotification("You are not logged in :( Please logIn ", "error");
+        return;
+      }
+
+      // Code to check the inputs from user if can used or not ? 
+      if (newRowData.amount == 0) {
+        showNotification("Please fill the amount", "error");
+        return;
+      }
+
+      if (newRowData.title.trim() == null) {
+        showNotification("please fill the title", "error");
+        return;
+      }
+
+      if (isNaN(newRowData.amount) != false) {
+        showNotification("Please fill the amount field ", "error");
+        return;
+      }
+
+      if (newRowData.amount <= 0) {
+        showNotification("Please write correct amount ", "error")
         return;
       }
 
       await addDoc(collection(db, "users", user.uid, "expenses"), {
-        title: newRowData.title,
+        title: newRowData.title ?? "-",
         amount: parseFloat(newRowData.amount),
-        date: new Date(newRowData.date),
-        category: newRowData.category,
-        paymentMethod: newRowData.paymentMethod,
+        date: newRowData.date || new Date().toISOString().split('T')[0],
+        category: newRowData.category ?? "General",
+        paymentMethod: newRowData.paymentMethod ?? "-",
       });
 
       showNotification("Expense added successfully!", "success");
       setIsAddingNew(false);
       setNewRowData({ date: "", title: "", category: "", paymentMethod: "", amount: "" });
-      fetchExpenseData();
-      if (props.onDataChange) props.onDataChange();
+
+      refreshData();
+
+      // if (props.onDataChange) props.onDataChange();
     } catch (e) {
       console.error("Error adding expense: ", e);
       showNotification("Failed to add expense", "error");
@@ -82,8 +119,9 @@ const ExpenseTable = forwardRef((props, ref) => {
       if (!user) return;
       await deleteDoc(doc(db, "users", user.uid, "expenses", id));
       showNotification("Expense deleted", "success");
-      fetchExpenseData();
-      if (props.onDataChange) props.onDataChange();
+
+      refreshData();
+      // if (props.onDataChange) props.onDataChange();
     } catch (e) {
       console.error("Error deleting expense:", e);
       showNotification("Delete failed", "error");
@@ -94,10 +132,10 @@ const ExpenseTable = forwardRef((props, ref) => {
   const startEditing = (expense) => {
     setEditingId(expense.id);
     setEditRowData({
-      date: expense.date,
+      date: formatDisplayDate(expense.date),
       title: expense.title,
       category: expense.category,
-      paymentMethod: expense.paymentMethod,
+      paymentMethod: isNaN(expense.paymentMethod) ? expense.paymentMethod : 0,
       amount: String(expense.amount).replace('$', '').replace(',', '')
     });
   };
@@ -114,17 +152,18 @@ const ExpenseTable = forwardRef((props, ref) => {
 
       const expenseDocRef = doc(db, "users", user.uid, "expenses", editingId);
       await updateDoc(expenseDocRef, {
-        title: editRowData.title,
-        amount: parseFloat(editRowData.amount),
-        date: new Date(editRowData.date),
-        category: editRowData.category,
+        title: editRowData.title ?? "-",
+        amount: parseFloat(editRowData.amount) || 0,
+        date: new Date(editRowData.date), // Storing as object/string? new Date() creates object. 
+        // Original code used new Date().
+        category: editRowData.category ?? "-",
         paymentMethod: editRowData.paymentMethod
       });
 
       showNotification("Expense updated successfully!", "success");
       setEditingId(null);
-      fetchExpenseData();
-      if (props.onDataChange) props.onDataChange();
+      refreshData();
+      // if (props.onDataChange) props.onDataChange();
     } catch (error) {
       console.error("Error updating expense:", error);
       showNotification("Failed to update expense", "error");
@@ -159,9 +198,7 @@ const ExpenseTable = forwardRef((props, ref) => {
 
   useImperativeHandle(ref, () => ({ addNewRow: handleAddNewRow }));
 
-  useEffect(() => {
-    fetchExpenseData();
-  }, []);
+  // Removed useEffect fetch
 
   return (
     <>
@@ -176,44 +213,56 @@ const ExpenseTable = forwardRef((props, ref) => {
         <table>
           <thead>
             <tr>
-              <th>Date</th>
-              <th>Description</th>
-              <th>Category</th>
-              <th>Method</th>
-              <th>Amount</th>
-              <th>Actions</th>
+              <th>{t('table.date')}</th>
+              <th>{t('table.description')}</th>
+              <th>{t('table.category')}</th>
+              <th>{t('table.method')}</th>
+              <th>{t('table.amount')}</th>
+              <th>{t('table.actions')}</th>
             </tr>
           </thead>
           <tbody>
-            {/* New row */}
-            {isAddingNew && (
+            {expenseData.length === 0 && !isAddingNew ? (
               <tr>
-                {['date','title','category','paymentMethod','amount'].map((field, idx) => (
-                  <td key={field}>
-                    <input
-                      type={field === 'amount' ? 'number' : 'text'}
-                      className="table-input"
-                      value={newRowData[field]}
-                      onChange={(e) => handleInputChange(field, e.target.value)}
-                      onKeyDown={(e) => handleKeyPress(e, field)}
-                      ref={el => inputRefs.current[field] = el}
-                      autoFocus={idx === 0}
-                    />
-                  </td>
-                ))}
-                <td className="row-actions">
-                  <button className="action-icon-btn save" onClick={AddExpense}>✓</button>
-                  <button className="action-icon-btn cancel" onClick={() => setIsAddingNew(false)}>✕</button>
-                </td>
+                <td colSpan="6" style={{ textAlign: 'center', padding: '30px', color: '#999' }}>{t('table.empty_expenses')}</td> {/*When there is no Data on the table  */}
               </tr>
-            )}
+            ) : (
+              isAddingNew && (
+                <tr>
+                  {['date', 'title', 'category', 'paymentMethod', 'amount'].map((field, idx) => (
+                    <td key={field}>
+                      <input
+                        type={field === 'amount' ? 'number' : field === 'date' ? 'date' : 'text'}
+                        placeholder={
+                          field === 'title' ? t('table.placeholder_description') :
+                            field === 'category' ? t('table.placeholder_category') :
+                              field === 'paymentMethod' ? t('table.placeholder_method') :
+                                field === 'amount' ? t('table.placeholder_amount') : ""
+                        }
+                        className="table-input"
+                        value={newRowData[field]}
+                        onChange={(e) => handleInputChange(field, e.target.value)}
+                        onKeyDown={(e) => handleKeyPress(e, field)}
+                        ref={el => inputRefs.current[field] = el}
+                        autoFocus={idx === 0}
+                      />
+                    </td>
+                  ))}
+                  <td className="row-actions">
+                    <button className="action-icon-btn save" onClick={AddExpense}>✓</button>
+                    <button className="action-icon-btn cancel" onClick={() => setIsAddingNew(false)}>✕</button>
+                  </td>
+                </tr>
+              ))
+            }
+
 
             {/* Expense rows */}
             {expenseData.map((expense) => (
               <tr key={expense.id}>
                 {editingId === expense.id ? (
                   <>
-                    {['date','title','category','paymentMethod','amount'].map((field) => (
+                    {['date', 'title', 'category', 'paymentMethod', 'amount'].map((field) => (
                       <td key={field}>
                         <input
                           type={field === 'amount' ? 'number' : 'text'}
@@ -232,11 +281,11 @@ const ExpenseTable = forwardRef((props, ref) => {
                   </>
                 ) : (
                   <>
-                    <td>{expense.date}</td>
+                    <td>{formatDisplayDate(expense.date)}</td>
                     <td>{expense.title}</td>
-                    <td>{expense.category}</td>
+                    <td><span className="category-expense-badge">{expense.category || 'General'}</span></td>
                     <td>{expense.paymentMethod}</td>
-                    <td className="amount-cell">${expense.amount}</td>
+                    <td className="amount-expense-cell">${expense.amount}</td>
                     <td className="row-actions">
                       <button className="action-icon-btn edit" onClick={() => startEditing(expense)}>✎</button>
                       <button className="action-icon-btn delete" onClick={() => deleteExpenseRow(expense.id)}>🗑</button>
@@ -249,21 +298,7 @@ const ExpenseTable = forwardRef((props, ref) => {
         </table>
       </div>
 
-      <style>{`
-        .table-input {
-          background: var(--bg-dark);
-          border: 1px solid var(--border-muted);
-          color: var(--text);
-          padding: 8px 12px;
-          border-radius: 8px;
-          width: 100%;
-          font-size: 14px;
-          outline: none;
-        }
-        .table-input:focus { border-color: var(--secondary); }
-        .amount-cell { font-weight: 800; color: var(--danger); }
-        .row-actions { display: flex; gap: 8px; }
-      `}</style>
+
     </>
   );
 });

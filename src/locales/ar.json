@@ -1,0 +1,298 @@
+{
+    "app": {
+        "title": "مدير الأموال"
+    },
+    "loading": {
+        "preparing": "جاري تحضير لوحة القيادة...",
+        "syncing": "جاري مزامنة البيانات المالية...",
+        "securing": "تأمين الاتصال...",
+        "welcome": "مرحباً بك في مدير الأموال"
+    },
+    "sidebar": {
+        "shortcuts": "اختصارات",
+        "navigation": "تصفح",
+        "dashboard": "لوحة القيادة",
+        "income": "الإيرادات",
+        "expense": "المصروفات",
+        "debts": "الديون",
+        "management": "إدارة",
+        "reports": "التقارير",
+        "settings": "الإعدادات",
+        "reportProplems": "الأبلاغ عن مشكلة"
+    },
+    "header": {
+        "titles": {
+            "grand_overview": "نظرة عامة شاملة",
+            "liquidity_analytics": "تحليلات السيولة",
+            "expenditure_control": "مراقبة الإنفاق",
+            "liability_management": "إدارة الالتزامات",
+            "fiscal_synthesis": "التوليف المالي",
+            "global_preferences": "التفضيلات العالمية",
+            "default": "مدير الأموال"
+        },
+        "role_beta": "النسخة التجريبية",
+        "role_developer": "مطور",
+        "role_owner": "المالك",
+        "role_member": "عضو",
+        "log_in": "تسجيل الدخول"
+    },
+    "home": {
+        "executive_overview": "ملخص تنفيذي",
+        "global_financial_state": "الوضع المالي العالمي وتحليلات السيولة.",
+        "synchronizing_core": "مزامنة النواة",
+        "quick_info": {
+            "income_this_month": "الدخل هذا الشهر",
+            "yearly_income": "الدخل السنوي",
+            "avg_monthly_expense": "متوسط المصروف الشهري",
+            "avg_monthly_income": "متوسط الدخل الشهري"
+        },
+        "analytics": {
+            "title": "نظرة عامة على التحليلات",
+            "income": "الإيرادات",
+            "expense": "المصروفات",
+            "error_fetching": "خطأ في جلب البيانات :(",
+            "need_login": "يجب عليك تسجيل الدخول"
+        },
+        "transactions": {
+            "title": "المعاملات الأخيرة",
+            "view_all": "عرض الكل",
+            "no_transactions": "لا توجد معاملات",
+            "status_completed": "مكتمل"
+        }
+    },
+    "dream": {
+        "title": "طموحات رأس المال",
+        "car": "سيارة فاخرة",
+        "house": "شراء عقار أساسي",
+        "complete": "مكتمل"
+    },
+    "my_cards": {
+        "title": "بطاقاتي",
+        "card_holder": "حامل البطاقة",
+        "expires": "تنتهي في"
+    },
+    "upcoming": {
+        "title": "الالتزامات المستقبلية",
+        "subtitle": "الجدول الزمني للتسويات القادمة",
+        "view_all": "عرض الكل",
+        "mark_settled": "تحديد كمدفوع",
+        "settled": "تم السداد",
+        "no_obligations": "لم يتم الكشف عن التزامات فورية.",
+        "register_obligation": "تسجيل التزام",
+        "description": "الوصف",
+        "amount": "المبلغ ($)",
+        "due_date": "تاريخ الاستحقاق",
+        "instantiate_obligation": "إنشاء الالتزام",
+        "success_add": "تم تسجيل الالتزام بنجاح",
+        "error_add": "فشل تسجيل الالتزام",
+        "success_update": "تم تحديد الدفعة كمسددة",
+        "success_delete": "تم حذف الالتزام",
+        "status_urgent": "عاجل",
+        "status_pending": "قيد الانتظار",
+        "status_scheduled": "جدولة"
+    },
+    "bills": {
+        "upcoming_payments": "المدفوعات القادمة",
+        "no_upcoming": "لا توجد مدفوعات قادمة"
+    },
+    "table": {
+        "date": "التاريخ",
+        "description": "الوصف",
+        "category": "الفئة",
+        "method": "الوسيلة",
+        "amount": "المبلغ",
+        "actions": "إجراءات",
+        "source": "وصف المصدر",
+        "obligation": "الالتزام",
+        "total_principal": "إجمالي الأصل",
+        "current_balance": "الرصيد الحالي",
+        "liquidation": "تصفية",
+        "empty_income": "لا توجد بيانات دخل. ستظهر البيانات هنا بمجرد إضافتها.",
+        "empty_expenses": "لا توجد نفقات.",
+        "save": "حفظ الصف",
+        "cancel": "إلغاء",
+        "delete_success": "تم حذف العنصر بنجاح!",
+        "placeholder_description": "مثل التسوق، الإيجار",
+        "placeholder_category": "مثل الطعام، المرافق",
+        "placeholder_method": "مثل نقداً، بطاقة",
+        "placeholder_amount": "0.00",
+        "placeholder_source": "مثل الراتب، عمل حر"
+    },
+    "login": {
+        "welcome_back": "مرحبًا بعودتك",
+        "subtitle": "ارتقِ برحلتك المالية. قم بتسجيل الدخول للوصول إلى تحليلاتك المميزة وتأمين مستقبلك.",
+        "sign_in_google": "تسجيل الدخول عبر Google",
+        "authenticating": "جاري المصادقة...",
+        "switch_account": "تبديل الحساب",
+        "sign_out": "تسجيل الخروج",
+        "agreement": "من خلال تسجيل الدخول، فإنك توافق على",
+        "terms": "شروط الخدمة",
+        "privacy": "سياسة الخصوصية",
+        "back_dashboard": "العودة إلى لوحة المعلومات"
+    },
+    "not_found": {
+        "title": "404 — الصفحة غير موجودة",
+        "desc": "لا يمكننا العثور على الصفحة التي تبحث عنها. ربما تم نقلها أو إزالتها.",
+        "go_home": "العودة للرئيسية",
+        "go_back": "الرجوع للخلف"
+    },
+    "income": {
+        "status_label": "تحليل السيولة",
+        "title": "مصادر الدخل",
+        "intro": "تتبع مصادر إيراداتك ومدخولك المالي",
+        "monthly_total": "الإجمالي الشهري",
+        "projected_revenue": "الإيرادات المتوقعة",
+        "growth_rate": "معدل النمو",
+        "add_source": "إضافة مصدر",
+        "transaction_history": "سجل المعاملات",
+        "real_time": "الوقت الحقيقي",
+        "based_on_goals": "بناءً على الأهداف الفصلية",
+        "your_comparison": "مقارنتك"
+    },
+    "expense": {
+        "status_label": "تدقيق المصروفات",
+        "title": "مراقبة النفقات",
+        "intro": "راقب تدفقاتك النقدية ومصاريفك الشهرية",
+        "total_burn_rate": "إجمالي معدل الإنفاق",
+        "recurring_overheads": "النفقات المتكررة",
+        "efficiency": "الكفاءة",
+        "record_outflow": "سجل مصروف",
+        "ledger_details": "تفاصيل السجل",
+        "optimized": "محسن",
+        "fixed_infra": "بنية تحتية ثابتة",
+        "budget_adherence": "الالتزام بالميزانية"
+    },
+    "debts": {
+        "status_label": "تقييم الالتزامات",
+        "title": "إدارة الديون",
+        "intro": "الرقابة الاستراتيجية على الالتزامات وتقدم السداد",
+        "total_liabilities": "إجمالي الالتزامات",
+        "monthly_strategy": "الاستراتيجية الشهرية",
+        "settled_assets": "تقدم السداد",
+        "register_liability": "تسجيل التزام",
+        "portfolio_ledger": "سجل المحفظة",
+        "remaining_balance": "الرصيد المتبقي",
+        "settlement_target": "هدف التسوية",
+        "my_debts": "ديوني",
+        "sort_label": "ترتيب حسب",
+        "high_to_low": "الأعلى للأقل",
+        "low_to_high": "الأقل للأعلى",
+        "new_debt": "دين جديد +",
+        "no_active_debts": "لا توجد ديون نشطة",
+        "add_one": "أضف واحد",
+        "delete_title": "حذف الدين؟",
+        "delete_message": "هل أنت متأكد من رغبتك في حذف هذا الدين نهائياً؟ لا يمكن التراجع عن هذا الإجراء.",
+        "confirm_delete": "حذف الدين",
+        "cancel": "إلغاء",
+        "modal_title": "تسجيل دين جديد",
+        "person_name": "اسم الشخص",
+        "placeholder_person": "مثل علي أحمد",
+        "reason_title": "السبب / العنوان",
+        "placeholder_reason": "مثل إصلاح السيارة، غداء...",
+        "total_amount": "المبلغ الإجمالي",
+        "save_debt": "حفظ الدين",
+        "saving": "جاري الحفظ...",
+        "transaction_history": "سجل المعاملات",
+        "no_history": "لا يوجد سجل حتى الآن.",
+        "make_payment": "إجراء دفع",
+        "placeholder_payment": "أدخل المبلغ ($)",
+        "confirm_payment": "تأكيد الدفع",
+        "paying": "جاري الدفع...",
+        "delete_entire": "حذف الدين بالكامل",
+        "delete_payment_title": "حذف الدفعة؟",
+        "delete_payment_msg": "هل أنت متأكد من رغبتك في حذف سجل الدفع هذا؟ سيتم إضافة المبلغ مرة أخرى إلى الدين المتبقي.",
+        "delete_payment_confirm": "حذف الدفعة"
+    },
+    "report": {
+        "title": "الإبلاغ عن مشكلة",
+        "intro": "نحن نقدر تعليقاتك. أخبرنا إذا وجدت خطأً أو كان لديك اقتراح.",
+        "login_required": "يرجى تسجيل الدخول للإبلاغ عن مشكلة",
+        "empty_desc": "يرجى وصف المشكلة",
+        "success": "تم إرسال التقرير بنجاح. شكراً لك!",
+        "error": "فشل إرسال التقرير. يرجى المحاولة مرة أخرى.",
+        "type_label": "نوع المشكلة",
+        "type_bug": "تقرير خطأ",
+        "type_suggestion": "اقتراح ميزة",
+        "type_other": "أخرى",
+        "desc_label": "الوصف",
+        "desc_placeholder": "صف المشكلة...",
+        "submitting": "جاري الإرسال...",
+        "submit_btn": "إرسال التقرير"
+    },
+    "reports": {
+        "title": "التقارير المالية",
+        "status_label": "التدقيق المالي",
+        "intro": "تقرير شامل عن وضعك المالي وتاريخك.",
+        "gross_liquidity": "إجمالي السيولة",
+        "total_expenditure": "إجمالي النفقات",
+        "net_retained_capital": "صافي رأس المال المحتفظ به",
+        "capital_trajectory": "مسار رأس المال",
+        "retention_efficiency": "كفاءة الاحتفاظ",
+        "capital_preservation_rate": "معدل الحفاظ على رأس المال",
+        "download_statement": "تحميل الكشف",
+        "filters": {
+            "date_desc": "التاريخ تنازلي",
+            "date_asc": "التاريخ تصاعدي",
+            "amount_asc": "المبلغ تصاعدي",
+            "amount_desc": "المبلغ تنازلي"
+        }
+    },
+    "settings": {
+        "title": "الإعدادات",
+        "description": "تفضيلات المنصة",
+        "platform_preferences": "تفضيلات المنصة",
+        "committing_changes": "جاري حفظ التغييرات...",
+        "commit_preferences": "حفظ التفضيلات",
+        "save_success": "تم حفظ الإعدادات بنجاح",
+        "save_error": "حدث خطأ أثناء حفظ الإعدادات",
+        "tabs": {
+            "general": "عام",
+            "alerts": "التنبيهات",
+            "security": "الأمان"
+        },
+        "general": {
+            "title": "الإعدادات العامة",
+            "subtitle": "الإعدادات الإقليمية والواجهة لمساحة العمل الخاصة بك.",
+            "currency_title": "العملة الأساسية",
+            "currency_desc": "العملة العالمية المستخدمة لحسابات السيولة",
+            "language_title": "لغة الواجهة",
+            "language_desc": "اللغة الرئيسية لتجميع البيانات في لوحة المعلومات",
+            "theme_title": "مزامنة المظهر تلقائيًا",
+            "theme_desc": "مطابقة تفضيلات مظهر النظام",
+            "data_title": "مزامنة البيانات في الوقت الفعل",
+            "data_desc": "إبقاء السجلات المالية محدثة عبر الأجهزة",
+            "lang_en": "الإنجليزية",
+            "lang_ar": "العربية"
+        },
+        "notifications": {
+            "title": "الإشعارات والتنبيهات",
+            "subtitle": "إدارة كيفية ووقت تلقي تحديثات الرؤى المالية.",
+            "email_briefings": "ملخصات البريد الإلكتروني",
+            "email_briefings_desc": "ملخصات أسبوعية لنمو صافي ثروتك.",
+            "critical_budget_alerts": "تنبيهات الميزانية الحرجة",
+            "critical_budget_alerts_desc": "إشعار فوري عند تجاوز 85% من الميزانية الشهرية."
+        },
+        "security": {
+            "title": "الأمان والخصوصية",
+            "subtitle": "حماية البيانات المتقدمة وضوابط الرؤية.",
+            "privacy_stealth_mode": "وضع الخصوصية الخفي",
+            "privacy_stealth_mode_desc": "إخفاء الإجماليات الحساسة في نظرة عامة على لوحة المعلومات.",
+            "authentication_lock": "قفل المصادقة",
+            "authentication_lock_desc": "طلب إعادة المصادقة قبل عرض التحليلات العميقة."
+        }
+    },
+    "monthly_spending": {
+        "title": "الحد المالي",
+        "used": "مستخدم",
+        "spent": "أنفق",
+        "limit": "الحد",
+        "commit": "حفظ"
+    },
+    "notifications": {
+        "title": "الإشعارات",
+        "important": "هام",
+        "more": "إشعارات أخرى",
+        "uploaded": "قام برفع:",
+        "no_notifications": "لا توجد إشعارات"
+    }
+}

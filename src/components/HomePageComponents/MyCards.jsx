@@ -1,15 +1,17 @@
 
 import React, { useState, useEffect } from 'react';
-import '../Styles/HomePageStyle.css';
+import '../Styles/HomePageStyles/HomePageStyle.css';
 import { db, auth } from "../../firebase";
 import { doc, getDoc, setDoc } from "firebase/firestore";
+import { useTranslation } from "react-i18next";
 
 function MyCards() {
+    const { t } = useTranslation();
     const [cardData, setCardData] = useState({
         visa: { pin: "1234", expiry: "12/25" },
         master: { pin: "1234", expiry: "08/26" }
     });
-    const [userName, setUserName] = useState("unKnown user");
+    const [userName, setUserName] = useState("Unknown user");
     const [editingCard, setEditingCard] = useState(null); // 'visa' or 'master'
     const [tempData, setTempData] = useState({ pin: "", expiry: "", name: "" });
     const [isRefreshing, setIsRefreshing] = useState(false);
@@ -29,7 +31,7 @@ function MyCards() {
             const profileRef = doc(db, "users", user.uid, "settings", "profile");
             const profileSnap = await getDoc(profileRef);
             if (profileSnap.exists()) {
-                setUserName(profileSnap.data().name || "unknown user");
+                setUserName(profileSnap.data().name || "Unknown user");
             }
         } catch (error) {
             console.error("Error fetching card/profile data:", error);
@@ -93,7 +95,7 @@ function MyCards() {
     return (
         <section className={`my-cards-section ${isRefreshing ? 'is-loading-internal' : ''}`}>
             <div className="section-header-flex">
-                <h3>My Cards</h3>
+                <h3>{t('my_cards.title')}</h3>
             </div>
 
             <div className="card-container">
@@ -105,7 +107,7 @@ function MyCards() {
                     </div>
 
                     <div className="card-number">
-                         <h3 className='stars'>**** **** ****</h3>
+                        <h3 className='stars'>**** **** ****</h3>
                         {editingCard === 'visa' ? (
                             <input
                                 type="text"
@@ -123,7 +125,7 @@ function MyCards() {
 
                     <div className="card-bottom">
                         <div className="card-holder">
-                            <span>Card Holder</span>
+                            <span>{t('my_cards.card_holder')}</span>
                             {editingCard === 'visa' ? (
                                 <input
                                     type="text"
@@ -137,7 +139,7 @@ function MyCards() {
                             )}
                         </div>
                         <div className="card-expiry">
-                            <span>Expires</span>
+                            <span>{t('my_cards.expires')}</span>
                             {editingCard === 'visa' ? (
                                 <input
                                     type="text"
@@ -186,7 +188,7 @@ function MyCards() {
 
                     <div className="card-bottom">
                         <div className="card-holder">
-                            <span>Card Holder</span>
+                            <span>{t('my_cards.card_holder')}</span>
                             {editingCard === 'master' ? (
                                 <input
                                     type="text"
@@ -200,7 +202,7 @@ function MyCards() {
                             )}
                         </div>
                         <div className="card-expiry">
-                            <span>Expires</span>
+                            <span>{t('my_cards.expires')}</span>
                             {editingCard === 'master' ? (
                                 <input
                                     type="text"
@@ -257,7 +259,7 @@ function MyCards() {
                     font-family: inherit;
                     font-size: inherit;
                 }
-                .pin-input { width: 60px; margin-left: 8px; font-weight: 600; }
+                .pin-input { width: 60px; margin-inline-start: 8px; font-weight: 600; }
                 .name-input { width: 140px; text-align: left; }
                 .expiry-input { width: 50px; }
 

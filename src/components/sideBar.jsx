@@ -1,6 +1,7 @@
 
 import "./Styles/sideBarStyle.css";
 import { NavLink } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 // Icons
 import HomeIcon from "./Icons/HomeIcon";
 import OrderIcon from "./Icons/IncomeIcon";
@@ -9,32 +10,36 @@ import CustomersIcon from './Icons/CustomersIcon';
 import ReportIcon from './Icons/ReportIcon';
 import SettingsIcon from './Icons/SettingsIcon';
 import CloseSideBarIcon from './Icons/CloseSideBarIcon';
+import BugIcon from './Icons/BugIcon';
 
 const SideBar = ({ isOpen, toggleSidebar }) => {
+    const { t } = useTranslation();
     const menuGroups = [
         {
-            title: "Navigation",
+            title: t('sidebar.navigation'),
             items: [
-                { to: "/", label: "Dashboard", icon: <HomeIcon className="sidebar-icon" /> },
-                { to: "/income", label: "Income", icon: <OrderIcon className="sidebar-icon" /> },
-                { to: "/expense", label: "Expense", icon: <ExpenseIcon className="sidebar-icon" /> },
-                { to: "/debts", label: "Debts", icon: <CustomersIcon className="sidebar-icon" /> },
+                { to: "/", label: t('sidebar.dashboard'), icon: <HomeIcon className="sidebar-icon" /> },
+                { to: "/income", label: t('sidebar.income'), icon: <OrderIcon className="sidebar-icon" /> },
+                { to: "/expense", label: t('sidebar.expense'), icon: <ExpenseIcon className="sidebar-icon" /> },
+                { to: "/debts", label: t('sidebar.debts'), icon: <CustomersIcon className="sidebar-icon" /> },
+                { to: "/reports", label: t('sidebar.reports'), icon: <ReportIcon className="sidebar-icon" /> },
             ]
         },
         {
-            title: "Management",
+            title: t('sidebar.management'),
+            className: "mt-auto",
             items: [
-                { to: "/reports", label: "Reports", icon: <ReportIcon className="sidebar-icon" /> },
-                { to: "/settings", label: "Settings", icon: <SettingsIcon className="sidebar-icon" /> },
+                { to: "/settings", label: t('sidebar.settings'), icon: <SettingsIcon className="sidebar-icon" /> },
+                { to: "/report-problem", label: t('report.title'), icon: <BugIcon className="sidebar-icon" /> },
             ]
         }
     ];
 
-    
+
     return (
         <aside className={`sidebar ${isOpen ? '' : 'closed'}`}>
             <div className="sidebar-header">
-                <h2 className="sidebar-title">Shortcuts</h2>
+                <h2 className="sidebar-title">{t('sidebar.shortcuts')}</h2>
                 <button className="close-sidebar-button" type="button" onClick={toggleSidebar} aria-label="Close Sidebar">
                     <CloseSideBarIcon />
                 </button>
@@ -42,7 +47,7 @@ const SideBar = ({ isOpen, toggleSidebar }) => {
 
             <nav className="sidebar-menu">
                 {menuGroups.map((group, idx) => (
-                    <div key={idx} className="sidebar-group">
+                    <div key={idx} className={`sidebar-group ${group.className || ''}`}>
                         <span className="group-label">{group.title}</span>
                         {group.items.map((item) => (
                             <NavLink

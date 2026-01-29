@@ -1,6 +1,9 @@
 import { Line } from "react-chartjs-2";
 import { useMemo } from "react";
-import '../Styles/analyticsStyle.css';
+import { auth } from '../../firebase';
+import '../Styles/HomePageStyles/analyticsStyle.css';
+import { useTranslation } from "react-i18next";
+
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -23,9 +26,10 @@ ChartJS.register(
 );
 
 function Analytics({ data }) {
+  const { t } = useTranslation();
   const { income = [], expenses = [] } = data || {};
 
-  const labels = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  const labels = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
   const chartData = useMemo(() => {
     const incomeByMonth = new Array(12).fill(0);
@@ -45,7 +49,7 @@ function Analytics({ data }) {
       labels,
       datasets: [
         {
-          label: "Income",
+          label: t('home.analytics.income'),
           data: incomeByMonth,
           borderColor: "#1d7db9",
           fill: true,
@@ -61,7 +65,7 @@ function Analytics({ data }) {
           }
         },
         {
-          label: "Expense",
+          label: t('home.analytics.expense'),
           data: expenseByMonth,
           borderColor: "#ea4335",
           fill: true,
@@ -78,7 +82,7 @@ function Analytics({ data }) {
         }
       ]
     };
-  }, [income, expenses]);
+  }, [income, expenses, t]);
 
   const options = {
     responsive: true,
@@ -111,14 +115,29 @@ function Analytics({ data }) {
 
   return (
     <section className="analytics-card">
-      <h3>Analytics Overview</h3>
-      <div className="chart-wrapper">
-        <Line
-          key={`${income.length}-${expenses.length}`}
-          data={chartData}
-          options={options}
-        />
-      </div>
+      <h3>{t('home.analytics.title')}</h3>
+      {
+
+
+
+        <div className="chart-wrapper">
+
+          {data != null ?
+            <Line
+              key={`${income.length}-${expenses.length}`}
+              data={chartData}
+              options={options}
+            />
+            :
+            <h2 className="error-fetching-data-message">{auth.currentUser ? t('home.analytics.error_fetching') : t('home.analytics.need_login')}</h2>
+
+          }
+        </div>
+
+
+
+      }
+
     </section>
   );
 }

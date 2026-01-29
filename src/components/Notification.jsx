@@ -23,6 +23,12 @@ const COLORS = {
 const Notification = ({ show, message, type = "info", onClose }) => {
   const [visible, setVisible] = useState(show);
 
+
+  const handleClose = () => {
+    setVisible(false);
+    setTimeout(onClose, 250); // wait for exit animation
+  };
+
   useEffect(() => {
     if (show) {
       setVisible(true);
@@ -31,11 +37,7 @@ const Notification = ({ show, message, type = "info", onClose }) => {
     }
   }, [show]);
 
-  const handleClose = () => {
-    setVisible(false);
-    setTimeout(onClose, 250); // wait for exit animation
-  };
-
+  
   if (!show && !visible) return null;
 
   const style = COLORS[type] || COLORS.info;

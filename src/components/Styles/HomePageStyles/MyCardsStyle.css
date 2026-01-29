@@ -88,14 +88,14 @@
     font-size: 18px;
     letter-spacing: 2px;
     font-family: 'Inter', monospace;
-    
+
     font-weight: 600;
     margin: 10px 0;
 }
 
-.stars{
+.stars {
     display: block;
-    margin-right: 15px;
+    margin-inline-end: 15px;
 }
 
 .card-bottom {
@@ -122,7 +122,7 @@
 }
 
 @media screen and (max-width : 1350px) {
-    .card-container{
+    .card-container {
         width: 94%;
     }
 }

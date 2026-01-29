@@ -1,7 +1,5 @@
-
-import React, { useState, useEffect } from 'react';
-import '../components/Styles/HomePageStyle.css';
-
+import React from 'react';
+import '../components/Styles/HomePageStyles/HomePageStyle.css';
 import QuickInfo from '../components/HomePageComponents/quickInfo';
 import Analytics from '../components/HomePageComponents/analytics';
 import QuickActionBar from '../components/HomePageComponents/quickActionsBar';
@@ -9,83 +7,52 @@ import RecentTransactions from '../components/HomePageComponents/RecentTransacti
 import MyCards from '../components/HomePageComponents/MyCards';
 import UpcomingPayments from '../components/HomePageComponents/UpcomingPayments';
 
-import { collection, getDocs } from 'firebase/firestore';
-import { auth, db } from '../firebase';
-
 // Import all required sub-component styles
-import '../components/Styles/MyCardsStyle.css';
-import '../components/Styles/quickInfoStyle.css';
+import '../components/Styles/HomePageStyles/MyCardsStyle.css';
+import '../components/Styles/HomePageStyles/quickInfoStyle.css';
 import '../components/HomePageComponents/RightBar/RightSidebar.css';
 import Notification from '../components/Notification';
 
+import { useTranslation } from "react-i18next";
+import { useFinancialData } from '../contexts/FinancialContext';
+
 const HomePage = () => {
-  function internetChecker()
-  {
-    if(window.onoffline)
-      {
-        Notification("now" ,);
-      }    
-  }
-  internetChecker()
-  const [financialData, setFinancialData] = useState({
-    income: [],
-    expenses: [],
-    debts: []
-  });
-  const [loading, setLoading] = useState(true);
-  const [isRefreshing, setIsRefreshing] = useState(false);
+  const { t } = useTranslation();
 
-  const fetchData = async () => {
-    setIsRefreshing(true);
-    const user = auth.currentUser;
-    if (!user) return;
+  // Access global context data
+  const { income, expenses, debts, refreshData } = useFinancialData();
 
-    try {
-      const [incomeSnap, expenseSnap, debtSnap] = await Promise.all([
-        getDocs(collection(db, "users", user.uid, "income")),
-        getDocs(collection(db, "users", user.uid, "expenses")),
-        getDocs(collection(db, "users", user.uid, "debts"))
-      ]);
-
-      const income = incomeSnap.docs.map(doc => ({ ...doc.data(), id: doc.id }));
-      const expenses = expenseSnap.docs.map(doc => ({ ...doc.data(), id: doc.id }));
-      const debts = debtSnap.docs.map(doc => ({ ...doc.data(), id: doc.id }));
-
-      setFinancialData({ income, expenses, debts });
-    } catch (error) {
-      console.error("Error fetching homepage data:", error);
-    } finally {
-      setLoading(false);
-      setTimeout(() => setIsRefreshing(false), 600);
-    }
+  // Construct data object for children
+  const financialData = {
+    income,
+    expenses,
+    debts
   };
 
-  useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      if (user) {
-        fetchData();
-      } else {
-        setLoading(false);
-      }
-    });
-    return () => unsubscribe();
-  }, []);
+  function internetChecker() {
+    if (window.onoffline) {
+      Notification("now",);
+    }
+  }
+  internetChecker();
 
   return (
-    <div className={`home-page-root ${isRefreshing ? 'refresh-active' : ''}`}>
+    <div className="home-page-root">
 
-      {/* Unified High-Performance Loading Bar */}
-      <div className="unified-refresh-overlay">
-        <div className="core-loader"></div>
-      </div>
-      <div className="status-label">Synchronizing Core</div>
+
 
       <div className="home-layout-wrapper">
+        <dialog>
+        <p>Are You Sure You Want To Delete This Debt ?</p>
+        <form method='dialog'>
+          <button>OK</button>
+        </form>
+      </dialog>
         {/* Main Dashboard Workspace */}
-        <div className="dashboard-content content-blur">
+        <div className="dashboard-content">
           <header className="dashboard-intro">
-            <h1>Executive Overview</h1>
-            <p>Global financial state and liquidity analytics.</p>
+            <h1>{t('home.executive_overview')}</h1>
+            <p>{t('home.global_financial_state')}</p>
           </header>
 
           {/* Top Level Quick Metrics */}
@@ -103,7 +70,7 @@ const HomePage = () => {
             {/* Secure Details & Obligations */}
             <div className="dashboard-secondary-column">
               <MyCards />
-              <UpcomingPayments debts={financialData.debts} onDataChange={fetchData} />
+              <UpcomingPayments debts={financialData.debts} onDataChange={refreshData} />
             </div>
           </div>
         </div>

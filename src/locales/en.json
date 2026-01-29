@@ -1,0 +1,299 @@
+{
+    "app": {
+        "title": "Money Manager"
+    },
+    "loading": {
+        "preparing": "Preparing your Dashboard...",
+        "syncing": "Syncing Financial Data...",
+        "securing": "Securing Connection...",
+        "welcome": "Welcome to MoneyManager"
+    },
+    "sidebar": {
+        "shortcuts": "Shortcuts",
+        "navigation": "Navigation",
+        "dashboard": "Dashboard",
+        "income": "Income",
+        "expense": "Expense",
+        "debts": "Debts",
+        "management": "Management",
+        "reports": "Reports",
+        "settings": "Settings",
+        "reportProplems": "Report A Problem"
+    },
+    "header": {
+        "titles": {
+            "grand_overview": "Grand Overview",
+            "liquidity_analytics": "Liquidity Analytics",
+            "expenditure_control": "Expenditure Control",
+            "liability_management": "Liability Management",
+            "fiscal_synthesis": "Fiscal Synthesis",
+            "global_preferences": "Global Preferences",
+            "default": "Money Manager"
+        },
+        "role_beta": "Beta",
+        "role_developer": "Developer",
+        "role_owner": "Owner",
+        "role_member": "Member",
+        "log_in": "Log In"
+    },
+    "dream": {
+        "title": "Capital Aspirations",
+        "car": "Premium Segment Vehicle",
+        "house": "Primary Estate Acquisition",
+        "complete": "Complete"
+    },
+    "monthly_spending" : {
+        "title" : "Monthly Spending",
+        "used": "Used",
+        "limit": "Limit",
+        "spent" : "Spent",
+        "commit" : "save"
+    },
+    "my_cards": {
+        "title": "My Cards",
+        "card_holder": "Card Holder",
+        "expires": "Expires"
+    },
+    "upcoming": {
+        "title": "Future Obligations",
+        "subtitle": "Timeline of upcoming settlements",
+        "view_all": "View All",
+        "mark_settled": "Mark as Settled",
+        "settled": "Settled",
+        "no_obligations": "No immediate obligations detected.",
+        "register_obligation": "Register Obligation",
+        "description": "Description",
+        "amount": "Amount ($)",
+        "due_date": "Due Date",
+        "instantiate_obligation": "Instantiate Obligation",
+        "success_add": "Obligation registered successfully",
+        "error_add": "Failed to register obligation",
+        "success_update": "Payment marked as settled",
+        "success_delete": "Obligation deleted",
+        "status_urgent": "Urgent",
+        "status_pending": "Pending",
+        "status_scheduled": "Scheduled"
+    },
+    "bills": {
+        "upcoming_payments": "Upcoming Payments",
+        "no_upcoming": "No upcoming payments"
+    },
+    "table": {
+        "date": "Date",
+        "description": "Description",
+        "category": "Category",
+        "method": "Method",
+        "amount": "Amount",
+        "actions": "Actions",
+        "source": "Source Description",
+        "obligation": "Obligation",
+        "total_principal": "Total Principal",
+        "current_balance": "Current Balance",
+        "liquidation": "Liquidation",
+        "empty_income": "No income data found. Data will appear here once added.",
+        "empty_expenses": "No expense data found. Data will appear here once added.",
+        "empty_debts": "No debts found.",
+        "save": "Save Row",
+        "cancel": "Cancel",
+        "delete_success": "Item deleted successfully!",
+        "placeholder_description": "e.g. Shopping, Rent",
+        "placeholder_category": "e.g. Food, Utilities",
+        "placeholder_method": "e.g. Cash, Card",
+        "placeholder_amount": "0.00",
+        "placeholder_source": "e.g. Salary, Freelance"
+    },
+    "login": {
+        "welcome_back": "Welcome Back",
+        "subtitle": "Elevate your financial journey. Sign in to access your premium analytics and secure your future.",
+        "sign_in_google": "Sign in with Google",
+        "authenticating": "Authenticating...",
+        "switch_account": "Switch Account",
+        "sign_out": "Sign Out",
+        "agreement": "By signing in, you agree to our",
+        "terms": "Terms of Service",
+        "privacy": "Privacy Policy",
+        "back_dashboard": "Back to Dashboard"
+    },
+    "not_found": {
+        "title": "404 — Page Not Found",
+        "desc": "We can’t find the page you’re looking for. It may have been moved or removed.",
+        "go_home": "Go Home",
+        "go_back": "Go Back"
+    },
+    "home": {
+        "executive_overview": "Executive Overview",
+        "global_financial_state": "Global financial state and liquidity analytics.",
+        "synchronizing_core": "Synchronizing Core",
+        "quick_info": {
+            "income_this_month": "Income This Month",
+            "yearly_income": "Yearly Income",
+            "avg_monthly_expense": "Avg. Monthly Expense",
+            "avg_monthly_income": "Avg. Monthly Income"
+        },
+        "analytics": {
+            "title": "Analytics Overview",
+            "income": "Income",
+            "expense": "Expense",
+            "error_fetching": "Error fetching data :(",
+            "need_login": "You need to logged In"
+        },
+        "transactions": {
+            "title": "Recent Transactions",
+            "view_all": "View All",
+            "no_transactions": "No transactions found",
+            "status_completed": "Completed"
+        }
+    },
+    "settings": {
+        "title": "Settings",
+        "description": "Platform Preferences",
+        "tabs": {
+            "general": "General",
+            "alerts": "Alerts",
+            "security": "Security"
+        },
+        "general": {
+            "title": "General Configuration",
+            "description": "Regional and interface settings for your workspace.",
+            "currency_title": "Base Currency",
+            "currency_desc": "Global currency used for liquidity calculations",
+            "language_title": "Interface Language",
+            "language_desc": "Main dialect for dashboard aggregation",
+            "theme_title": "Theme Auto-Sync",
+            "theme_desc": "Match system appearance preferences",
+            "data_title": "Real-time Data Sync",
+            "data_desc": "Keep financial records updated across devices",
+            "lang_en": "English",
+            "lang_ar": "Arabic"
+        },
+        "notifications": {
+            "title": "Notifications & Alerts",
+            "subtitle": "Manage how and when you receive financial insight updates.",
+            "email_briefings": "Email Briefings",
+            "email_briefings_desc": "Weekly summaries of your net-worth growth.",
+            "critical_budget_alerts": "Critical Budget Alerts",
+            "critical_budget_alerts_desc": "Instant notification upon exceeding 85% of monthly budget."
+        },
+        "security": {
+            "title": "Security & Privacy",
+            "subtitle": "Advanced data protection and visibility controls.",
+            "privacy_stealth_mode": "Privacy Stealth Mode",
+            "privacy_stealth_mode_desc": "Mask sensitive totals on the dashboard overview.",
+            "authentication_lock": "Authentication Lock",
+            "authentication_lock_desc": "Require re-auth before viewing deep analytics."
+        },
+        "save_btn": "Commit Changes",
+        "commit_preferences": "Commit Preferences",
+        "save_success": "Settings saved successfully",
+        "save_error": "Error saving settings",
+        "committing_changes": "Committing..."
+    },
+    "income": {
+        "status_label": "Analyzing Liquidity",
+        "title": "Income Streams",
+        "intro": "Track your revenue sources and financial intake",
+        "monthly_total": "Monthly Total",
+        "projected_revenue": "Projected Revenue",
+        "growth_rate": "Growth Rate",
+        "add_source": "Add Source",
+        "transaction_history": "Transaction History",
+        "real_time": "Real-time",
+        "based_on_goals": "Based on quarterly goals",
+        "your_comparison": "Your Comparison"
+    },
+    "expense": {
+        "status_label": "Auditing Expenditure",
+        "title": "Expenditure Control",
+        "intro": "Monitor your cash outflows and monthly overheads",
+        "total_burn_rate": "Total Burn Rate",
+        "recurring_overheads": "Recurring Overheads",
+        "efficiency": "Efficiency",
+        "record_outflow": "Record Outflow",
+        "ledger_details": "Ledger Details",
+        "optimized": "Optimized",
+        "fixed_infra": "Fixed infrastructure",
+        "budget_adherence": "Budget Adherence"
+    },
+    "debts": {
+        "status_label": "Evaluating Obligations",
+        "title": "Debt Management",
+        "intro": "Strategic oversight of liabilities and repayment progress",
+        "total_liabilities": "Total Liabilities",
+        "monthly_strategy": "Monthly Strategy",
+        "settled_assets": "Settlement Progress",
+        "register_liability": "Register Liability",
+        "portfolio_ledger": "Portfolio Ledger",
+        "remaining_balance": "Remaining Balance",
+        "settlement_target": "Settlement Target",
+        "my_debts": "My Debts",
+        "sort_label": "Sort By",
+        "high_to_low": "High to Low",
+        "low_to_high": "Low to High",
+        "new_debt": "New Debt +",
+        "no_active_debts": "No Active Debts",
+        "add_one": "Add One",
+        "delete_title": "Delete Debt?",
+        "delete_message": "Are you sure you want to delete this debt permanently? This action cannot be undone.",
+        "confirm_delete": "Delete Debt",
+        "cancel": "Cancel",
+        "modal_title": "Record New Debt",
+        "person_name": "Person Name",
+        "placeholder_person": "e.g. Ali Ahmed",
+        "reason_title": "Reason / Title",
+        "placeholder_reason": "e.g. Car Repair, Lunch...",
+        "total_amount": "Total Amount",
+        "save_debt": "Save Debt",
+        "saving": "Saving...",
+        "transaction_history": "Transaction History",
+        "no_history": "No history yet.",
+        "make_payment": "Make a Payment",
+        "placeholder_payment": "Enter Amount ($)",
+        "confirm_payment": "Confirm Payment",
+        "paying": "Paying...",
+        "delete_entire": "Delete Entire Debt",
+        "delete_payment_title": "Delete Payment?",
+        "delete_payment_msg": "Are you sure you want to remove this payment record? The amount will be added back to the remaining debt.",
+        "delete_payment_confirm": "Delete Payment"
+    },
+    "reports": {
+        "title": "Fiscal Reports",
+        "status_label": "Financial Audit",
+        "intro": "Comprehensive breakdown of your financial health and history.",
+        "gross_liquidity": "Gross Liquidity",
+        "total_expenditure": "Total Expenditure",
+        "net_retained_capital": "Net Retained Capital",
+        "capital_trajectory": "Capital Trajectory",
+        "retention_efficiency": "Retention Efficiency",
+        "capital_preservation_rate": "Capital Preservation Rate",
+        "download_statement": "Download Statement",
+        "filters": {
+            "date_desc": "Date Descending",
+            "date_asc": "Date Ascending",
+            "amount_asc": "Amount Ascending",
+            "amount_desc": "Amount Descending"
+        }
+    },
+    "report": {
+        "title": "Report Problem",
+        "intro": "We appreciate your feedback. Let us know if you found a bug or have a suggestion.",
+        "login_required": "Please login to report an issue",
+        "empty_desc": "Please describe the problem",
+        "success": "Report submitted successfully. Thank you!",
+        "error": "Failed to submit report. Please try again.",
+        "type_label": "Issue Type",
+        "type_bug": "Bug Report",
+        "type_suggestion": "Feature Suggestion",
+        "type_other": "Other",
+        "desc_label": "Description",
+        "desc_placeholder": "Describe the issue...",
+        "submitting": "Submitting...",
+        "submit_btn": "Submit Report"
+    },
+    "notifications": {
+        "title": "Notifications",
+        "important": "Important",
+        "more": "More notifications",
+        "uploaded": "uploaded:",
+        "no_notifications": "No notifications found"
+    }
+}

@@ -1,9 +1,10 @@
-
 import React from 'react';
-import '../Styles/RecentTransactionsStyle.css';
+import '../Styles/HomePageStyles/RecentTransactionsStyle.css';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 function RecentTransactions({ income = [], expenses = [] }) {
+    const { t } = useTranslation();
     // Combine and sort by date
     const allTransactions = [
         ...income.map(item => ({
@@ -12,7 +13,7 @@ function RecentTransactions({ income = [], expenses = [] }) {
             date: item.date?.toDate ? item.date.toDate() : new Date(item.date),
             amount: `+$${Number(item.amount).toLocaleString()}`,
             type: "income",
-            status: "Completed"
+            status: t('home.transactions.status_completed')
         })),
         ...expenses.map(item => ({
             id: item.id,
@@ -20,15 +21,15 @@ function RecentTransactions({ income = [], expenses = [] }) {
             date: item.date?.toDate ? item.date.toDate() : new Date(item.date),
             amount: `-$${Number(item.amount).toLocaleString()}`,
             type: "expense",
-            status: "Completed"
+            status: t('home.transactions.status_completed')
         }))
     ].sort((a, b) => b.date - a.date).slice(0, 5);
     const navigate = useNavigate();
     return (
         <section className="transactions-card">
             <div className="card-header">
-                <h3>Recent Transactions</h3>  
-                <button className="view-all-btn" onClick={() => navigate('/income')}>View All</button>
+                <h3>{t('home.transactions.title')}</h3>
+                <button className="view-all-btn" onClick={() => navigate('/income')}>{t('home.transactions.view_all')}</button>
             </div>
 
             <div className="transactions-list">
@@ -42,14 +43,14 @@ function RecentTransactions({ income = [], expenses = [] }) {
                             <p className="t-date">{item.date.toLocaleDateString()}</p>
                         </div>
                         <div className="transaction-status">
-                            <span className={`status-tag ${item.status.toLowerCase()}`}>{item.status}</span>
+                            <span className={`status-tag ${item.status === 'Completed' ? 'completed' : 'completed'}`}>{item.status}</span>
                         </div>
                         <div className={`transaction-amount ${item.type}`}>
                             {item.amount}
                         </div>
                     </div>
                 )) : (
-                    <p style={{ textAlign: 'center', color: '#999', padding: '20px' }}>No transactions found</p>
+                    <p style={{ textAlign: 'center', color: '#999', padding: '20px' }}>{t('home.transactions.no_transactions')}</p>
                 )}
             </div>
         </section>
