@@ -52,7 +52,7 @@ A premium, high-performance financial management dashboard built with **React**,
    npm install
    ```
 
-3. **Configure Environment Variables**
+3. **Configure Environment Variables***
    Create a `.env` file in the root directory and add your Firebase credentials:
    ```env
    VITE_FIREBASE_API_KEY=your_api_key
