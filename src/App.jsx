@@ -21,8 +21,8 @@ import LoginPage from './Pages/LoginPage'
 import LandingPage from './Pages/LandingPage'
 import ReportProblemPage from './Pages/ReportProblemPage'
 
-import TermsOfService from "./pages/TermsOfService";
-import PrivacyPolicy from "./pages/PrivacyPolicy";
+import TermsOfService from "./Pages/TermsOfService";
+import PrivacyPolicy from "./Pages/PrivacyPolicy";
 
 
 export default function App() {

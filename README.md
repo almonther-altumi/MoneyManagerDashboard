@@ -17,7 +17,7 @@ A premium, high-performance financial management dashboard built with **React**,
 - **Arabic Connectivity**: Specialized rendering logic ensuring perfect Arabic script connectivity in PDF exports.
 - **Print-Ready Layouts**: Centered, high-contrast, professional fiscal statements designed for official records.
 
-### 🌐 Full Internationalization (i18n)
+## 🌐 Full Internationalization (i18n)
 - **Dual Language**: Seamless switching between English and Arabic.
 - **RTL & LTR Support**: Fully responsive layout adjustments for Right-to-Left (Arabic) and Left-to-Right (English) directions.
 
