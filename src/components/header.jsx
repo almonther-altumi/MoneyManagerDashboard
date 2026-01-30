@@ -2,11 +2,11 @@
 import React, { useState, useEffect } from "react";
 import "./Styles/headerStyle.css";
 import { useLocation, useNavigate } from "react-router-dom";
-import avatar from "../assets/unKnownUser.svg";
+import avatar from "../assets/unknownUser.svg";
 
 import { useTranslation } from "react-i18next";
 
-// Icons0910207638
+// Icons
 import Email_Icon from './Icons/Header_Icons/EmailIcon';
 import ThemeIcon from './Icons/Header_Icons/ThemeIcon';
 import NotificationMenu from './NotificationMenu';
