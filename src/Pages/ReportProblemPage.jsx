@@ -117,7 +117,7 @@ const ReportProblemPage = () => {
                         onChange={(e) => setIssueText(e.target.value)}
                         placeholder={t('report.desc_placeholder')}
                         rows="6"
-                        style={{ width: '100%', padding: '12px', borderRadius: '8px', border: '1px solid var(--border)', background: 'var(--bg-light)', color: 'var(--text)', resize: 'vertical' }}
+                        style={{ width: '100%', padding: '12px', borderRadius: '8px', border: '1px solid var(--border)', background: 'var(--bg-light)', color: 'var(--text)', resize: 'vertical' ,minHeight: '50px' , maxHeight: '200px' , maxWidth: '710px'}}
                     />
                 </div>
 
