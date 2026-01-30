@@ -43,7 +43,7 @@ const LandingPage = () => {
                 <nav className="landing-nav">
                     <div className="nav-logo">
                         <div style={{ display: 'flex', alignItems: 'center' }}>
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="32" height="32">
                                 <path d="M12 2L2 7L12 12L22 7L12 2Z" strokeLinecap="round" strokeLinejoin="round" />
                                 <path d="M2 17L12 22L22 17" strokeLinecap="round" strokeLinejoin="round" />
                                 <path d="M2 12L12 17L22 12" strokeLinecap="round" strokeLinejoin="round" />

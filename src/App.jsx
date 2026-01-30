@@ -9,20 +9,21 @@ import { FinancialProvider } from './contexts/FinancialContext';
 import Header from './components/header'
 import SideBar from "./components/sideBar"
 
-// pages 
-import IncomePage from './Pages/IncomePage'
-import ExpensePage from './Pages/ExpensePage'
-import DebtsPage from './Pages/DebtsPage'
-import ReportsPage from './Pages/ReportsPage'
-import SettingsPage from './Pages/SettingsPage'
-import NotFoundPage from './Pages/NotFoundPage'
-import HomePage from './Pages/HomePage'
-import LoginPage from './Pages/LoginPage'
-import LandingPage from './Pages/LandingPage'
-import ReportProblemPage from './Pages/ReportProblemPage'
+import { Suspense, lazy } from "react";
 
-import TermsOfService from "./Pages/TermsOfService";
-import PrivacyPolicy from "./Pages/PrivacyPolicy";
+// Lazy Pages
+const IncomePage = lazy(() => import('./Pages/IncomePage'));
+const ExpensePage = lazy(() => import('./Pages/ExpensePage'));
+const DebtsPage = lazy(() => import('./Pages/DebtsPage'));
+const ReportsPage = lazy(() => import('./Pages/ReportsPage'));
+const SettingsPage = lazy(() => import('./Pages/SettingsPage'));
+const NotFoundPage = lazy(() => import('./Pages/NotFoundPage'));
+const HomePage = lazy(() => import('./Pages/HomePage'));
+const LoginPage = lazy(() => import('./Pages/LoginPage'));
+const LandingPage = lazy(() => import('./Pages/LandingPage'));
+const ReportProblemPage = lazy(() => import('./Pages/ReportProblemPage'));
+const TermsOfService = lazy(() => import('./Pages/TermsOfService'));
+const PrivacyPolicy = lazy(() => import('./Pages/PrivacyPolicy'));
 
 
 export default function App() {
@@ -95,24 +96,26 @@ export default function App() {
             )}
 
             <main className="page-content">
-              <Routes>
-                <Route path="/" element={user ? <HomePage /> : <LandingPage />} />
+              <Suspense fallback={<LoadingScreen />}>
+                <Routes>
+                  <Route path="/" element={user ? <HomePage /> : <LandingPage />} />
 
-                {/* Protected Routes - Redirect to Login if not authenticated */}
-                <Route path="/income" element={user ? <IncomePage /> : <Navigate to="/login" />} />
-                <Route path="/expense" element={user ? <ExpensePage /> : <Navigate to="/login" />} />
-                <Route path="/debts" element={user ? <DebtsPage /> : <Navigate to="/login" />} />
-                <Route path="/reports" element={user ? <ReportsPage /> : <Navigate to="/login" />} />
-                <Route path="/settings" element={user ? <SettingsPage /> : <Navigate to="/login" />} />
-                <Route path="/report-problem" element={user ? <ReportProblemPage /> : <Navigate to="/login" />} />
+                  {/* Protected Routes - Redirect to Login if not authenticated */}
+                  <Route path="/income" element={user ? <IncomePage /> : <Navigate to="/login" />} />
+                  <Route path="/expense" element={user ? <ExpensePage /> : <Navigate to="/login" />} />
+                  <Route path="/debts" element={user ? <DebtsPage /> : <Navigate to="/login" />} />
+                  <Route path="/reports" element={user ? <ReportsPage /> : <Navigate to="/login" />} />
+                  <Route path="/settings" element={user ? <SettingsPage /> : <Navigate to="/login" />} />
+                  <Route path="/report-problem" element={user ? <ReportProblemPage /> : <Navigate to="/login" />} />
 
-                {/* Public Routes */}
-                <Route path="/login" element={<LoginPage />} />
-                <Route path="/terms" element={<TermsOfService />} />
-                <Route path="/privacy" element={<PrivacyPolicy />} />
+                  {/* Public Routes */}
+                  <Route path="/login" element={<LoginPage />} />
+                  <Route path="/terms" element={<TermsOfService />} />
+                  <Route path="/privacy" element={<PrivacyPolicy />} />
 
-                <Route path="*" element={<NotFoundPage />} />
-              </Routes>
+                  <Route path="*" element={<NotFoundPage />} />
+                </Routes>
+              </Suspense>
             </main>
           </div>
         </FinancialProvider>

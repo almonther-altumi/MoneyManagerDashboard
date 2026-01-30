@@ -1,0 +1,16 @@
+{
+    "name": "Money Manager Dashboard",
+    "short_name": "MoneyManager",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#4f46e5",
+    "description": "Master your personal finances with Money Manager.",
+    "icons": [
+        {
+            "src": "/websiteIcon.svg",
+            "sizes": "any",
+            "type": "image/svg+xml"
+        }
+    ]
+}
