@@ -67,6 +67,8 @@ scrollbar-width: none;
     flex-direction: column;
     gap: 40px;
     flex: 1;
+    overflow-y: auto;
+
     /* Take remaining height */
 }
 

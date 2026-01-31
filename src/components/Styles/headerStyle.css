@@ -130,6 +130,10 @@
     transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
+.sidebar-closed .menu-toggle-btn {
+    display: flex;
+}
+
 .menu-toggle-btn:hover {
     background: var(--secondary);
     color: white;
@@ -183,10 +187,6 @@
 
     .account-info {
         display: none;
-    }
-
-    .sidebar-closed .menu-toggle-btn {
-        display: flex;
     }
 }
 

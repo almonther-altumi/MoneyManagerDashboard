@@ -57,7 +57,7 @@ export default function App() {
 
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth <= 1029) {
+      if (window.innerWidth <= 1024) {
         setIsSidebarOpen(false);
 
       } else {
