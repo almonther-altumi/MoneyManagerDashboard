@@ -7,29 +7,38 @@ const LandingPage = () => {
     const navigate = useNavigate();
     const { t } = useTranslation();
     const [faqOpen, setFaqOpen] = useState(null);
-    const [isDarkMode, setIsDarkMode] = useState(true);
+    const [isDarkMode, setIsDarkMode] = useState(() => {
+        const theme = localStorage.getItem('app_theme') || 'dark';
+        if (theme === 'auto') {
+            return window.matchMedia('(prefers-color-scheme: dark)').matches;
+        }
+        return theme === 'dark';
+    });
 
     useEffect(() => {
-        // Initialize theme from local storage or default
-        const savedTheme = localStorage.getItem('theme') || 'dark';
-        setIsDarkMode(savedTheme === 'dark');
-        if (savedTheme === 'dark') {
-            document.getElementById('root').classList.add('dark-mode');
-        } else {
-            document.getElementById('root').classList.remove('dark-mode');
-        }
+        const handleThemeChange = () => {
+            const theme = localStorage.getItem('app_theme') || 'dark';
+            if (theme === 'auto') {
+                setIsDarkMode(window.matchMedia('(prefers-color-scheme: dark)').matches);
+            } else {
+                setIsDarkMode(theme === 'dark');
+            }
+        };
+
+        window.addEventListener('theme_update', handleThemeChange);
+        window.addEventListener('storage', handleThemeChange);
+
+        return () => {
+            window.removeEventListener('theme_update', handleThemeChange);
+            window.removeEventListener('storage', handleThemeChange);
+        };
     }, []);
 
     const toggleTheme = () => {
         const newMode = !isDarkMode;
         setIsDarkMode(newMode);
-        if (newMode) {
-            document.getElementById('root').classList.add('dark-mode');
-            localStorage.setItem('theme', 'dark');
-        } else {
-            document.getElementById('root').classList.remove('dark-mode');
-            localStorage.setItem('theme', 'light');
-        }
+        localStorage.setItem('app_theme', newMode ? 'dark' : 'light');
+        window.dispatchEvent(new Event('theme_update'));
     };
 
     const toggleFaq = (index) => {

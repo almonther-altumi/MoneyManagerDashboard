@@ -35,15 +35,47 @@ export default function App() {
   useEffect(() => {
     document.dir = i18n.language === 'ar' ? 'rtl' : 'ltr';
     document.documentElement.lang = i18n.language;
-
-    // Initialize Theme
-    const savedTheme = localStorage.getItem('app_theme');
-    if (savedTheme === 'dark') {
-      document.body.classList.add('dark-mode');
-    } else {
-      document.body.classList.remove('dark-mode');
-    }
   }, [i18n.language]);
+
+  // Theme Management
+  useEffect(() => {
+    const handleTheme = () => {
+      const savedTheme = localStorage.getItem('app_theme') || 'light';
+      let isDark = savedTheme === 'dark';
+
+      if (savedTheme === 'auto') {
+        isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      }
+
+      if (isDark) {
+        document.body.classList.add('dark-mode');
+      } else {
+        document.body.classList.remove('dark-mode');
+      }
+    };
+
+    handleTheme();
+
+    // Listen for storage changes (for multiple tabs)
+    window.addEventListener('storage', handleTheme);
+    // Custom event for immediate updates within the same tab
+    window.addEventListener('theme_update', handleTheme);
+
+    // Listen for system theme changes
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    const sysListener = () => {
+      if (localStorage.getItem('app_theme') === 'auto') {
+        handleTheme();
+      }
+    };
+    mediaQuery.addEventListener('change', sysListener);
+
+    return () => {
+      window.removeEventListener('storage', handleTheme);
+      window.removeEventListener('theme_update', handleTheme);
+      mediaQuery.removeEventListener('change', sysListener);
+    };
+  }, []);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {

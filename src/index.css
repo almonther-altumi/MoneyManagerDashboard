@@ -1,32 +1,5 @@
 :root {
-  /* hsl (fallback color) */
-  --bg-dark: hsl(228 79% 2%);
-  --bg: hsl(222 55% 5%);
-  --bg-light: hsl(220 35% 10%);
-  --text: hsl(220 100% 98%);
-  --text-muted: hsl(220 35% 73%);
-  --highlight: hsl(220 20% 42%);
-  --border: hsl(220 26% 31%);
-  --border-muted: hsl(220 37% 20%);
-  --primary: hsl(220 78% 76%);
-  --secondary: hsl(40 53% 60%);
-  --danger: hsl(9 26% 64%);
-  --warning: hsl(52 19% 57%);
-  --success: hsl(146 17% 59%);
-  --info: hsl(217 28% 65%);
-
-  /* Premium Glass Variables (Dark Default) */
-  --glass-bg: rgba(18, 18, 24, 0.7);
-  --glass-border: rgba(255, 255, 255, 0.08);
-  --glass-text: #ffffff;
-  --glass-text-muted: rgba(255, 255, 255, 0.5);
-  --glass-row-hover: rgba(255, 255, 255, 0.06);
-  --glass-input-hover: rgba(255, 255, 255, 0.05);
-
-}
-
-#root.dark-mode {
-  /* hsl (fallback color) */
+  /* hsl (fallback color - Light Mode) */
   --bg-dark: hsl(220 59% 91%);
   --bg: hsl(220 100% 97%);
   --bg-light: hsl(220 100% 100%);
@@ -49,7 +22,32 @@
   --glass-text-muted: rgba(0, 0, 0, 0.5);
   --glass-row-hover: rgba(0, 0, 0, 0.04);
   --glass-input-hover: rgba(0, 0, 0, 0.03);
+}
 
+.dark-mode {
+  /* hsl (fallback color - Dark Mode) */
+  --bg-dark: hsl(228 79% 2%);
+  --bg: hsl(222 55% 5%);
+  --bg-light: hsl(220 35% 10%);
+  --text: hsl(220 100% 98%);
+  --text-muted: hsl(220 35% 73%);
+  --highlight: hsl(220 20% 42%);
+  --border: hsl(220 26% 31%);
+  --border-muted: hsl(220 37% 20%);
+  --primary: hsl(220 78% 76%);
+  --secondary: hsl(40 53% 60%);
+  --danger: hsl(9 26% 64%);
+  --warning: hsl(52 19% 57%);
+  --success: hsl(146 17% 59%);
+  --info: hsl(217 28% 65%);
+
+  /* Premium Glass Variables (Dark Mode) */
+  --glass-bg: rgba(18, 18, 24, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-text: #ffffff;
+  --glass-text-muted: rgba(255, 255, 255, 0.5);
+  --glass-row-hover: rgba(255, 255, 255, 0.06);
+  --glass-input-hover: rgba(255, 255, 255, 0.05);
 }
 
 html {
@@ -118,12 +116,6 @@ button:hover {
   border-color: #646cff;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #F9F8F6;
-  }
-}
 
 
 

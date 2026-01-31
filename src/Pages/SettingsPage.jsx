@@ -27,22 +27,29 @@ function SettingsPage() {
     });
 
     // Sync from context to local state
-    // FIXED: Removed i18n.language from dependency to prevent reverting user selection
     useEffect(() => {
         if (contextSettings) {
-            setLocalSettings(prev => ({ ...prev, ...contextSettings }));
-
-            // Apply Theme from settings on load (Language sync is now handled globally in FinancialContext)
-            const isDark = contextSettings.themeAuto;
-            if (isDark) {
-                document.body.classList.add('dark-mode');
-                localStorage.setItem('app_theme', 'dark');
-            } else {
-                document.body.classList.remove('dark-mode');
-                localStorage.setItem('app_theme', 'light');
-            }
+            const currentAppTheme = localStorage.getItem('app_theme') || 'light';
+            setLocalSettings(prev => ({
+                ...prev,
+                ...contextSettings,
+                themeAuto: currentAppTheme === 'auto'
+            }));
         }
     }, [contextSettings]);
+
+    // Listen for external theme updates (e.g. from Header)
+    useEffect(() => {
+        const handleExternalThemeUpdate = () => {
+            const currentAppTheme = localStorage.getItem('app_theme') || 'light';
+            setLocalSettings(prev => ({
+                ...prev,
+                themeAuto: currentAppTheme === 'auto'
+            }));
+        };
+        window.addEventListener('theme_update', handleExternalThemeUpdate);
+        return () => window.removeEventListener('theme_update', handleExternalThemeUpdate);
+    }, []);
 
     const handleChange = (key, value) => {
         setLocalSettings(prev => ({ ...prev, [key]: value }));
@@ -56,13 +63,9 @@ function SettingsPage() {
 
         // Immediate Theme Switch
         if (key === 'themeAuto') {
-            if (value) {
-                document.body.classList.add('dark-mode');
-                localStorage.setItem('app_theme', 'dark');
-            } else {
-                document.body.classList.remove('dark-mode');
-                localStorage.setItem('app_theme', 'light');
-            }
+            const newTheme = value ? 'auto' : 'light';
+            localStorage.setItem('app_theme', newTheme);
+            window.dispatchEvent(new Event('theme_update'));
         }
     };
 

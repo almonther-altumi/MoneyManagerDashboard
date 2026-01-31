@@ -17,20 +17,38 @@ function Header({ user, toggleSidebar, isSidebarOpen }) {
     const location = useLocation();
     const navigate = useNavigate();
     const [isDarkMode, setIsDarkMode] = useState(() => {
-        return localStorage.getItem('theme') === 'dark';
+        const theme = localStorage.getItem('app_theme') || 'light';
+        if (theme === 'auto') {
+            return window.matchMedia('(prefers-color-scheme: dark)').matches;
+        }
+        return theme === 'dark';
     });
     const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
 
-
     useEffect(() => {
-        document.getElementById('root').classList.toggle('dark-mode');
-        localStorage.setItem('theme', 'dark');
+        const handleThemeChange = () => {
+            const theme = localStorage.getItem('app_theme') || 'light';
+            if (theme === 'auto') {
+                setIsDarkMode(window.matchMedia('(prefers-color-scheme: dark)').matches);
+            } else {
+                setIsDarkMode(theme === 'dark');
+            }
+        };
 
+        window.addEventListener('theme_update', handleThemeChange);
+        window.addEventListener('storage', handleThemeChange);
 
-    }, [isDarkMode]);
+        return () => {
+            window.removeEventListener('theme_update', handleThemeChange);
+            window.removeEventListener('storage', handleThemeChange);
+        };
+    }, []);
+
     const toggleTheme = () => {
+        const newTheme = isDarkMode ? 'light' : 'dark';
+        localStorage.setItem('app_theme', newTheme);
         setIsDarkMode(!isDarkMode);
-
+        window.dispatchEvent(new Event('theme_update'));
     };
 
     // Default/Fallback user (Mock)
