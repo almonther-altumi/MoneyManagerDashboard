@@ -26,7 +26,7 @@ ChartJS.register(
   Filler
 );
 
-import { useFinancialData } from '../contexts/FinancialContext';
+import { useFinancialData } from '../hooks/useFinancialData';
 
 // Dedicated Professional PDF Template Component (Defined outside to prevent re-creation on render)
 const ReportPDFTemplate = ({ pdfTemplateRef, t, i18n, reportData, formatCurrency, formatPercent }) => (

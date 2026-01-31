@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import '../../components/Styles/DebtsPageStyles/AddDebtModalStyle.css';
 import { useTranslation } from 'react-i18next';
+import { checkRateLimit } from '../../security/rateLimiter';
 
 const AddDebtModal = ({ onClose, onAdd }) => {
     const { t } = useTranslation();
@@ -12,6 +13,13 @@ const AddDebtModal = ({ onClose, onAdd }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (!name || !amount) return;
+
+        // Rate Limit Check
+        const canProceed = await checkRateLimit();
+        if (!canProceed) {
+            alert(t('security.rate_limit_warning'));
+            return;
+        }
 
         setIsLoading(true);
         try {

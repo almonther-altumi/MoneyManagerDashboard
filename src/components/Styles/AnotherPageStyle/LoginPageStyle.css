@@ -5,11 +5,12 @@
     top: 0;
     left: 0;
     z-index: 2000;
-    background: #000;
+    background: var(--bg-light);
     display: flex;
     justify-content: center;
     align-items: center;
     overflow: hidden;
+    transition: background 0.3s ease;
 }
 
 .login-bg-overlay {
@@ -21,8 +22,13 @@
     background-image: url('https://antigravity-artifacts.s3.amazonaws.com/login_background_abstract_1767628179590.png');
     background-size: cover;
     background-position: center;
-    filter: brightness(0.4) saturate(1.2);
+    filter: brightness(0.7) saturate(1.2);
     z-index: 1;
+    transition: filter 0.3s ease;
+}
+
+.dark-mode .login-bg-overlay {
+    filter: brightness(0.3) saturate(0.8);
 }
 
 .login-card {
@@ -31,16 +37,23 @@
     width: 100%;
     max-width: 450px;
     padding: 60px 40px;
-    background: rgba(255, 255, 255, 0.03);
+    background: var(--glass-bg);
     backdrop-filter: blur(25px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    -webkit-backdrop-filter: blur(25px);
+    border: 1px solid var(--glass-border);
     border-radius: 40px;
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
-    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.1);
     animation: cardEntrance 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    transition: all 0.3s ease;
+}
+
+.dark-mode .login-card {
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+    background: rgba(255, 255, 255, 0.03);
 }
 
 @keyframes cardEntrance {
@@ -58,13 +71,13 @@
 .login-logo {
     width: 80px;
     height: 80px;
-    background: linear-gradient(135deg, #1db954 0%, #1967d2 100%);
+    background: linear-gradient(135deg, var(--primary) 0%, var(--info) 100%);
     border-radius: 22px;
     display: flex;
     align-items: center;
     justify-content: center;
     margin-bottom: 30px;
-    box-shadow: 0 10px 30px rgba(29, 185, 84, 0.3);
+    box-shadow: 0 10px 30px rgba(var(--primary-rgb), 0.3);
 }
 
 .login-logo svg {
@@ -76,13 +89,13 @@
 .login-card h1 {
     font-size: 32px;
     font-weight: 800;
-    color: white;
+    color: var(--text);
     margin: 0 0 10px 0;
     letter-spacing: -1px;
 }
 
 .login-card p {
-    color: rgba(255, 255, 255, 0.6);
+    color: var(--text-muted);
     font-size: 16px;
     margin-bottom: 40px;
     line-height: 1.5;
@@ -90,8 +103,8 @@
 
 .google-login-btn {
     width: 100%;
-    background: white;
-    color: #202124;
+    background: var(--text);
+    color: var(--bg);
     border: none;
     padding: 18px 20px;
     border-radius: 18px;
@@ -103,13 +116,13 @@
     gap: 15px;
     cursor: pointer;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 4px 15px rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
 .google-login-btn:hover {
     transform: translateY(-3px);
-    box-shadow: 0 10px 30px rgba(255, 255, 255, 0.2);
-    background: #f8f9fa;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    opacity: 0.9;
 }
 
 .google-login-btn:active {
@@ -119,17 +132,24 @@
 .google-icon {
     width: 24px;
     height: 24px;
+    filter: brightness(1);
+}
+
+.dark-mode .google-icon {
+    filter: brightness(0.9) invert(0);
 }
 
 .login-footer {
     margin-top: 40px;
     font-size: 13px;
-    color: rgba(255, 255, 255, 0.4);
+    color: var(--text-muted);
+    opacity: 0.7;
 }
 
 .login-footer span {
-    color: #1a73e8;
+    color: var(--primary);
     cursor: pointer;
+    font-weight: 600;
 }
 
 .login-footer span:hover {
@@ -142,23 +162,35 @@
     top: 40px;
     left: 40px;
     z-index: 100;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    color: white;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    color: var(--text);
     padding: 10px 20px;
     border-radius: 12px;
     font-size: 14px;
     font-weight: 600;
     cursor: pointer;
     backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     display: flex;
     align-items: center;
     gap: 8px;
     transition: all 0.2s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
 .back-home-btn:hover {
-    background: rgba(255, 255, 255, 0.1);
+    background: var(--glass-row-hover);
+    transform: translateX(-3px);
+}
+
+[dir="rtl"] .back-home-btn {
+    left: auto;
+    right: 40px;
+}
+
+[dir="rtl"] .back-home-btn svg {
+    transform: rotate(180deg);
 }
 
 /* Switch Account View */
@@ -172,19 +204,19 @@
     width: 100px;
     height: 100px;
     border-radius: 50%;
-    border: 3px solid #1db954;
+    border: 3px solid var(--primary);
     margin-bottom: 20px;
-    box-shadow: 0 0 30px rgba(29, 185, 84, 0.2);
+    box-shadow: 0 0 30px rgba(var(--primary-rgb), 0.2);
 }
 
 .user-info-group h2 {
-    color: white;
+    color: var(--text);
     font-size: 24px;
     margin: 0;
 }
 
 .user-info-group p {
-    color: rgba(255, 255, 255, 0.5);
+    color: var(--text-muted);
     margin: 5px 0 30px 0;
 }
 
@@ -196,25 +228,31 @@
 }
 
 .switch-account-btn {
-    background: #1db954;
+    background: var(--primary);
     color: white;
     border-radius: 12px;
     padding: 14px;
     font-weight: 700;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
 }
 
 .switch-account-btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(29, 185, 84, 0.3);
+    box-shadow: 0 8px 20px rgba(var(--primary-rgb), 0.3);
+    filter: brightness(1.1);
 }
 
 .logout-secondary-btn {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    color: white;
+    background: var(--glass-input-hover);
+    border: 1px solid var(--glass-border);
+    color: var(--text);
     border-radius: 12px;
     padding: 14px;
     font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
 }
 
 .logout-secondary-btn:hover {

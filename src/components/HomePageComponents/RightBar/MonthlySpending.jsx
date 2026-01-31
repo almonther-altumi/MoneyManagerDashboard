@@ -2,7 +2,7 @@
 import './RightSidebar.css'
 import React, { useState, useEffect } from 'react';
 import { Pie } from "react-chartjs-2";
-import { collection, getDocs, query, where, Timestamp } from "firebase/firestore";
+import { Timestamp } from "firebase/firestore";
 
 import {
   Chart as ChartJS,
@@ -11,61 +11,22 @@ import {
   Legend,
 } from "chart.js";
 import { db, auth } from "../../../firebase";
-import { doc, getDoc, setDoc } from "firebase/firestore";
+import { doc, setDoc } from "firebase/firestore";
 import { useTranslation } from "react-i18next";
+import { useFinancialData } from "../../../hooks/useFinancialData";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-function MonthlySpending() {
+const MonthlySpending = () => {
   const { t } = useTranslation();
-  const [spent, setSpent] = useState(0);
-  const [limit, setLimit] = useState(2000);
+  const { budgetLimit, monthlySpent, refreshData } = useFinancialData();
   const [isEditing, setIsEditing] = useState(false);
   const [tempLimit, setTempLimit] = useState(2000);
 
-  async function fetchMonthlySpent(user) {
-    const now = new Date();
-
-
-    const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
-    const endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 1);
-
-    const expensesRef = collection(db, "users", user.uid, "expenses")
-    const q = query(
-      expensesRef,
-      where("date", ">=", Timestamp.fromDate(startOfMonth)),
-      where("date", "<", Timestamp.fromDate(endOfMonth))
-    )
-    const snapshot = await getDocs(q);
-    let total = 0;
-    snapshot.forEach((doc) => {
-      total += Number(doc.data().amount || 0)
-    })
-
-    setSpent(total)
-
-  }
   useEffect(() => {
-    const fetchBudget = async (user) => {
-      const budgetRef = doc(db, "users", user.uid, "settings", "budget");
-      const budgetSnap = await getDoc(budgetRef);
-      if (budgetSnap.exists()) {
-        const data = budgetSnap.data();
-        if (data.limit) {
-          setLimit(data.limit);
-          setTempLimit(data.limit);
-        }
-      }
-    };
+    setTempLimit(budgetLimit);
+  }, [budgetLimit]);
 
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      if (user) {
-        fetchBudget(user);
-        fetchMonthlySpent(user)
-      }
-    });
-    return () => unsubscribe();
-  }, []);
 
   const handleSave = async () => {
     const user = auth.currentUser;
@@ -73,22 +34,22 @@ function MonthlySpending() {
     try {
       const budgetRef = doc(db, "users", user.uid, "settings", "budget");
       await setDoc(budgetRef, { limit: Number(tempLimit) }, { merge: true });
-      setLimit(Number(tempLimit));
       setIsEditing(false);
+      if (refreshData) refreshData();
     } catch (error) {
       console.error("Error saving budget:", error);
     }
   };
 
-  const remaining = limit - spent;
+  const remaining = budgetLimit - monthlySpent;
   const isOverBudget = remaining < 0;
 
   const data = {
     labels: ["Spent", "Remaining"],
     datasets: [
       {
-        data: [spent, remaining > 0 ? remaining : 0],
-        backgroundColor: [isOverBudget ? "var(--danger)" : "var(--secondary)", "var(--border-muted)"],
+        data: [monthlySpent, remaining > 0 ? remaining : 0],
+        backgroundColor: [isOverBudget ? "#ef4444" : "#10b981", "var(--border-muted)"],
         borderWidth: 0,
         hoverOffset: 10
       },
@@ -122,8 +83,8 @@ function MonthlySpending() {
       <div className="pie-wrapper">
         <Pie data={data} options={options} />
         <div className="pie-center-label">
-          <span className="percent">{limit > 0 ? Math.round((spent / limit) * 100) : 0}%</span>
-          <span className="label">{t('monthly_spending.used')}</span> 
+          <span className="percent">{budgetLimit > 0 ? Math.round((monthlySpent / budgetLimit) * 100) : 0}%</span>
+          <span className="label text-muted">{t('monthly_spending.used')}</span>
         </div>
       </div>
 
@@ -142,12 +103,12 @@ function MonthlySpending() {
         ) : (
           <div className="budget-stats-summary">
             <div className="stat">
-              <span className="val">${spent.toLocaleString()}</span>
+              <span className="val" style={{ color: isOverBudget ? '#ef4444' : '#10b981' }}>${monthlySpent.toLocaleString()}</span>
               <span className="lbl">{t('monthly_spending.spent')}</span>
             </div>
             <div className="divider"></div>
             <div className="stat">
-              <span className="val">${limit.toLocaleString()}</span>
+              <span className="val">${budgetLimit.toLocaleString()}</span>
               <span className="lbl">{t('monthly_spending.limit')}</span>
             </div>
           </div>

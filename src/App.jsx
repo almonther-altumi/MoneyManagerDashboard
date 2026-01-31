@@ -26,10 +26,16 @@ const ReportProblemPage = lazy(() => import('./Pages/ReportProblemPage'));
 const TermsOfService = lazy(() => import('./Pages/TermsOfService'));
 const PrivacyPolicy = lazy(() => import('./Pages/PrivacyPolicy'));
 const AdminNotificationsPage = lazy(() => import('./Pages/AdminNotificationsPage'));
+const AdminUsersPage = lazy(() => import('./Pages/AdminUsersPage'));
+import { doc, onSnapshot } from "firebase/firestore";
+import { db } from "./firebase";
+import { ShieldAlert, LogOut } from 'lucide-react';
+import BudgetAlertManager from "./components/BudgetAlertManager";
 
 
 export default function App() {
   const [user, setUser] = useState(null);
+  const [userStatus, setUserStatus] = useState(null); // {status, reason}
   const [loading, setLoading] = useState(true);
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const { i18n } = useTranslation();
@@ -82,11 +88,35 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+    let unsubscribeStatus = () => { };
+
+    const unsubscribeAuth = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
+
+      if (currentUser) {
+        // Listen to user status in real-time
+        const userRef = doc(db, 'users', currentUser.uid);
+        unsubscribeStatus = onSnapshot(userRef, (doc) => {
+          if (doc.exists()) {
+            const data = doc.data();
+            if (data.status === 'banned' || data.status === 'suspended') {
+              setUserStatus({ status: data.status, reason: data.statusReason || data.suspensionReason });
+            } else {
+              setUserStatus(null);
+            }
+          }
+        });
+      } else {
+        setUserStatus(null);
+        unsubscribeStatus();
+      }
+
       setLoading(false);
     });
-    return () => unsubscribe();
+    return () => {
+      unsubscribeAuth();
+      unsubscribeStatus();
+    };
   }, []);
 
   const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
@@ -112,10 +142,15 @@ export default function App() {
     return <LoadingScreen />;
   }
 
+  if (userStatus) {
+    return <RestrictionScreen status={userStatus.status} reason={userStatus.reason} />;
+  }
+
   return (
     <div className={`app-root ${user && isSidebarOpen ? 'sidebar-open' : 'sidebar-closed'}`}>
       <BrowserRouter>
         <FinancialProvider>
+          <BudgetAlertManager />
           {user && (
             <>
               <SideBar user={user} isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
@@ -144,6 +179,7 @@ export default function App() {
                   <Route path="/settings" element={user ? <SettingsPage /> : <Navigate to="/login" />} />
                   <Route path="/report-problem" element={user ? <ReportProblemPage /> : <Navigate to="/login" />} />
                   <Route path="/admin/notifications" element={user && user.email === 'monthertumi2025@gmail.com' ? <AdminNotificationsPage /> : <Navigate to="/" />} />
+                  <Route path="/admin/users" element={user && user.email === 'monthertumi2025@gmail.com' ? <AdminUsersPage /> : <Navigate to="/" />} />
 
                   {/* Public Routes */}
                   <Route path="/login" element={<LoginPage />} />
@@ -227,7 +263,7 @@ const LoadingScreen = () => {
       setTextIndex((prev) => (prev + 1) % loadingTexts.length);
     }, 2000);
     return () => clearInterval(interval);
-  }, []);
+  }, [loadingTexts.length]);
 
   return (
     <div style={{
@@ -297,6 +333,79 @@ const LoadingScreen = () => {
                     100% { transform: translateY(0px); opacity: 0.8; }
                 }
             `}</style>
+    </div>
+  );
+};
+
+const RestrictionScreen = ({ status, reason }) => {
+  const { t } = useTranslation();
+  const isBanned = status === 'banned';
+
+  return (
+    <div style={{
+      height: '100vh',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      background: 'var(--bg-light)',
+      color: 'var(--text)',
+      padding: '24px',
+      textAlign: 'center'
+    }}>
+      <div style={{
+        background: isBanned ? 'rgba(239, 68, 68, 0.1)' : 'rgba(245, 158, 11, 0.1)',
+        padding: '32px',
+        borderRadius: '24px',
+        border: `1px solid ${isBanned ? '#ef4444' : '#f59e0b'}`,
+        maxWidth: '500px',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        gap: '20px'
+      }}>
+        <ShieldAlert size={64} color={isBanned ? '#ef4444' : '#f59e0b'} />
+        <h1 style={{ margin: 0, fontSize: '28px' }}>
+          {isBanned ? t('security.account_banned') : t('security.account_suspended')}
+        </h1>
+        <p style={{ color: 'var(--text-muted)', fontSize: '16px', lineHeight: '1.6' }}>
+          {isBanned ? t('security.banned_desc') : t('security.suspended_desc')}
+        </p>
+
+        {reason && (
+          <div style={{
+            background: 'var(--bg)',
+            padding: '12px 16px',
+            borderRadius: '12px',
+            fontSize: '14px',
+            width: '100%',
+            textAlign: 'left',
+            border: '1px solid var(--border-muted)'
+          }}>
+            <strong style={{ display: 'block', marginBottom: '4px' }}>{t('security.reason_prefix')}</strong>
+            {reason}
+          </div>
+        )}
+
+        <button
+          onClick={() => auth.signOut()}
+          style={{
+            marginTop: '12px',
+            background: 'var(--text)',
+            color: 'var(--bg)',
+            border: 'none',
+            padding: '12px 24px',
+            borderRadius: '12px',
+            fontWeight: '700',
+            cursor: 'pointer',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px'
+          }}
+        >
+          <LogOut size={18} /> {t('login.sign_out')}
+        </button>
+      </div>
     </div>
   );
 };

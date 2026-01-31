@@ -11,7 +11,7 @@ function RecentTransactions({ income = [], expenses = [] }) {
             id: item.id,
             title: item.title || item.source,
             date: item.date?.toDate ? item.date.toDate() : new Date(item.date),
-            amount: `+$${Number(item.amount).toLocaleString()}`,
+            amount: `+$${(Number(item.amount) || 0).toLocaleString()}`,
             type: "income",
             status: t('home.transactions.status_completed')
         })),
@@ -19,7 +19,7 @@ function RecentTransactions({ income = [], expenses = [] }) {
             id: item.id,
             title: item.title,
             date: item.date?.toDate ? item.date.toDate() : new Date(item.date),
-            amount: `-$${Number(item.amount).toLocaleString()}`,
+            amount: `-$${(Number(item.amount) || 0).toLocaleString()}`,
             type: "expense",
             status: t('home.transactions.status_completed')
         }))

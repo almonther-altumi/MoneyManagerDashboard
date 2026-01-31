@@ -39,6 +39,9 @@
         linear-gradient(#fff 0 0);
     -webkit-mask-composite: xor;
     mask-composite: exclude;
+    mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
     opacity: 0;
     transition: opacity 0.3s;
     pointer-events: none;
@@ -81,20 +84,27 @@
     flex-direction: column;
     justify-content: center;
     gap: 4px;
-    min-width: 0;
-    /* Important for truncation */
+    min-width: 100px;
+}
+
+.name-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
 }
 
 .name {
     margin: 0;
-    font-size: 1.2rem;
-    /* Slightly reduced fits better */
+    font-size: 1.15rem;
     font-weight: 800;
     color: var(--text);
     letter-spacing: -0.5px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    flex-shrink: 1;
+    unicode-bidi: isolate;
 }
 
 .reason {
@@ -111,7 +121,13 @@
     flex-direction: column;
     align-items: flex-end;
     gap: 12px;
-    min-width: 140px;
+    min-width: 120px;
+    text-align: right;
+}
+
+[dir="rtl"] .card-right {
+    align-items: flex-start;
+    text-align: left;
 }
 
 .financial-stack {
@@ -124,7 +140,14 @@
     color: var(--text-muted);
     letter-spacing: 1px;
     font-weight: 700;
+}
+
+[dir="ltr"] .amount-label {
     margin-right: 15px;
+}
+
+[dir="rtl"] .amount-label {
+    margin-left: 15px;
 }
 
 .amount-value {
@@ -154,12 +177,20 @@
     background: linear-gradient(90deg, var(--secondary), var(--primary));
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(var(--secondary), 0.5);
+    transform-origin: left;
+    transition: width 1s ease;
+}
+
+[dir="rtl"] .progress-bar-fill {
+    transform-origin: right;
+    background: linear-gradient(270deg, var(--secondary), var(--primary));
 }
 
 .progress-text {
     font-size: 0.8rem;
     color: var(--text);
     font-weight: 700;
+    white-space: nowrap;
 }
 
 /* Mobile Responsive */

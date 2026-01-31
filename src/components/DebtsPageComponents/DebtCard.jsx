@@ -1,7 +1,7 @@
 import React from 'react';
 import '../../components/Styles/DebtsPageStyles/DebtCardStyle.css';
 
-const DebtCard = ({ debt, onClick }) => {
+const DebtCard = ({ debt, onClick, isSample }) => {
     const total = Number(debt.amount) || 0;
     const remaining = Number(debt.remaining) || 0;
     const paid = total - remaining;
@@ -10,7 +10,7 @@ const DebtCard = ({ debt, onClick }) => {
     const cleanProgress = Math.min(Math.max(progress, 0), 100);
 
     return (
-        <div className="debt-horizontal-card" onClick={() => onClick(debt)}>
+        <div className="debt-horizontal-card" onClick={() => onClick && onClick(debt)}>
             <div className="card-left">
                 <div className="avatar-circle">
                     {debt.name ? debt.name.charAt(0).toUpperCase() : '?'}
@@ -19,7 +19,10 @@ const DebtCard = ({ debt, onClick }) => {
 
             <div className="card-center">
                 <div className="debt-main-info">
-                    <h3 className="name">{debt.name}</h3>
+                    <div className="name-wrapper">
+                        <span className="name">{debt.name}</span>
+                        {isSample && <span className="sample-badge-mini">Sample</span>}
+                    </div>
                     <span className="reason">{debt.reason || "Generic Loan"}</span>
                 </div>
                 {/* Mobile View: Progress moves here usually, or keep simple */}
@@ -43,6 +46,20 @@ const DebtCard = ({ debt, onClick }) => {
                     <span className="progress-text">{Math.round(cleanProgress)}% Paid</span>
                 </div>
             </div>
+            <style>{`
+                .sample-badge-mini {
+                    background: rgba(var(--secondary-rgb), 0.1);
+                    color: var(--secondary);
+                    padding: 2px 6px;
+                    border-radius: 4px;
+                    font-size: 9px;
+                    font-weight: 800;
+                    text-transform: uppercase;
+                    margin-left: 8px;
+                    vertical-align: middle;
+                    border: 1px solid rgba(var(--secondary-rgb), 0.2);
+                }
+            `}</style>
         </div>
     );
 };

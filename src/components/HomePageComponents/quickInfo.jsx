@@ -86,8 +86,8 @@ function QuickInfo({ data }) {
             .filter(Boolean)
     ).size || 1;
 
-    const avgMonthlyIncome = yearlyIncome / uniqueIncomeMonths;
-    const avgMonthlyExpense = yearlyExpense / uniqueExpenseMonths;
+    const avgMonthlyIncome = (yearlyIncome / uniqueIncomeMonths) || 0;
+    const avgMonthlyExpense = (yearlyExpense / uniqueExpenseMonths) || 0;
 
     return (
         <section className="profit-section">

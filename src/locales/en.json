@@ -102,7 +102,9 @@
         "placeholder_category": "e.g. Food, Utilities",
         "placeholder_method": "e.g. Cash, Card",
         "placeholder_amount": "0.00",
-        "placeholder_source": "e.g. Salary, Freelance"
+        "placeholder_source": "e.g. Salary, Freelance",
+        "load_more": "Load More",
+        "loading": "Loading..."
     },
     "login": {
         "welcome_back": "Welcome Back",
@@ -123,7 +125,12 @@
         "go_back": "Go Back"
     },
     "home": {
-        "executive_overview": "Executive Overview",
+        "welcome_title": "Welcome to your Financial Dashboard!",
+        "empty_dashboard_hint": "It looks like you haven't added any data yet. Would you like to see how the dashboard looks with some sample data?",
+        "try_demo": "Try Demo Mode",
+        "demo_mode_notice": "Currently viewing sample data. Your actual records are hidden and safe.",
+        "exit_demo": "Exit Demo Mode",
+        "executive_overview": "Financial Overview",
         "global_financial_state": "Global financial state and liquidity analytics.",
         "synchronizing_core": "Synchronizing Core",
         "quick_info": {
@@ -163,6 +170,9 @@
             "language_desc": "Main dialect for dashboard aggregation",
             "theme_title": "Theme Auto-Sync",
             "theme_desc": "Match system appearance preferences",
+            "theme_light": "Light Mode",
+            "theme_dark": "Dark Mode",
+            "theme_auto": "Auto (System)",
             "data_title": "Real-time Data Sync",
             "data_desc": "Keep financial records updated across devices",
             "lang_en": "English",
@@ -174,7 +184,10 @@
             "email_briefings": "Email Briefings",
             "email_briefings_desc": "Weekly summaries of your net-worth growth.",
             "critical_budget_alerts": "Critical Budget Alerts",
-            "critical_budget_alerts_desc": "Instant notification upon exceeding 85% of monthly budget."
+            "critical_budget_alerts_desc": "Instant notification upon exceeding 85% of monthly budget.",
+            "budget_info": "Notice: You have used {{percent}}% of your monthly budget.",
+            "budget_warning": "Warning: You have exceeded {{percent}}% of your budget!",
+            "budget_critical": "Critical: You have reached 100% of your monthly budget!"
         },
         "security": {
             "title": "Security & Privacy",
@@ -319,5 +332,33 @@
         "cancel_btn": "Cancel",
         "update_success": "Notification updated successfully!",
         "delete_success": "Notification deleted successfully!"
+    },
+    "admin_users": {
+        "title": "User Governance",
+        "subtitle": "Monitor and manage access for all platform users.",
+        "search_placeholder": "Search by email or name...",
+        "table_name": "User",
+        "table_status": "Status",
+        "table_actions": "Actions",
+        "status_active": "Active",
+        "status_suspended": "Suspended",
+        "status_banned": "Banned",
+        "ban_btn": "Ban User",
+        "unban_btn": "Lift Ban",
+        "reason_label": "Reason for Ban",
+        "reason_placeholder": "e.g. Rate limiting violation, spamming...",
+        "confirm_ban": "Confirm Ban",
+        "banned_at": "Banned On:",
+        "total_users": "Gross Users",
+        "banned_users": "Restricted",
+        "no_users": "No users found matching your query."
+    },
+    "security": {
+        "account_suspended": "Account Suspended",
+        "suspended_desc": "Your account has been temporarily suspended due to suspicious activity (excessive requests). Please contact support for review.",
+        "account_banned": "Access Terminated",
+        "banned_desc": "This account is permanently banned from the platform.",
+        "reason_prefix": "Reason:",
+        "rate_limit_warning": "Action blocked: Slow down! You are performing actions too quickly."
     }
 }

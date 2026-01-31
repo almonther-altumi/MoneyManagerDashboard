@@ -4,7 +4,7 @@ import { db, auth } from '../firebase';
 import { doc, setDoc } from 'firebase/firestore';
 import { useTranslation } from 'react-i18next';
 
-import { useFinancialData } from '../contexts/FinancialContext';
+import { useFinancialData } from '../hooks/useFinancialData';
 
 import { useNotification } from '../hooks/useNotification';
 import Notification from '../components/Notification';

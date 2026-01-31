@@ -1,42 +1,33 @@
-import React, { useState, useRef, forwardRef, useImperativeHandle } from "react";
-import { collection, deleteDoc, addDoc, updateDoc, doc } from "firebase/firestore";
+import React, { useState, useRef, forwardRef, useImperativeHandle, useEffect } from "react";
+import "../Styles/TableStyle.css";
+import { useTranslation } from "react-i18next";
+import { collection, addDoc, updateDoc, doc, deleteDoc, query, orderBy, limit, getDocs, startAfter } from "firebase/firestore";
 import { db, auth } from "../../firebase";
 import Notification from "../Notification";
 import { useNotification } from "../../hooks/useNotification";
-import { useTranslation } from "react-i18next";
-import "../Styles/TableStyle.css"
-import { useFinancialData } from "../../contexts/FinancialContext";
+import { useFinancialData } from "../../hooks/useFinancialData";
+import { checkRateLimit } from "../../security/rateLimiter";
 
 const IncomeTable = forwardRef((props, ref) => {
     const { t } = useTranslation();
-    const { income: incomeData, refreshData } = useFinancialData();
+    const { refreshData } = useFinancialData();
+    const { notification, showNotification, hideNotification } = useNotification();
 
-    // State for the new editable row
+    const [incomeData, setIncomeData] = useState([]);
+    const [lastDoc, setLastDoc] = useState(null);
+    const [loadingMore, setLoadingMore] = useState(false);
+    const [hasMore, setHasMore] = useState(true);
+    const [isInitialLoading, setIsInitialLoading] = useState(true);
+
     const [isAddingNew, setIsAddingNew] = useState(false);
     const [newRowData, setNewRowData] = useState({
-        date: "",
+        date: new Date().toISOString().split('T')[0],
         title: "",
         category: "",
         paymentMethod: "",
         amount: ""
     });
 
-    // Expose functions to parent via ref
-    useImperativeHandle(ref, () => ({
-        addNewRow() {
-            setIsAddingNew(true);
-            const now = new Date().toISOString().split('T')[0];
-            setNewRowData({
-                date: now,
-                title: "",
-                category: "",
-                paymentMethod: "",
-                amount: ""
-            });
-        }
-    }));
-
-    // State for editing rows
     const [editingId, setEditingId] = useState(null);
     const [editRowData, setEditRowData] = useState({
         date: "",
@@ -46,159 +37,222 @@ const IncomeTable = forwardRef((props, ref) => {
         amount: ""
     });
 
-    // Use notification hook
-    const { notification, showNotification, hideNotification } = useNotification();
+    const inputRefs = useRef({});
 
-    const AddIncome = async () => {
+    const fetchInitialData = async () => {
+        const user = auth.currentUser;
+        if (!user) return;
+
         try {
-            const user = auth.currentUser;
-            if (!user) {
-                showNotification("User not logged in", "error");
-                return;
-            }
+            const q = query(
+                collection(db, "users", user.uid, "income"),
+                orderBy("date", "desc"),
+                limit(10)
+            );
+            const snapshot = await getDocs(q);
+            const data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 
-            // users > userId > his : income , expenses and other collections 
-            const incomeDate = newRowData.date || new Date().toISOString().split('T')[0];
-
-            await addDoc(collection(db, "users", user.uid, "income"), {
-                title: newRowData.title,
-                amount: parseFloat(newRowData.amount),
-                date: incomeDate,
-                category: newRowData.category,
-                paymentMethod: newRowData.paymentMethod,
-            });
-            // Actually, the original stored a Date object (Timestamp).
-            // But the context raw data will have Timestamp objects. 
-            // My context code `...doc.data()` spreads the Timestamp.
-            // I need to format it for display in the table map.
-
-            showNotification("Income added successfully!", "success");
-
-            // Reset fields
-            setIsAddingNew(false);
-            setNewRowData({
-                date: "",
-                title: "",
-                category: "",
-                paymentMethod: "",
-                amount: ""
-            });
-
-            // Update global data
-            refreshData();
-
-        } catch (e) {
-            console.error("Error adding income: ", e);
-            showNotification("Failed to add income", "error");
+            setIncomeData(data);
+            setLastDoc(snapshot.docs[snapshot.docs.length - 1]);
+            setHasMore(snapshot.docs.length === 10);
+        } catch (error) {
+            console.error("Error fetching initial income:", error);
+        } finally {
+            setIsInitialLoading(false);
         }
     };
+
+    const loadMore = async () => {
+        if (!lastDoc || loadingMore || !hasMore) return;
+
+        setLoadingMore(true);
+        const user = auth.currentUser;
+        if (!user) return;
+
+        try {
+            const q = query(
+                collection(db, "users", user.uid, "income"),
+                orderBy("date", "desc"),
+                startAfter(lastDoc),
+                limit(10)
+            );
+            const snapshot = await getDocs(q);
+            const newData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
+            setIncomeData(prev => [...prev, ...newData]);
+            setLastDoc(snapshot.docs[snapshot.docs.length - 1]);
+            setHasMore(snapshot.docs.length === 10);
+        } catch (error) {
+            console.error("Error loading more income:", error);
+        } finally {
+            setLoadingMore(false);
+        }
+    };
+
+    useEffect(() => {
+        fetchInitialData();
+    }, []);
+
+    useImperativeHandle(ref, () => ({
+        addNewRow: () => {
+            setIsAddingNew(true);
+            const today = new Date().toISOString().split('T')[0];
+            setNewRowData({ date: today, title: "", category: "", paymentMethod: "", amount: "" });
+            setTimeout(() => {
+                if (inputRefs.current['date']) {
+                    inputRefs.current['date'].focus();
+                }
+            }, 0);
+        }
+    }));
 
     const handleInputChange = (field, value) => {
         setNewRowData(prev => ({ ...prev, [field]: value }));
-    };
-
-    const handleKeyPress = (e) => {
-        if (e.key === 'Enter') {
-            AddIncome();
-        } else if (e.key === 'Escape') {
-            setIsAddingNew(false);
-        }
-    };
-    // Refs for the input fields
-    const inputRefs = useRef({});
-
-    // fetchIncomeData removed in favor of context
-
-    async function deleteIncomeRow(id) {
-        try {
-            const user = auth.currentUser;
-            if (!user) return;
-
-            await deleteDoc(doc(db, "users", user.uid, "income", id))
-            showNotification("Item deleted successfully!", "success")
-
-            refreshData();
-        }
-        catch (error) {
-            console.log(error)
-            showNotification("Failed to delete item", "error")
-        }
-    }
-
-    const startEditing = (income) => {
-        setEditingId(income.id);
-        // income.date from context might be Timestamp or string depending on how it was saved.
-        // I need to handle display formatting.
-        // For now, I'll assume I handle it in the map function below or here.
-        // Let's inspect how I render it.
-        // In render: `{income.date}`.
-        // If income.date is Timestamp from context, this will break.
-        // I should stick to the original logic where I format it.
-        setEditRowData({
-            date: formatDisplayDate(income.date),
-            title: income.title,
-            category: income.category,
-            paymentMethod: income.paymentMethod,
-            amount: String(income.amount).replace('$', '').replace(',', '')
-        });
     };
 
     const handleEditChange = (field, value) => {
         setEditRowData(prev => ({ ...prev, [field]: value }));
     };
 
-    const updateIncomeRow = async () => {
-        try {
-            const user = auth.currentUser;
-            if (!user) return;
+    const AddIncome = async () => {
+        const user = auth.currentUser;
+        if (!user) return;
 
+        if (!newRowData.title || !newRowData.amount) {
+            showNotification(t('notifications.fill_required'), "error");
+            return;
+        }
+
+        const canProceed = await checkRateLimit();
+        if (!canProceed) {
+            showNotification(t('security.rate_limit_warning'), "error");
+            return;
+        }
+
+        try {
+            const incomeDate = newRowData.date || new Date().toISOString().split('T')[0];
+
+            await addDoc(collection(db, "users", user.uid, "income"), {
+                title: newRowData.title,
+                amount: parseFloat(newRowData.amount) || 0,
+                date: incomeDate,
+                category: newRowData.category || "General",
+                paymentMethod: newRowData.paymentMethod || "-",
+                createdAt: new Date()
+            });
+
+            showNotification(t('table.add_success'), "success");
+            setIsAddingNew(false);
+            setNewRowData({
+                date: new Date().toISOString().split('T')[0],
+                title: "",
+                category: "",
+                paymentMethod: "",
+                amount: ""
+            });
+            fetchInitialData();
+            if (refreshData) refreshData();
+        } catch (error) {
+            console.error("Error adding income:", error);
+            showNotification(t('table.add_error'), "error");
+        }
+    };
+
+    const deleteIncomeRow = async (id) => {
+        const user = auth.currentUser;
+        if (!user) return;
+
+        const canProceed = await checkRateLimit();
+        if (!canProceed) {
+            showNotification(t('security.rate_limit_warning'), "error");
+            return;
+        }
+
+        try {
+            await deleteDoc(doc(db, "users", user.uid, "income", id));
+            setIncomeData(prev => prev.filter(item => item.id !== id));
+            showNotification(t('table.delete_success'), "success");
+            if (refreshData) refreshData();
+        } catch (error) {
+            console.error("Error deleting income:", error);
+            showNotification(t('table.delete_error'), "error");
+        }
+    };
+
+    const startEditing = (income) => {
+        setEditingId(income.id);
+        let formattedDate = income.date;
+        if (income.date && income.date.toDate) {
+            formattedDate = income.date.toDate().toISOString().split('T')[0];
+        } else if (income.date) {
+            try {
+                formattedDate = new Date(income.date).toISOString().split('T')[0];
+            } catch {
+                formattedDate = income.date;
+            }
+        }
+
+        setEditRowData({
+            date: formattedDate,
+            title: income.title,
+            category: income.category,
+            paymentMethod: income.paymentMethod || "",
+            amount: income.amount
+        });
+    };
+
+    const updateIncomeRow = async () => {
+        const user = auth.currentUser;
+        if (!user || !editingId) return;
+
+        const canProceed = await checkRateLimit();
+        if (!canProceed) {
+            showNotification(t('security.rate_limit_warning'), "error");
+            return;
+        }
+
+        try {
             const incomeDocRef = doc(db, "users", user.uid, "income", editingId);
             await updateDoc(incomeDocRef, {
                 title: editRowData.title,
-                amount: parseFloat(editRowData.amount),
-                date: new Date(editRowData.date),
+                amount: parseFloat(editRowData.amount) || 0,
+                date: editRowData.date,
                 category: editRowData.category,
                 paymentMethod: editRowData.paymentMethod
             });
 
-            showNotification("Income updated successfully!", "success");
+            showNotification(t('table.update_success'), "success");
+            setIncomeData(prev => prev.map(item => item.id === editingId ? { ...item, ...editRowData, amount: parseFloat(editRowData.amount) || 0 } : item));
             setEditingId(null);
-            refreshData();
+            if (refreshData) refreshData();
         } catch (error) {
             console.error("Error updating income:", error);
-            showNotification("Failed to update income", "error");
+            showNotification(t('table.update_error'), "error");
         }
     };
 
-    // Helper to format date consistent with original
-    const formatDisplayDate = (dateVal) => {
-        if (!dateVal) return "";
-        try {
-            let d;
-            if (dateVal.toDate) {
-                d = dateVal.toDate();
-            } else if (typeof dateVal === 'string') {
-                d = new Date(dateVal);
+    const handleKeyPress = (e, field, isEditing = false) => {
+        if (e.key === 'Enter') {
+            if (isEditing) {
+                updateIncomeRow();
             } else {
-                d = new Date(dateVal);
+                AddIncome();
             }
-
-            if (isNaN(d.getTime())) return dateVal;
-
-            return d.toLocaleDateString(undefined, {
-                year: 'numeric',
-                month: '2-digit',
-                day: '2-digit'
-            });
-        } catch {
-            return dateVal;
         }
     };
 
+    const formatDisplayDate = (date) => {
+        if (!date) return "";
+        let d;
+        if (date.toDate) d = date.toDate();
+        else d = new Date(date);
+
+        if (isNaN(d.getTime())) return date;
+        return d.toLocaleDateString();
+    };
 
     return (
         <>
-            {/* Notification Component */}
             <Notification
                 show={notification.show}
                 message={notification.message}
@@ -207,36 +261,33 @@ const IncomeTable = forwardRef((props, ref) => {
             />
 
             <div className="table-wrapper">
-                <table>
+                <table className="luxury-table">
                     <thead>
                         <tr>
                             <th>{t('table.date')}</th>
                             <th>{t('table.description')}</th>
                             <th>{t('table.category')}</th>
                             <th>{t('table.method')}</th>
-                            <th >{t('table.amount')}</th>
-                            <th>{t('table.actions')}</th>
+                            <th>{t('table.amount')}</th>
+                            <th className="actions-header">{t('table.actions')}</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {/* New Editable Row at top */}
                         {isAddingNew && (
-                            <tr className="adding-new-row">
-                                <td>
+                            <tr className="adding-row">
+                                <td data-label={t('table.date')}>
                                     <input
                                         type="date"
                                         className="table-input"
                                         value={newRowData.date}
                                         onChange={(e) => handleInputChange('date', e.target.value)}
-                                        onKeyDown={(e) => handleKeyPress(e, 'date')}
                                         ref={(el) => inputRefs.current['date'] = el}
-                                        autoFocus
                                     />
                                 </td>
-                                <td>
+                                <td data-label={t('table.description')}>
                                     <input
                                         type="text"
-                                        placeholder={t('table.placeholder_source')}
+                                        placeholder={t('table.placeholder_description')}
                                         className="table-input"
                                         value={newRowData.title}
                                         onChange={(e) => handleInputChange('title', e.target.value)}
@@ -244,7 +295,7 @@ const IncomeTable = forwardRef((props, ref) => {
                                         ref={(el) => inputRefs.current['title'] = el}
                                     />
                                 </td>
-                                <td>
+                                <td data-label={t('table.category')}>
                                     <input
                                         type="text"
                                         placeholder={t('table.placeholder_category')}
@@ -255,7 +306,7 @@ const IncomeTable = forwardRef((props, ref) => {
                                         ref={(el) => inputRefs.current['category'] = el}
                                     />
                                 </td>
-                                <td>
+                                <td data-label={t('table.method')}>
                                     <input
                                         type="text"
                                         placeholder={t('table.placeholder_method')}
@@ -266,7 +317,7 @@ const IncomeTable = forwardRef((props, ref) => {
                                         ref={(el) => inputRefs.current['paymentMethod'] = el}
                                     />
                                 </td>
-                                <td>
+                                <td data-label={t('table.amount')}>
                                     <input
                                         type="number"
                                         placeholder={t('table.placeholder_amount')}
@@ -284,53 +335,61 @@ const IncomeTable = forwardRef((props, ref) => {
                             </tr>
                         )}
 
-                        {incomeData.length === 0 && !isAddingNew ? (
+                        {incomeData.length === 0 && !isAddingNew && !isInitialLoading && (
                             <tr>
-                                <td colSpan="6" style={{ textAlign: 'center', padding: '30px', color: '#999' }}>{t('table.empty_income')}</td>
+                                <td colSpan="6" className="empty-table-message">
+                                    <div className="empty-state-content" style={{ textAlign: 'center', padding: '40px', color: 'var(--text-muted)' }}>
+                                        <p>{t('table.empty_income')}</p>
+                                    </div>
+                                </td>
                             </tr>
-                        ) : (
-                            <>
-                                {/* Existing income data rows */}
-                                {incomeData.map((income) => (
-                                    <tr key={income.id}>
-                                        {editingId === income.id ? (
-                                            <>
-                                                <td><input type="text" className="table-input" value={editRowData.date} onChange={(e) => handleEditChange('date', e.target.value)} /></td>
-                                                <td><input type="text" className="table-input" value={editRowData.title} onChange={(e) => handleEditChange('title', e.target.value)} /></td>
-                                                <td><input type="text" className="table-input" value={editRowData.category} onChange={(e) => handleEditChange('category', e.target.value)} /></td>
-                                                <td><input type="text" className="table-input" value={editRowData.paymentMethod} onChange={(e) => handleEditChange('paymentMethod', e.target.value)} /></td>
-                                                <td><input type="number" className="table-input amount" value={editRowData.amount} onChange={(e) => handleEditChange('amount', e.target.value)} /></td>
-                                                <td className="row-actions">
-                                                    <button className="action-icon-btn save" onClick={updateIncomeRow} title={t('table.save')}>✓</button>
-                                                    <button className="action-icon-btn cancel" onClick={() => setEditingId(null)} title={t('table.cancel')}>✕</button>
-                                                </td>
-                                            </>
-                                        ) : (
-                                            <>
-                                                <td>{formatDisplayDate(income.date)}</td>
-                                                <td>{income.title}</td>
-                                                <td><span className="category-income-badge">{income.category || 'General'}</span></td>
-                                                <td>{income.paymentMethod || 'Bank'}</td>
-                                                <td className="amount-income-cell">${income.amount}</td>
-                                                <td className="row-actions">
-                                                    <button className="action-icon-btn edit" onClick={() => startEditing(income)} title="Edit">✎</button>
-                                                    <button className="action-icon-btn delete" onClick={() => deleteIncomeRow(income.id)} title="Delete">🗑</button>
-                                                </td>
-                                            </>
-                                        )}
-                                    </tr>
-                                ))}
-                            </>
                         )}
+
+                        {incomeData.map((income) => (
+                            <tr key={income.id}>
+                                {editingId === income.id ? (
+                                    <>
+                                        <td data-label={t('table.date')}><input type="date" className="table-input" value={editRowData.date} onChange={(e) => handleEditChange('date', e.target.value)} /></td>
+                                        <td data-label={t('table.description')}><input type="text" className="table-input" value={editRowData.title} onChange={(e) => handleEditChange('title', e.target.value)} /></td>
+                                        <td data-label={t('table.category')}><input type="text" className="table-input" value={editRowData.category} onChange={(e) => handleEditChange('category', e.target.value)} /></td>
+                                        <td data-label={t('table.method')}><input type="text" className="table-input" value={editRowData.paymentMethod} onChange={(e) => handleEditChange('paymentMethod', e.target.value)} /></td>
+                                        <td data-label={t('table.amount')}><input type="number" className="table-input amount" value={editRowData.amount} onChange={(e) => handleEditChange('amount', e.target.value)} /></td>
+                                        <td className="row-actions">
+                                            <button className="action-icon-btn save" onClick={updateIncomeRow} title={t('table.save')}>✓</button>
+                                            <button className="action-icon-btn cancel" onClick={() => setEditingId(null)} title={t('table.cancel')}>✕</button>
+                                        </td>
+                                    </>
+                                ) : (
+                                    <>
+                                        <td data-label={t('table.date')}>{formatDisplayDate(income.date)}</td>
+                                        <td data-label={t('table.description')} style={{ fontWeight: '600' }}>{income.title}</td>
+                                        <td data-label={t('table.category')}><span className="category-income-badge">{income.category || 'General'}</span></td>
+                                        <td data-label={t('table.method')}>{income.paymentMethod || 'Bank'}</td>
+                                        <td data-label={t('table.amount')} className="amount-income-cell">${(Number(income.amount) || 0).toLocaleString()}</td>
+                                        <td className="row-actions">
+                                            <button className="action-icon-btn edit" onClick={() => startEditing(income)} title="Edit">✎</button>
+                                            <button className="action-icon-btn delete" onClick={() => deleteIncomeRow(income.id)} title="Delete">🗑</button>
+                                        </td>
+                                    </>
+                                )}
+                            </tr>
+                        ))}
                     </tbody>
                 </table>
 
+                {!isInitialLoading && hasMore && incomeData.length > 0 && (
+                    <div className="pagination-footer">
+                        <button
+                            className="load-more-btn"
+                            onClick={loadMore}
+                            disabled={loadingMore}
+                        >
+                            {loadingMore ? t('table.loading') : t('table.load_more')}
+                        </button>
+                    </div>
+                )}
             </div>
-
-
         </>
-
-
     );
 });
 

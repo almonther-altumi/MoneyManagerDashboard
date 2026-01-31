@@ -1,66 +1,55 @@
 .my-cards-section {
-    width: 94%;
+    width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 15px;
 }
 
 .my-cards-section h3 {
     margin: 0;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 800;
     color: var(--text-muted);
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 1.5px;
 }
 
 .card-container {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 16px;
+    width: 100%;
 }
 
 .credit-card {
     position: relative;
     width: 100%;
-    height: 160px;
-    /* Reduced further from 180px */
-    border-radius: 20px;
-    padding: 20px;
+    max-width: 420px;
+    height: 180px;
+    border-radius: 24px;
+    padding: 24px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     color: white;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
     transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
     overflow: hidden;
     cursor: pointer;
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .credit-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-}
-
-.credit-card::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(circle, rgba(255, 255, 255, 0.08) 0%, transparent 70%);
-    pointer-events: none;
+    transform: translateY(-6px) scale(1.01);
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.3);
 }
 
 .visa-card {
     background: linear-gradient(135deg, #1A1F2C 0%, #0a0c0f 100%);
-    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .master-card {
     background: linear-gradient(135deg, #1A73E8 0%, #000000 100%);
-    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .card-top {
@@ -70,32 +59,40 @@
 }
 
 .card-chip {
-    width: 36px;
-    height: 28px;
+    width: 44px;
+    height: 32px;
     background: linear-gradient(135deg, #D4AF37 0%, #F9D423 100%);
-    border-radius: 5px;
-    position: relative;
+    border-radius: 6px;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
 .card-type {
-    font-weight: 800;
-    font-size: 18px;
+    font-weight: 900;
+    font-size: 20px;
     letter-spacing: -0.5px;
-    opacity: 0.8;
+    font-style: italic;
+    opacity: 0.9;
 }
 
 .card-number {
-    font-size: 18px;
-    letter-spacing: 2px;
-    font-family: 'Inter', monospace;
-
-    font-weight: 600;
-    margin: 10px 0;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin: 15px 0;
 }
 
-.stars {
-    display: block;
-    margin-inline-end: 15px;
+.card-number .stars {
+    font-size: 20px;
+    letter-spacing: 2px;
+    opacity: 0.6;
+    margin: 0;
+}
+
+.editable-field {
+    font-size: 20px;
+    letter-spacing: 3px;
+    font-weight: 700;
+    font-family: 'Outfit', sans-serif;
 }
 
 .card-bottom {
@@ -104,25 +101,68 @@
     align-items: flex-end;
 }
 
-.card-holder p,
-.card-expiry p {
-    font-size: 8px;
+.card-holder span,
+.card-expiry span {
+    display: block;
+    font-size: 9px;
     text-transform: uppercase;
-    letter-spacing: 1px;
-    margin: 0 0 2px 0;
-    opacity: 0.5;
+    letter-spacing: 1.2px;
+    margin-bottom: 4px;
+    opacity: 0.6;
     font-weight: 700;
 }
 
 .card-holder h5,
 .card-expiry h5 {
     margin: 0;
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 700;
+    letter-spacing: 0.5px;
 }
 
-@media screen and (max-width : 1350px) {
+/* Centering Logic for Mobile */
+@media screen and (max-width: 768px) {
+    .my-cards-section {
+        align-items: center;
+        text-align: center;
+    }
+
+    .section-header-flex {
+        width: 100%;
+        justify-content: center !important;
+    }
+
     .card-container {
-        width: 94%;
+        align-items: center;
+    }
+
+    .credit-card {
+        height: 160px;
+        padding: 20px;
+        max-width: 380px;
+        /* Optimal mobile width */
+    }
+
+    .card-number {
+        justify-content: center;
+    }
+
+    .card-number .stars {
+        font-size: 16px;
+    }
+
+    .editable-field {
+        font-size: 16px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .credit-card {
+        max-width: 100%;
+        height: 150px;
+    }
+
+    .card-number {
+        gap: 8px;
     }
 }

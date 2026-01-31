@@ -7,7 +7,7 @@ import { doc, setDoc, getDoc } from "firebase/firestore";
 import { auth, db } from "../firebase";
 import { useTranslation } from 'react-i18next';
 
-import { useFinancialData } from '../contexts/FinancialContext';
+import { useFinancialData } from '../hooks/useFinancialData';
 
 function IncomePage() {
     const { t } = useTranslation();

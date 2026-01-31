@@ -7,7 +7,7 @@ import { useTranslation } from "react-i18next";
 
 
 import "../Styles/DebtsPageStyles/DebtsTableStyle.css"
-import { useFinancialData } from "../../contexts/FinancialContext";
+import { useFinancialData } from "../../hooks/useFinancialData";
 
 const DebtsTable = forwardRef((props, ref) => {
     const { t } = useTranslation();
@@ -125,11 +125,11 @@ const DebtsTable = forwardRef((props, ref) => {
             <Notification show={notification.show} message={notification.message} type={notification.type} onClose={hideNotification} />
 
             <div className="table-wrapper">
-                <table>
+                <table className="luxury-table">
                     <thead>
                         <tr>
                             <th>{t('table.date')}</th>
-                            <th>{t('table.obligation')}</th> {/* Someone you got the money  */}
+                            <th>{t('table.obligation')}</th>
                             <th>{t('table.total_principal')}</th>
                             <th>{t('table.current_balance')}</th>
                             <th>{t('table.liquidation')}</th>
@@ -137,51 +137,53 @@ const DebtsTable = forwardRef((props, ref) => {
                         </tr>
                     </thead>
                     <tbody>
-                        {/* Row for adding new line  */}
                         {debtsData.length === 0 && !isAddingNew ? (
                             <tr>
-                                <td colSpan="6" style={{ textAlign: 'center', padding: '30px', color: '#999' }}>{t('table.empty_debts')}</td> {/*When there is no Data on the table  */}
+                                <td colSpan="6" className="empty-table-message">
+                                    <div className="empty-state-content">
+                                        <p>{t('table.empty_debts')}</p>
+                                    </div>
+                                </td>
                             </tr>
                         ) : (
                             isAddingNew && (
-                                <tr className="adding-new-row">
-                                    <td><input className="table-input" value={newRowData.date} onChange={e => setNewRowData({ ...newRowData, date: e.target.value })} onKeyDown={e => handleKeyPress(e, 'date')} ref={el => inputRefs.current['date'] = el} autoFocus /></td>
-                                    <td><input className="table-input" value={newRowData.title} onChange={e => setNewRowData({ ...newRowData, title: e.target.value })} onKeyDown={e => handleKeyPress(e, 'title')} ref={el => inputRefs.current['title'] = el} /></td>
-                                    <td><input className="table-input" value={newRowData.amount} onChange={e => setNewRowData({ ...newRowData, amount: e.target.value })} onKeyDown={e => handleKeyPress(e, 'amount')} ref={el => inputRefs.current['amount'] = el} /></td>
-                                    <td><input className="table-input" value={newRowData.remaining} onChange={e => setNewRowData({ ...newRowData, remaining: e.target.value })} onKeyDown={e => handleKeyPress(e, 'remaining')} ref={el => inputRefs.current['remaining'] = el} /></td>
-                                    <td>--</td>
-                                    <td><button className="action-icon-btn save" onClick={AddDebt}>✓</button></td>
+                                <tr className="adding-row">
+                                    <td data-label={t('table.date')}><input className="table-input" value={newRowData.date} onChange={e => setNewRowData({ ...newRowData, date: e.target.value })} onKeyDown={e => handleKeyPress(e, 'date')} ref={el => inputRefs.current['date'] = el} autoFocus /></td>
+                                    <td data-label={t('table.obligation')}><input className="table-input" value={newRowData.title} onChange={e => setNewRowData({ ...newRowData, title: e.target.value })} onKeyDown={e => handleKeyPress(e, 'title')} ref={el => inputRefs.current['title'] = el} /></td>
+                                    <td data-label={t('table.total_principal')}><input className="table-input" value={newRowData.amount} onChange={e => setNewRowData({ ...newRowData, amount: e.target.value })} onKeyDown={e => handleKeyPress(e, 'amount')} ref={el => inputRefs.current['amount'] = el} /></td>
+                                    <td data-label={t('table.current_balance')}><input className="table-input" value={newRowData.remaining} onChange={e => setNewRowData({ ...newRowData, remaining: e.target.value })} onKeyDown={e => handleKeyPress(e, 'remaining')} ref={el => inputRefs.current['remaining'] = el} /></td>
+                                    <td data-label={t('table.liquidation')}>--</td>
+                                    <td className="row-actions"><button className="action-icon-btn save" onClick={AddDebt}>✓</button></td>
                                 </tr>
                             ))}
 
-                        {/* Data rows from database */}
                         {debtsData.map(debt => (
                             <tr key={debt.id}>
                                 {editingId === debt.id ? (
                                     <>
-                                        <td><input className="table-input" value={editRowData.date} onChange={e => handleEditChange('date', e.target.value)} /></td>
-                                        <td><input className="table-input" value={editRowData.title} onChange={e => handleEditChange('title', e.target.value)} /></td>
-                                        <td><input type="number" className="table-input" value={editRowData.amount} onChange={e => handleEditChange('amount', e.target.value)} /></td>
-                                        <td><input type="number" className="table-input" value={editRowData.remaining} onChange={e => handleEditChange('remaining', e.target.value)} /></td>
-                                        <td>--</td>
-                                        <td>
+                                        <td data-label={t('table.date')}><input className="table-input" value={editRowData.date} onChange={e => handleEditChange('date', e.target.value)} /></td>
+                                        <td data-label={t('table.obligation')}><input className="table-input" value={editRowData.title} onChange={e => handleEditChange('title', e.target.value)} /></td>
+                                        <td data-label={t('table.total_principal')}><input type="number" className="table-input" value={editRowData.amount} onChange={e => handleEditChange('amount', e.target.value)} /></td>
+                                        <td data-label={t('table.current_balance')}><input type="number" className="table-input" value={editRowData.remaining} onChange={e => handleEditChange('remaining', e.target.value)} /></td>
+                                        <td data-label={t('table.liquidation')}>--</td>
+                                        <td className="row-actions">
                                             <button className="action-icon-btn save" onClick={updateDebtRow}>✓</button>
                                             <button className="action-icon-btn cancel" onClick={() => setEditingId(null)}>✕</button>
                                         </td>
                                     </>
                                 ) : (
                                     <>
-                                        <td>{debt.date}</td>
-                                        <td>{debt.title}</td>
-                                        <td>${debt.amount}</td>
-                                        <td style={{ color: 'var(--danger)', fontWeight: 700 }}>${debt.remaining}</td>
-                                        <td className="progress-cell">
+                                        <td data-label={t('table.date')}>{debt.date}</td>
+                                        <td data-label={t('table.obligation')} style={{ fontWeight: '600' }}>{debt.title}</td>
+                                        <td data-label={t('table.total_principal')}>${debt.amount}</td>
+                                        <td data-label={t('table.current_balance')} style={{ color: 'var(--danger)', fontWeight: 700 }}>${debt.remaining}</td>
+                                        <td data-label={t('table.liquidation')} className="progress-cell">
                                             <div className="progress-bar-mini">
                                                 <div className="progress-fill" style={{ width: `${debt.progress}%` }}></div>
                                             </div>
                                             <span style={{ fontSize: '12px', fontWeight: 600, color: 'var(--text-muted)' }}>{Math.round(debt.progress)}%</span>
                                         </td>
-                                        <td>
+                                        <td className="row-actions">
                                             <button className="action-icon-btn edit" onClick={() => startEditing(debt)}>✎</button>
                                             <button className="action-icon-btn delete" onClick={() => deleteDebtRow(debt.id)}>🗑️</button>
                                         </td>

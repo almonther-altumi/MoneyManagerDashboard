@@ -13,6 +13,7 @@ import CloseSideBarIcon from './Icons/CloseSideBarIcon';
 import BugIcon from './Icons/BugIcon';
 import NotificationIcon from './Icons/Header_Icons/NotificationIcon';
 import { auth } from '../firebase';
+import { Users } from 'lucide-react';
 
 const SideBar = ({ isOpen, toggleSidebar }) => {
     const { t } = useTranslation();
@@ -32,7 +33,8 @@ const SideBar = ({ isOpen, toggleSidebar }) => {
             className: "mt-auto",
             items: [
                 ...(auth.currentUser?.email === 'monthertumi2025@gmail.com' ? [
-                    { to: "/admin/notifications", label: t('sidebar.admin'), icon: <NotificationIcon className="sidebar-icon" /> }
+                    { to: "/admin/notifications", label: t('sidebar.admin'), icon: <NotificationIcon className="sidebar-icon" /> },
+                    { to: "/admin/users", label: t('sidebar.admin_users'), icon: <Users size={20} className="sidebar-icon" /> }
                 ] : []),
                 { to: "/settings", label: t('sidebar.settings'), icon: <SettingsIcon className="sidebar-icon" /> },
                 { to: "/report-problem", label: t('report.title'), icon: <BugIcon className="sidebar-icon" /> },
