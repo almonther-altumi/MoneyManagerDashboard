@@ -50,6 +50,20 @@
   --glass-input-hover: rgba(255, 255, 255, 0.05);
 }
 
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  max-width: 100%;
+  overflow-x: hidden;
+  position: relative;
+}
+
 html {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
@@ -69,11 +83,13 @@ body {
   min-width: 320px;
   min-height: 100vh;
   background-color: var(--bg-light);
-  overflow-x: hidden;
 }
 
 .app-root {
   overflow-x: hidden;
+  width: 100vw;
+  max-width: 100%;
+  position: relative;
 }
 
 
@@ -131,7 +147,7 @@ button:hover {
   .expense-page-root,
   .debts-page-root,
   .home-page-root {
-    padding: 24px !important;
+    padding: 32px 24px !important;
   }
 
   h1 {
@@ -140,6 +156,29 @@ button:hover {
 
   h2 {
     font-size: 1.8em;
+  }
+}
+
+@media (max-width: 480px) {
+
+  .reports-page-root,
+  .income-page-root,
+  .expense-page-root,
+  .debts-page-root,
+  .home-page-root {
+    padding: 16px 12px !important;
+  }
+
+  h1 {
+    font-size: 1.8em;
+  }
+
+  h2 {
+    font-size: 1.5em;
+  }
+
+  h3 {
+    font-size: 1.2em;
   }
 }
 

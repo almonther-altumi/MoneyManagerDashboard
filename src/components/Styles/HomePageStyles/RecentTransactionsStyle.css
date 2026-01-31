@@ -140,7 +140,7 @@
 
 @media (max-width: 768px) {
     .transactions-card {
-        padding: 16px;
+        padding: 14px;
     }
 
     .status-tag {
@@ -148,28 +148,37 @@
     }
 
     .transaction-item {
-        padding: 10px;
+        padding: 8px 10px;
         gap: 4px;
     }
 
     .icon-box {
-        width: 32px;
-        height: 32px;
-        font-size: 14px;
-        margin-inline-end: 10px;
+        width: 30px;
+        height: 30px;
+        font-size: 13px;
+        margin-inline-end: 8px;
     }
 
     .t-title {
-        font-size: 13px;
+        font-size: 12px;
+    }
+
+    .t-date {
+        font-size: 10px;
     }
 
     .transaction-amount {
-        font-size: 14px;
+        font-size: 13px;
     }
 }
 
 @media (max-width: 480px) {
     .card-header h3 {
-        font-size: 16px;
+        font-size: 15px;
+    }
+
+    .view-all-btn {
+        font-size: 9px;
+        padding: 4px 8px;
     }
 }

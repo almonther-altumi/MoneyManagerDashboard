@@ -1,102 +1,52 @@
 .profit-section {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 24px;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
     margin-bottom: 24px;
+    width: 100%;
 }
 
 .summeryMoneyBox {
     background: var(--bg);
-    padding: 24px;
-    border-radius: 24px;
+    padding: 20px;
+    border-radius: 20px;
     border: 1px solid var(--border-muted);
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 14px;
     transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-    position: relative;
-    overflow: hidden;
     box-shadow: var(--shadow);
 }
 
-.summeryMoneyBox:hover {
-    transform: translateY(-4px);
-    border-color: var(--secondary);
-    box-shadow: var(--shadow-lg);
-}
-
 .profit-icon {
-    width: 48px;
-    height: 48px;
-    padding: 12px;
-    border-radius: 14px;
+    width: 42px;
+    height: 42px;
+    padding: 10px;
+    border-radius: 12px;
     background: var(--bg-light);
     color: var(--secondary);
     border: 1px solid var(--border-muted);
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
-}
-
-.summeryMoneyBox:hover .profit-icon {
-    background: var(--primary);
-    color: var(--bg-light);
-    border-color: var(--primary);
-    transform: scale(1.05);
-}
-
-.profit-info {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
+    flex-shrink: 0;
 }
 
 .profit-amount {
-    font-size: 22px;
+    font-size: 20px;
     font-weight: 800;
     color: var(--text);
     margin: 0;
-    letter-spacing: -1px;
+    letter-spacing: -0.5px;
 }
 
 .profit-description {
-    font-size: 10px;
+    font-size: 9px;
     font-weight: 800;
     color: var(--text-muted);
     margin: 0;
     text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-.summeryMoneyBox.green .profit-icon {
-    color: var(--success);
-}
-
-.summeryMoneyBox.blue .profit-icon {
-    color: var(--secondary);
-}
-
-.summeryMoneyBox.purple .profit-icon {
-    color: #A461D8;
-}
-
-.summeryMoneyBox.red .profit-icon {
-    color: var(--danger);
-}
-
-@media (max-width: 1200px) {
-    .profit-section {
-        gap: 16px;
-    }
-
-    .summeryMoneyBox {
-        padding: 20px;
-    }
-
-    .profit-amount {
-        font-size: 20px;
-    }
+    letter-spacing: 0.8px;
 }
 
 @media (max-width: 768px) {
@@ -106,19 +56,19 @@
     }
 
     .summeryMoneyBox {
-        padding: 16px;
-        gap: 12px;
+        padding: 14px;
+        gap: 10px;
     }
 
     .profit-icon {
-        width: 36px;
-        height: 36px;
-        padding: 8px;
+        width: 34px;
+        height: 34px;
+        padding: 7px;
         border-radius: 10px;
     }
 
     .profit-amount {
-        font-size: 16px;
+        font-size: 15px;
     }
 
     .profit-description {
@@ -129,5 +79,9 @@
 @media (max-width: 480px) {
     .profit-section {
         grid-template-columns: 1fr;
+    }
+
+    .summeryMoneyBox {
+        padding: 12px;
     }
 }

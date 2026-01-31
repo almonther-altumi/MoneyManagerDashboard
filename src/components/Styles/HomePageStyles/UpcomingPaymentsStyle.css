@@ -400,23 +400,35 @@
 
 @media (max-width: 768px) {
     .upcoming-payments-card {
-        padding: 16px;
+        padding: 14px;
+        gap: 16px;
     }
 
     .payments-header {
         flex-direction: column;
         align-items: flex-start;
-        gap: 12px;
+        gap: 10px;
+    }
+
+    .payments-header h2 {
+        font-size: 16px;
     }
 
     .header-actions-group {
         width: 100%;
-        justify-content: space-between;
+        justify-content: flex-start;
+        gap: 8px;
+    }
+
+    .add-obligation-btn,
+    .view-all-text-btn {
+        font-size: 10px;
+        padding: 6px 10px;
     }
 
     .payment-main-row {
         flex-direction: column;
-        gap: 8px;
+        gap: 6px;
     }
 
     .payment-finance {
@@ -424,17 +436,31 @@
         align-self: flex-start;
     }
 
+    .payment-amount {
+        font-size: 15px;
+    }
+
     .status-pill {
         align-self: flex-start;
+        padding: 3px 8px;
+        font-size: 9px;
     }
 
     .payment-identity {
-        gap: 8px;
+        gap: 10px;
     }
 
     .payment-icon-small {
-        width: 32px;
-        height: 32px;
-        font-size: 14px;
+        width: 30px;
+        height: 30px;
+        font-size: 13px;
+    }
+
+    .payment-details h4 {
+        font-size: 13px;
+    }
+
+    .payment-details p {
+        font-size: 11px;
     }
 }

@@ -2,46 +2,43 @@
     width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 12px;
+    align-items: flex-start;
 }
 
 .my-cards-section h3 {
     margin: 0;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 800;
     color: var(--text-muted);
     text-transform: uppercase;
-    letter-spacing: 1.5px;
+    letter-spacing: 1.2px;
 }
 
 .card-container {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 14px;
     width: 100%;
 }
 
 .credit-card {
     position: relative;
     width: 100%;
-    max-width: 420px;
-    height: 180px;
-    border-radius: 24px;
-    padding: 24px;
+    max-width: 380px;
+    height: 170px;
+    border-radius: 20px;
+    padding: 20px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     color: white;
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
     transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
     overflow: hidden;
     cursor: pointer;
     border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.credit-card:hover {
-    transform: translateY(-6px) scale(1.01);
-    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.3);
+    box-sizing: border-box;
 }
 
 .visa-card {
@@ -59,40 +56,37 @@
 }
 
 .card-chip {
-    width: 44px;
-    height: 32px;
+    width: 38px;
+    height: 28px;
     background: linear-gradient(135deg, #D4AF37 0%, #F9D423 100%);
-    border-radius: 6px;
-    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
 }
 
 .card-type {
     font-weight: 900;
-    font-size: 20px;
+    font-size: 16px;
     letter-spacing: -0.5px;
-    font-style: italic;
     opacity: 0.9;
 }
 
 .card-number {
     display: flex;
     align-items: center;
-    gap: 15px;
-    margin: 15px 0;
+    gap: 10px;
+    margin: 12px 0;
 }
 
 .card-number .stars {
-    font-size: 20px;
-    letter-spacing: 2px;
-    opacity: 0.6;
+    font-size: 16px;
+    letter-spacing: 1px;
+    opacity: 0.7;
     margin: 0;
 }
 
 .editable-field {
-    font-size: 20px;
-    letter-spacing: 3px;
+    font-size: 16px;
+    letter-spacing: 1px;
     font-weight: 700;
-    font-family: 'Outfit', sans-serif;
 }
 
 .card-bottom {
@@ -104,32 +98,23 @@
 .card-holder span,
 .card-expiry span {
     display: block;
-    font-size: 9px;
+    font-size: 8px;
     text-transform: uppercase;
-    letter-spacing: 1.2px;
-    margin-bottom: 4px;
+    letter-spacing: 1px;
+    margin-bottom: 2px;
     opacity: 0.6;
-    font-weight: 700;
 }
 
 .card-holder h5,
 .card-expiry h5 {
     margin: 0;
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 700;
-    letter-spacing: 0.5px;
 }
 
-/* Centering Logic for Mobile */
 @media screen and (max-width: 768px) {
     .my-cards-section {
         align-items: center;
-        text-align: center;
-    }
-
-    .section-header-flex {
-        width: 100%;
-        justify-content: center !important;
     }
 
     .card-container {
@@ -137,32 +122,46 @@
     }
 
     .credit-card {
-        height: 160px;
-        padding: 20px;
-        max-width: 380px;
-        /* Optimal mobile width */
+        height: 140px;
+        max-width: 300px;
+        padding: 16px;
     }
 
-    .card-number {
-        justify-content: center;
-    }
-
-    .card-number .stars {
-        font-size: 16px;
-    }
-
+    .card-number .stars,
     .editable-field {
-        font-size: 16px;
+        font-size: 13px;
+    }
+
+    .card-chip {
+        width: 32px;
+        height: 24px;
     }
 }
 
 @media screen and (max-width: 480px) {
     .credit-card {
-        max-width: 100%;
-        height: 150px;
+        max-width: 280px;
+        height: 130px;
+        padding: 14px;
     }
 
     .card-number {
-        gap: 8px;
+        margin: 8px 0;
+    }
+
+    .card-type {
+        font-size: 14px;
+    }
+
+    .card-holder h5,
+    .card-expiry h5 {
+        font-size: 11px;
+    }
+}
+
+@media screen and (max-width: 360px) {
+    .credit-card {
+        max-width: 260px;
+        height: 120px;
     }
 }

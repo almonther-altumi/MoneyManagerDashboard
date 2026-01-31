@@ -207,11 +207,13 @@ export default function App() {
           display: flex;
           flex-direction: column;
           min-width: 0;
+          width: 100%;
           transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
         }
 
         .sidebar-open .main-layout {
           margin-inline-start: 280px;
+          width: calc(100% - 280px);
         }
 
         .page-content {
@@ -235,6 +237,7 @@ export default function App() {
         @media (max-width: 1024px) {
           .sidebar-open .main-layout {
             margin-inline-start: 0;
+            width: 100%;
           }
           .sidebar-backdrop {
             display: block;
