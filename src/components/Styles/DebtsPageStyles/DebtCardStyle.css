@@ -1,59 +1,24 @@
 .debt-horizontal-card {
     background: var(--bg);
     border: 1px solid var(--border-muted);
-    border-radius: 24px;
-    padding: 20px 24px;
+    border-radius: 20px;
+    padding: 16px 24px;
     display: flex;
     align-items: center;
     gap: 20px;
-    min-height: 100px;
-    height: auto;
-    box-sizing: border-box;
-
-    /* Reduced from 24px to 16px */
-    cursor: pointer;
+    min-height: 80px;
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     position: relative;
     overflow: hidden;
-    backdrop-filter: blur(10px);
-
-    /* Full Width for Grid Cell */
     width: 100%;
-    max-width: none;
-    margin: 0;
-}
-
-/* Gradient Border Effect on Hover */
-.debt-horizontal-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    border-radius: 24px;
-    padding: 2px;
-    background: linear-gradient(135deg, var(--primary), var(--secondary));
-    -webkit-mask:
-        linear-gradient(#fff 0 0) content-box,
-        linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    mask:
-        linear-gradient(#fff 0 0) content-box,
-        linear-gradient(#fff 0 0);
-    opacity: 0;
-    transition: opacity 0.3s;
-    pointer-events: none;
-}
-
-.debt-horizontal-card:hover::before {
-    opacity: 1;
+    box-sizing: border-box;
+    cursor: pointer;
 }
 
 .debt-horizontal-card:hover {
-    transform: translateY(-4px) scale(1.01);
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--secondary);
     background: var(--bg-light);
 }
 
@@ -62,97 +27,82 @@
 }
 
 .avatar-circle {
-    width: 60px;
-    /* Reduced from 80px */
-    height: 60px;
-    border-radius: 50%;
+    width: 52px;
+    height: 52px;
+    border-radius: 16px;
+    /* Squircle style */
     background: linear-gradient(135deg, var(--primary), var(--secondary));
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 24px;
-    /* Reduced from 32px */
+    font-size: 20px;
     font-weight: 800;
     color: white;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .card-center {
     flex: 1;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     gap: 4px;
-    min-width: 100px;
+    min-width: 0;
 }
 
 .name-wrapper {
     display: flex;
     align-items: center;
     gap: 8px;
-    width: 100%;
 }
 
 .name {
-    margin: 0;
-    font-size: 1.15rem;
+    font-size: 1.1rem;
     font-weight: 800;
     color: var(--text);
-    letter-spacing: -0.5px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    flex-shrink: 1;
-    unicode-bidi: isolate;
 }
 
 .reason {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     color: var(--text-muted);
-    font-weight: 500;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    font-weight: 600;
 }
 
 .card-right {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    gap: 12px;
-    min-width: 120px;
-    text-align: right;
+    gap: 10px;
+    min-width: 150px;
 }
 
 [dir="rtl"] .card-right {
     align-items: flex-start;
-    text-align: left;
 }
 
-.financial-stack {
-    text-align: right;
+.amount-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+[dir="rtl"] .amount-group {
+    align-items: flex-start;
 }
 
 .amount-label {
-    font-size: 0.8rem;
+    font-size: 0.7rem;
     text-transform: uppercase;
     color: var(--text-muted);
-    letter-spacing: 1px;
-    font-weight: 700;
-}
-
-[dir="ltr"] .amount-label {
-    margin-right: 15px;
-}
-
-[dir="rtl"] .amount-label {
-    margin-left: 15px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
 }
 
 .amount-value {
-    font-size: 1.4rem;
-    font-weight: 800;
+    font-size: 1.3rem;
+    font-weight: 900;
     color: var(--text);
 }
 
@@ -160,13 +110,12 @@
     width: 100%;
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
-    gap: 4px;
+    gap: 6px;
 }
 
 .progress-bar-bg {
     width: 100%;
-    height: 8px;
+    height: 6px;
     background: var(--bg-dark);
     border-radius: 10px;
     overflow: hidden;
@@ -174,97 +123,70 @@
 
 .progress-bar-fill {
     height: 100%;
-    background: linear-gradient(90deg, var(--secondary), var(--primary));
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(var(--secondary), 0.5);
-    transform-origin: left;
-    transition: width 1s ease;
+    transition: width 1s ease-out;
 }
 
 [dir="rtl"] .progress-bar-fill {
-    transform-origin: right;
-    background: linear-gradient(270deg, var(--secondary), var(--primary));
+    background: linear-gradient(270deg, var(--primary), var(--secondary));
 }
 
 .progress-text {
-    font-size: 0.8rem;
-    color: var(--text);
-    font-weight: 700;
-    white-space: nowrap;
+    font-size: 0.75rem;
+    color: var(--primary);
+    font-weight: 800;
+    text-align: end;
 }
 
-/* Mobile Responsive */
+[dir="rtl"] .progress-text {
+    text-align: start;
+}
+
+/* Mobile Adjustments */
 @media (max-width: 768px) {
     .debt-horizontal-card {
-        flex-direction: row;
-        align-items: center;
-        padding: 20px;
-        gap: 16px;
-        max-width: none;
-        height: auto;
-        min-height: 90px;
-        box-sizing: border-box;
-    }
-
-    .card-left {
-        flex-shrink: 0;
+        padding: 16px;
+        gap: 12px;
     }
 
     .avatar-circle {
-        width: 48px;
-        height: 48px;
+        width: 44px;
+        height: 44px;
         font-size: 18px;
-    }
-
-    .card-center {
-        flex: 1;
-        min-width: 0;
     }
 
     .name {
         font-size: 1rem;
-        margin-bottom: 2px;
-    }
-
-    .reason {
-        font-size: 0.75rem;
-    }
-
-    .card-right {
-        flex-shrink: 0;
-        align-items: flex-end;
-        border-top: none;
-        padding-top: 0;
-        gap: 6px;
-        min-width: auto;
-    }
-
-    .financial-stack {
-        text-align: right;
-        margin-bottom: 6px;
-    }
-
-    .amount-label {
-        font-size: 0.65rem;
-        display: block;
-        margin-bottom: 2px;
     }
 
     .amount-value {
-        font-size: 1.1rem;
-        display: block;
+        font-size: 1.15rem;
     }
 
-    .progress-section {
-        align-items: flex-end;
-        width: 100px;
+    .card-right {
+        min-width: 120px;
+    }
+}
+
+@media (max-width: 480px) {
+    .debt-horizontal-card {
+        flex-wrap: wrap;
     }
 
-    .progress-bar-bg {
-        height: 6px;
+    .card-right {
+        width: 100%;
+        min-width: 100%;
+        margin-top: 10px;
+        padding-top: 10px;
+        border-top: 1px solid var(--border-muted);
+        align-items: stretch;
     }
 
-    .progress-text {
-        font-size: 0.7rem;
+    .amount-group {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
     }
 }

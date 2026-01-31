@@ -13,39 +13,151 @@
 
 .debt-modal-content {
     background: var(--bg);
-    border-radius: 16px;
-    width: 90%;
-    max-width: 360px;
+    border-radius: 24px;
+    width: 95%;
+    max-width: 420px;
     overflow: hidden;
     border: 1px solid var(--border-muted);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
 }
 
 .modal-header-simple {
-    padding: 20px;
+    padding: 32px 28px;
     background: var(--bg-dark);
     position: relative;
     border-bottom: 1px solid var(--border-muted);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
 }
 
 .modal-header-simple h2 {
     margin: 0;
     color: var(--text);
+    font-size: 1.5rem;
+    font-weight: 800;
+    padding-inline-end: 60px;
+    /* Space for close button */
+}
+
+.total-amount-edit-box {
+    margin-top: 12px;
+    padding: 10px 16px;
+    background: var(--bg);
+    border-radius: 12px;
+    border: 1px solid var(--border-muted);
+}
+
+.display-total-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9rem;
+}
+
+.display-total-wrapper .label {
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+.display-total-wrapper .value {
+    color: var(--text);
+    font-weight: 800;
+    font-size: 1rem;
+}
+
+.edit-total-trigger {
+    background: none;
+    border: none;
+    color: var(--primary);
+    cursor: pointer;
+    font-size: 0.9rem;
+    padding: 4px;
+    margin-inline-start: auto;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+}
+
+.edit-total-trigger:hover {
+    opacity: 1;
+}
+
+.edit-input-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.total-edit-input {
+    flex: 1;
+    background: var(--bg-dark);
+    border: 1px solid var(--primary);
+    color: white;
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    outline: none;
+}
+
+.save-total-btn,
+.cancel-total-btn {
+    background: var(--bg-light);
+    border: 1px solid var(--border-muted);
+    color: var(--text);
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 0.8rem;
+}
+
+.save-total-btn {
+    color: #10B981;
+    border-color: #10B981;
+}
+
+.cancel-total-btn {
+    color: #EF4444;
 }
 
 .modal-header-simple .subtitle {
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     color: var(--text-muted);
+    font-weight: 500;
 }
 
 .close-btn {
     position: absolute;
-    top: 16px;
-    right: 16px;
-    background: none;
-    border: none;
-    color: var(--text-muted);
-    font-size: 1.2rem;
+    top: 24px;
+    right: 24px;
+    background: var(--bg-light);
+    border: 1px solid var(--border-muted);
+    color: var(--text);
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
+    transition: all 0.2s;
+    font-size: 1rem;
+    z-index: 10;
+}
+
+[dir="rtl"] .close-btn {
+    right: auto;
+    left: 24px;
+}
+
+.close-btn:hover {
+    background: var(--border-muted);
+    transform: rotate(90deg);
 }
 
 .modal-body-simple {
@@ -100,20 +212,20 @@
     color: #ef4444;
     /* Red */
 }
+
 span.date {
     color: var(--text);
 }
 
- span.amount.success
-{
+span.amount.success {
 
-    color:rgb(39, 247, 39);
+    color: rgb(39, 247, 39);
 }
 
-p.empty-text
-{
+p.empty-text {
     color: var(--text);
 }
+
 .modal-actions-footer {
     margin-top: 24px;
     border-top: 1px solid var(--border-muted);
@@ -189,6 +301,7 @@ p.empty-text
 .pay-confirm-btn:active {
     transform: scale(0.96);
 }
+
 .pay-confirm-btn:hover {
     background: #00ffaa2e;
     border: none;

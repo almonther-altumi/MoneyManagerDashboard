@@ -91,6 +91,12 @@ function DebtsPage() {
         try {
             const debtRef = doc(db, "users", user.uid, "debts", debtId);
             await updateDoc(debtRef, newData);
+
+            // Sync local selectedDebt if it's the one being updated
+            if (selectedDebt && selectedDebt.id === debtId) {
+                setSelectedDebt(prev => ({ ...prev, ...newData }));
+            }
+
             if (refreshData) refreshData();
         } catch (error) {
             console.error(error);

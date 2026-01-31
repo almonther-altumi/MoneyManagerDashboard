@@ -17,8 +17,9 @@
 
 .card-container {
     display: flex;
-    flex-direction: column;
-    gap: 14px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 20px;
     width: 100%;
 }
 
@@ -26,9 +27,9 @@
     position: relative;
     width: 100%;
     max-width: 380px;
-    height: 170px;
+    height: 180px;
     border-radius: 20px;
-    padding: 20px;
+    padding: 24px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -112,12 +113,23 @@
     font-weight: 700;
 }
 
+@media screen and (max-width: 1200px) {
+    .card-container {
+        justify-content: flex-start;
+    }
+
+    .credit-card {
+        max-width: 350px;
+    }
+}
+
 @media screen and (max-width: 768px) {
     .my-cards-section {
         align-items: center;
     }
 
     .card-container {
+        flex-direction: column;
         align-items: center;
     }
 
