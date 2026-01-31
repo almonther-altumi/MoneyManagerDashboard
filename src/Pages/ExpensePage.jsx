@@ -3,7 +3,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import '../components/Styles/ExpensePageStyles/ExpensePageStyle.css';
 import ExpenseTable from '../components/ExpensePageComponents/ExpenseTable';
 import EditableStatCard from '../components/HomePageComponents/EditableStatCard';
-import { collection, getDocs, doc, setDoc, getDoc } from "firebase/firestore";
+import { doc, setDoc, getDoc } from "firebase/firestore";
 import { auth, db } from "../firebase";
 import { useTranslation } from 'react-i18next';
 

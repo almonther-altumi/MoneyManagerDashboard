@@ -1,261 +1,30 @@
-.income-page-root,
-.expense-page-root,
-.debts-page-root {
-    min-height: 100vh;
-    padding: 30px 48px;
-    background-color: var(--bg-light);
+/* Page Specific Styles for Income Page */
+.income-stats-row .stat-card {
+    border-left: 4px solid var(--success);
 }
 
-.income-content-centered,
-.expense-content-centered,
-.debts-content-centered {
-    max-width: 1400px;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    gap: 32px;
+.trend-up {
+    color: var(--success);
+    font-size: 12px;
+    font-weight: 700;
 }
 
-.income-header,
-.expense-header,
-.debts-header {
-    margin-bottom: 16px;
-}
-
-.income-header h2,
-.expense-header h2,
-.debts-header h2 {
-    font-size: 32px;
-    font-weight: 800;
-    margin: 0;
-    color: var(--text);
-    letter-spacing: -1.2px;
-}
-
-.income-header p,
-.expense-header p,
-.debts-header p {
-    color: var(--text-muted);
-    font-size: 15px;
-    margin: 4px 0 0 0;
-}
-
-/* Stats Row */
-.income-stats-row,
-.expense-stats-row,
-.debts-stats-row {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 20px;
-}
-
-.stat-card {
-    background: var(--bg);
-    padding: 22px;
-    border-radius: 24px;
-    border: 1px solid var(--border-muted);
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-    box-shadow: var(--shadow);
-}
-
-.stat-card:hover {
-    transform: translateY(-4px);
-    border-color: var(--secondary);
-    box-shadow: var(--shadow-lg);
-}
-
-.stat-card .label {
-    font-size: 11px;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    color: var(--text-muted);
-
-}
-
-.trend-up,
-.trend {
-    color: var(--text-muted);
-}
-
-.stat-card .amount {
-    font-size: 14px;
-    font-weight: 800;
-    color: var(--text);
-}
-
-/* Table Design */
-.income-table-container,
-.expense-table-container,
-.debts-table-container {
-    background: var(--bg);
-    border-radius: 24px;
-    border: 1px solid var(--border-muted);
-    overflow: hidden;
-    box-shadow: var(--shadow);
-}
-
-.table-header {
-    padding: 24px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid var(--border-muted);
-}
-
-.table-header h3 {
-    font-size: 18px;
-    font-weight: 800;
-    margin: 0;
-    color: var(--text);
-}
-
-.add-btn-main,
-.add-btn-expense,
-.add-btn-debt {
-    background: var(--primary);
-    color: var(--bg-light);
-    border: none;
-    padding: 10px 20px;
-    border-radius: 12px;
-    font-weight: 800;
-    font-size: 13px;
-    cursor: pointer;
+.income-table-container .table-header h3 {
     display: flex;
     align-items: center;
     gap: 8px;
-    transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
-.add-btn-main:hover,
-.add-btn-expense:hover,
-.add-btn-debt:hover {
-    background: var(--secondary);
-    transform: translateY(-2px);
-    box-shadow: var(--shadow);
+.income-table-container .table-header h3::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    background: var(--success);
+    border-radius: 50%;
 }
 
-.table-wrapper {
-    overflow-x: auto;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-thead th {
-    text-align: left;
-    padding: 16px 24px;
-    color: var(--text-muted);
-    font-size: 11px;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    border-bottom: 1px solid var(--border-muted);
-}
-
-tbody td {
-    padding: 14px 24px;
-    color: var(--text);
-    font-size: 14px;
-    font-weight: 500;
-    border-bottom: 1px solid var(--border-muted);
-}
-
-tbody tr:hover {
-    background: var(--highlight);
-}
-
-/* Action Buttons */
-.action-icon-btn {
-    width: 36px;
-    height: 36px;
-    border-radius: 10px;
-    background: transparent;
-    border: none;
-    color: var(--text-muted);
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all 0.2s;
-}
-
-.action-icon-btn:hover {
-    background: var(--highlight);
-    color: var(--danger);
-}
-
-.action-icon-btn.edit:hover {
-    color: var(--secondary);
-}
-
-
-/* Responsive Table Design */
-@media (max-width: 768px) {
-
-    .income-page-root,
-    .expense-page-root,
-    .debts-page-root {
-        padding: 20px 16px;
-    }
-
-    .income-content-centered,
-    .expense-content-centered,
-    .debts-content-centered {
-        max-width: 100%;
-        padding: 0;
-    }
-
-    .income-header h2,
-    .expense-header h2,
-    .debts-header h2 {
-        font-size: 24px;
-    }
-
-    .income-stats-row,
-    .expense-stats-row,
-    .debts-stats-row {
-        grid-template-columns: 1fr;
-        gap: 16px;
-    }
-
-    .table-header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 16px;
-        padding: 20px;
-    }
-
-    .table-header h3 {
-        font-size: 16px;
-    }
-
-    .add-btn-main,
-    .add-btn-expense,
-    .add-btn-debt {
-        width: 100%;
-        justify-content: center;
-        padding: 12px;
-    }
-
-    thead th {
-        padding: 12px 16px;
-        font-size: 10px;
-        white-space: nowrap;
-    }
-
-    tbody td {
-        padding: 12px 16px;
-        font-size: 13px;
-    }
-
-    .action-icon-btn {
-        width: 32px;
-        height: 32px;
-    }
+/* Specific Table Row styles if any */
+tbody tr td .amount-income {
+    color: var(--success);
+    font-weight: 700;
 }

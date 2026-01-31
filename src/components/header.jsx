@@ -8,8 +8,11 @@ import { useTranslation } from "react-i18next";
 
 // Icons
 import Email_Icon from './Icons/Header_Icons/EmailIcon';
+import NotificationIcon from './Icons/Header_Icons/NotificationIcon';
 import ThemeIcon from './Icons/Header_Icons/ThemeIcon';
 import NotificationMenu from './NotificationMenu';
+import { db } from "../firebase";
+import { collection, query, orderBy, limit, onSnapshot } from 'firebase/firestore';
 
 // eslint-disable-next-line no-unused-vars
 function Header({ user, toggleSidebar, isSidebarOpen }) {
@@ -79,22 +82,37 @@ function Header({ user, toggleSidebar, isSidebarOpen }) {
         }
     };
 
-    const [hasNotification, setHasNotification] = useState(() => {
-        return localStorage.getItem('has_notification') === 'true';
-    });
+    const [hasNotification, setHasNotification] = useState(false);
+    const [latestNoteId, setLatestNoteId] = useState(null);
 
     useEffect(() => {
-        const checkNotification = () => {
-            setHasNotification(localStorage.getItem('has_notification') === 'true');
-        };
+        const q = query(
+            collection(db, 'global_notifications'),
+            orderBy('time', 'desc'),
+            limit(1)
+        );
 
-        window.addEventListener('notification_update', checkNotification);
-        return () => window.removeEventListener('notification_update', checkNotification);
+        const unsubscribe = onSnapshot(q, (snapshot) => {
+            if (!snapshot.empty) {
+                const latestDoc = snapshot.docs[0];
+                const latestId = latestDoc.id;
+                setLatestNoteId(latestId);
+
+                const lastSeenId = localStorage.getItem('last_seen_notification_id');
+                if (lastSeenId !== latestId) {
+                    setHasNotification(true);
+                }
+            }
+        });
+
+        return () => unsubscribe();
     }, []);
 
     const handleMailClick = () => {
+        if (latestNoteId) {
+            localStorage.setItem('last_seen_notification_id', latestNoteId);
+        }
         setHasNotification(false);
-        localStorage.removeItem('has_notification');
         setIsNotificationsOpen(!isNotificationsOpen);
     }
 
@@ -114,7 +132,7 @@ function Header({ user, toggleSidebar, isSidebarOpen }) {
             <nav className="header-actions">
                 <div className="notification-container">
                     <button className="icon-btn theme-toggle" onClick={handleMailClick} title="App News">
-                        <Email_Icon width={iconSize} height={iconSize} />
+                        <NotificationIcon width={iconSize} height={iconSize} />
                         {hasNotification && <span className="notification-pulse" />}
                     </button>
                     {isNotificationsOpen && (

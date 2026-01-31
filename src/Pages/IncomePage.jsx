@@ -3,7 +3,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import '../components/Styles/IncomePageStyles/IncomePageStyle.css';
 import IncomeTable from '../components/IncomePageComponents/IncomeTable';
 import EditableStatCard from '../components/HomePageComponents/EditableStatCard';
-import { collection, getDocs, doc, setDoc, getDoc } from "firebase/firestore";
+import { doc, setDoc, getDoc } from "firebase/firestore";
 import { auth, db } from "../firebase";
 import { useTranslation } from 'react-i18next';
 
@@ -104,7 +104,7 @@ function IncomePage() {
                         </button>
                     </div>
 
-                    <IncomeTable ref={incomeTableRef} onDataChange={() => fetchTotalIncome().then(income => setTotalIncome(income))} />
+                    <IncomeTable ref={incomeTableRef} />
                 </div>
             </div>
         </div>

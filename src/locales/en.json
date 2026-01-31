@@ -18,7 +18,9 @@
         "management": "Management",
         "reports": "Reports",
         "settings": "Settings",
-        "reportProplems": "Report A Problem"
+        "reportProplems": "Report A Problem",
+        "admin": "Admin Panel",
+        "admin_users": "Users Management"
     },
     "header": {
         "titles": {
@@ -42,12 +44,12 @@
         "house": "Primary Estate Acquisition",
         "complete": "Complete"
     },
-    "monthly_spending" : {
-        "title" : "Monthly Spending",
+    "monthly_spending": {
+        "title": "Monthly Spending",
         "used": "Used",
         "limit": "Limit",
-        "spent" : "Spent",
-        "commit" : "save"
+        "spent": "Spent",
+        "commit": "save"
     },
     "my_cards": {
         "title": "My Cards",
@@ -295,5 +297,27 @@
         "more": "More notifications",
         "uploaded": "uploaded:",
         "no_notifications": "No notifications found"
+    },
+    "admin": {
+        "title": "Push Notifications",
+        "subtitle": "Broadcast messages to all users in the system.",
+        "title_label_en": "Notification Title (English)",
+        "title_placeholder_en": "e.g. New Feature",
+        "title_label_ar": "Notification Title (Arabic)",
+        "title_placeholder_ar": "e.g. ميزة جديدة",
+        "message_label_en": "Notification Content (English)",
+        "message_placeholder_en": "Enter description in English...",
+        "message_label_ar": "Notification Content (Arabic)",
+        "message_placeholder_ar": "أدخل الوصف بالعربية...",
+        "send_btn": "Broadcast Now",
+        "success": "Notification broadcasted successfully!",
+        "error": "Failed to send notification. Check console for details.",
+        "recent_title": "Recent Notifications",
+        "edit_btn": "Edit",
+        "delete_btn": "Delete",
+        "update_btn": "Update Notification",
+        "cancel_btn": "Cancel",
+        "update_success": "Notification updated successfully!",
+        "delete_success": "Notification deleted successfully!"
     }
 }

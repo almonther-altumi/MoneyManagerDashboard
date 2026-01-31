@@ -18,7 +18,9 @@
         "management": "إدارة",
         "reports": "التقارير",
         "settings": "الإعدادات",
-        "reportProplems": "الأبلاغ عن مشكلة"
+        "reportProplems": "الأبلاغ عن مشكلة",
+        "admin": "لوحة الإدارة",
+        "admin_users": "إدارة المستخدمين"
     },
     "header": {
         "titles": {
@@ -294,5 +296,27 @@
         "more": "إشعارات أخرى",
         "uploaded": "قام برفع:",
         "no_notifications": "لا توجد إشعارات"
+    },
+    "admin": {
+        "title": "إرسال تنبيهات",
+        "subtitle": "بث رسائل وتحديثات لجميع مستخدمي النظام.",
+        "title_label_en": "عنوان التنبيه (بالإنجليزي)",
+        "title_placeholder_en": "مثلاً: New Feature",
+        "title_label_ar": "عنوان التنبيه (بالعربي)",
+        "title_placeholder_ar": "مثلاً: ميزة جديدة",
+        "message_label_en": "محتوى التنبيه (بالإنجليزي)",
+        "message_placeholder_en": "أدخل الوصف بالإنجليزية...",
+        "message_label_ar": "محتوى التنبيه (بالعربي)",
+        "message_placeholder_ar": "أدخل الوصف بالعربية...",
+        "send_btn": "إرسال للكل الآن",
+        "success": "تم إرسال التنبيه لكل المستخدمين بنجاح!",
+        "error": "فشل في إرسال التنبيه. تحقق من وحدة التحكم.",
+        "recent_title": "التنبيهات المرسلة مؤخراً",
+        "edit_btn": "تعديل",
+        "delete_btn": "حذف",
+        "update_btn": "تحديث التنبيه",
+        "cancel_btn": "إلغاء",
+        "update_success": "تم تحديث التنبيه بنجاح!",
+        "delete_success": "تم حذف التنبيه بنجاح!"
     }
 }

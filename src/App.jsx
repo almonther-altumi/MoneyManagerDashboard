@@ -4,6 +4,7 @@ import { useState, useEffect } from "react"
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase";
 import { useTranslation } from "react-i18next";
+import './components/Styles/SharedManagementPage.css';
 import { FinancialProvider } from './contexts/FinancialContext';
 
 import Header from './components/header'
@@ -24,6 +25,7 @@ const LandingPage = lazy(() => import('./Pages/LandingPage'));
 const ReportProblemPage = lazy(() => import('./Pages/ReportProblemPage'));
 const TermsOfService = lazy(() => import('./Pages/TermsOfService'));
 const PrivacyPolicy = lazy(() => import('./Pages/PrivacyPolicy'));
+const AdminNotificationsPage = lazy(() => import('./Pages/AdminNotificationsPage'));
 
 
 export default function App() {
@@ -49,8 +51,10 @@ export default function App() {
 
       if (isDark) {
         document.body.classList.add('dark-mode');
+        document.documentElement.classList.add('dark-mode');
       } else {
         document.body.classList.remove('dark-mode');
+        document.documentElement.classList.remove('dark-mode');
       }
     };
 
@@ -114,7 +118,7 @@ export default function App() {
         <FinancialProvider>
           {user && (
             <>
-              <SideBar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
+              <SideBar user={user} isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
               {/* Mobile Sidebar Backdrop */}
               {isSidebarOpen && (
                 <div className="sidebar-backdrop" onClick={toggleSidebar}></div>
@@ -139,6 +143,7 @@ export default function App() {
                   <Route path="/reports" element={user ? <ReportsPage /> : <Navigate to="/login" />} />
                   <Route path="/settings" element={user ? <SettingsPage /> : <Navigate to="/login" />} />
                   <Route path="/report-problem" element={user ? <ReportProblemPage /> : <Navigate to="/login" />} />
+                  <Route path="/admin/notifications" element={user && user.email === 'monthertumi2025@gmail.com' ? <AdminNotificationsPage /> : <Navigate to="/" />} />
 
                   {/* Public Routes */}
                   <Route path="/login" element={<LoginPage />} />

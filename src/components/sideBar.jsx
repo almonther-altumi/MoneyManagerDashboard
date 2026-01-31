@@ -11,6 +11,8 @@ import ReportIcon from './Icons/ReportIcon';
 import SettingsIcon from './Icons/SettingsIcon';
 import CloseSideBarIcon from './Icons/CloseSideBarIcon';
 import BugIcon from './Icons/BugIcon';
+import NotificationIcon from './Icons/Header_Icons/NotificationIcon';
+import { auth } from '../firebase';
 
 const SideBar = ({ isOpen, toggleSidebar }) => {
     const { t } = useTranslation();
@@ -29,6 +31,9 @@ const SideBar = ({ isOpen, toggleSidebar }) => {
             title: t('sidebar.management'),
             className: "mt-auto",
             items: [
+                ...(auth.currentUser?.email === 'monthertumi2025@gmail.com' ? [
+                    { to: "/admin/notifications", label: t('sidebar.admin'), icon: <NotificationIcon className="sidebar-icon" /> }
+                ] : []),
                 { to: "/settings", label: t('sidebar.settings'), icon: <SettingsIcon className="sidebar-icon" /> },
                 { to: "/report-problem", label: t('report.title'), icon: <BugIcon className="sidebar-icon" /> },
             ]
