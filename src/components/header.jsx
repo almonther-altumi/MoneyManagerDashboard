@@ -86,6 +86,8 @@ function Header({ user, toggleSidebar, isSidebarOpen }) {
     const [latestNoteId, setLatestNoteId] = useState(null);
 
     useEffect(() => {
+        if (!user) return; // only listen when authenticated
+
         const q = query(
             collection(db, 'global_notifications'),
             orderBy('time', 'desc'),
@@ -103,10 +105,13 @@ function Header({ user, toggleSidebar, isSidebarOpen }) {
                     setHasNotification(true);
                 }
             }
+        }, (err) => {
+            // silence permission errors for unauthenticated users
+            console.warn('Notification listener error:', err);
         });
 
         return () => unsubscribe();
-    }, []);
+    }, [user]);
 
     const handleMailClick = () => {
         if (latestNoteId) {
@@ -136,7 +141,7 @@ function Header({ user, toggleSidebar, isSidebarOpen }) {
                         {hasNotification && <span className="notification-pulse" />}
                     </button>
                     {isNotificationsOpen && (
-                        <NotificationMenu onClose={() => setIsNotificationsOpen(false)} />
+                        <NotificationMenu user={user} onClose={() => setIsNotificationsOpen(false)} />
                     )}
                 </div>
                 <button className="icon-btn theme-toggle" onClick={toggleTheme} title={isDarkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}>

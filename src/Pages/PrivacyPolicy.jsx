@@ -1,63 +1,51 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import "../components/Styles/AnotherPageStyle/LegalPages.css";
 
 const PrivacyPolicy = () => {
   const navigate = useNavigate();
+  const { t, i18n } = useTranslation();
+  const isRTL = i18n.language === 'ar';
 
   return (
     <div className="legal-page">
       <div className="legal-card">
         <button className="legal-back-btn" onClick={() => navigate(-1)}>
-          ← Back
+          {isRTL ? '→' : '←'} {t('privacy.back')}
         </button>
 
-        <h1>Privacy Policy</h1>
-        <p className="legal-date">Last updated: January 2026</p>
+        <h1>{t('privacy.title')}</h1>
+        <p className="legal-date">{t('privacy.last_updated')}</p>
 
         <section>
-          <h2>1. Information We Collect</h2>
-          <p>
-            We collect basic account information such as name, email, and profile
-            image through Google Authentication.
-          </p>
+          <h2>{t('privacy.section1_title')}</h2>
+          <p>{t('privacy.section1_content')}</p>
         </section>
 
         <section>
-          <h2>2. How We Use Data</h2>
-          <p>
-            Data is used solely to provide authentication, store user preferences,
-            and improve the application experience.
-          </p>
+          <h2>{t('privacy.section2_title')}</h2>
+          <p>{t('privacy.section2_content')}</p>
         </section>
 
         <section>
-          <h2>3. Data Storage</h2>
-          <p>
-            All data is securely stored using Firebase services.
-          </p>
+          <h2>{t('privacy.section3_title')}</h2>
+          <p>{t('privacy.section3_content')}</p>
         </section>
 
         <section>
-          <h2>4. Third-Party Services</h2>
-          <p>
-            We rely on Google and Firebase services, which operate under their own
-            privacy policies.
-          </p>
+          <h2>{t('privacy.section4_title')}</h2>
+          <p>{t('privacy.section4_content')}</p>
         </section>
 
         <section>
-          <h2>5. User Rights</h2>
-          <p>
-            You may request data deletion or stop using the service at any time.
-          </p>
+          <h2>{t('privacy.section5_title')}</h2>
+          <p>{t('privacy.section5_content')}</p>
         </section>
 
         <section>
-          <h2>6. Updates</h2>
-          <p>
-            This policy may be updated periodically.
-          </p>
+          <h2>{t('privacy.section6_title')}</h2>
+          <p>{t('privacy.section6_content')}</p>
         </section>
       </div>
     </div>

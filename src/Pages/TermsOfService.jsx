@@ -1,72 +1,56 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import "../components/Styles/AnotherPageStyle/LegalPages.css";
 
 const TermsOfService = () => {
   const navigate = useNavigate();
+  const { t, i18n } = useTranslation();
+  const isRTL = i18n.language === 'ar';
 
   return (
     <div className="legal-page">
       <div className="legal-card">
         <button className="legal-back-btn" onClick={() => navigate(-1)}>
-          ← Back
+          {isRTL ? '→' : '←'} {t('terms.back')}
         </button>
 
-        <h1>Terms of Service</h1>
-        <p className="legal-date">Last updated: January 2026</p>
+        <h1>{t('terms.title')}</h1>
+        <p className="legal-date">{t('terms.last_updated')}</p>
 
         <section>
-          <h2>1. Acceptance of Terms</h2>
-          <p>
-            By accessing or using this application, you agree to be bound by these
-            Terms of Service. If you do not agree, please discontinue use.
-          </p>
+          <h2>{t('terms.section1_title')}</h2>
+          <p>{t('terms.section1_content')}</p>
         </section>
 
         <section>
-          <h2>2. Description of the Service</h2>
-          <p>
-            This service provides personal financial tracking, analytics, and
-            goal management tools for informational purposes only.
-          </p>
+          <h2>{t('terms.section2_title')}</h2>
+          <p>{t('terms.section2_content')}</p>
         </section>
 
         <section>
-          <h2>3. User Accounts</h2>
-          <p>
-            Authentication is handled via Google Sign-In. You are responsible
-            for maintaining the confidentiality of your account.
-          </p>
+          <h2>{t('terms.section3_title')}</h2>
+          <p>{t('terms.section3_content')}</p>
         </section>
 
         <section>
-          <h2>4. User Responsibility</h2>
-          <p>
-            You are solely responsible for the data you enter and decisions you
-            make based on the service.
-          </p>
+          <h2>{t('terms.section4_title')}</h2>
+          <p>{t('terms.section4_content')}</p>
         </section>
 
         <section>
-          <h2>5. Prohibited Use</h2>
-          <p>
-            Any attempt to misuse, exploit, or disrupt the service is strictly
-            prohibited.
-          </p>
+          <h2>{t('terms.section5_title')}</h2>
+          <p>{t('terms.section5_content')}</p>
         </section>
 
         <section>
-          <h2>6. Disclaimer</h2>
-          <p>
-            The service is provided "as is" without warranties of any kind.
-          </p>
+          <h2>{t('terms.section6_title')}</h2>
+          <p>{t('terms.section6_content')}</p>
         </section>
 
         <section>
-          <h2>7. Changes</h2>
-          <p>
-            We reserve the right to modify these terms at any time.
-          </p>
+          <h2>{t('terms.section7_title')}</h2>
+          <p>{t('terms.section7_content')}</p>
         </section>
       </div>
     </div>

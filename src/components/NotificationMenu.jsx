@@ -4,7 +4,7 @@ import { collection, query, orderBy, limit, onSnapshot } from 'firebase/firestor
 import './Styles/NotificationMenuStyle.css';
 import { useTranslation } from 'react-i18next';
 
-const NotificationMenu = ({ onClose }) => {
+const NotificationMenu = ({ onClose, user }) => {
     const menuRef = useRef(null);
     const [notifications, setNotifications] = useState([]);
     const { t, i18n } = useTranslation();
@@ -22,6 +22,8 @@ const NotificationMenu = ({ onClose }) => {
     }, [onClose]);
 
     useEffect(() => {
+        if (!user) return; // only fetch global notifications for authenticated users
+
         const q = query(
             collection(db, 'global_notifications'),
             orderBy('time', 'desc'),
@@ -44,10 +46,12 @@ const NotificationMenu = ({ onClose }) => {
                 };
             });
             setNotifications(notes);
+        }, (err) => {
+            console.warn('NotificationMenu listener error:', err);
         });
 
         return () => unsubscribe();
-    }, [i18n.language]);
+    }, [i18n.language, user]);
 
     return (
         <div className="notification-dropdown" ref={menuRef}>

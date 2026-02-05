@@ -12,6 +12,16 @@ const AdminUsersPage = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [banModal, setBanModal] = useState({ isOpen: false, user: null, reason: '' });
 
+    const formatRelativeTime = (date) => {
+        const now = new Date();
+        const diff = Math.floor((now - date) / 1000);
+
+        if (diff < 60) return t('time.just_now') || 'Just now';
+        if (diff < 3600) return `${Math.floor(diff / 60)}m ago`;
+        if (diff < 86400) return `${Math.floor(diff / 3600)}h ago`;
+        return date.toLocaleDateString();
+    };
+
     useEffect(() => {
         if (auth.currentUser?.email !== 'monthertumi2025@gmail.com') return;
 
@@ -38,6 +48,7 @@ const AdminUsersPage = () => {
 
     const confirmBan = async () => {
         if (!banModal.reason) return;
+
         const userRef = doc(db, 'users', banModal.user.id);
         await updateDoc(userRef, {
             status: 'banned',
@@ -92,6 +103,9 @@ const AdminUsersPage = () => {
                             <tr>
                                 <th>{t('admin_users.table_name')}</th>
                                 <th>{t('admin_users.table_status')}</th>
+                                <th>{t('admin_users.table_joined_at')}</th>
+                                <th>{t('admin_users.table_usage_time')}</th>
+                                <th>{t('admin_users.table_last_active')}</th>
                                 <th>{t('admin_users.table_actions')}</th>
                             </tr>
                         </thead>
@@ -118,6 +132,33 @@ const AdminUsersPage = () => {
                                         {user.statusReason && <div className="reason-hint">{user.statusReason}</div>}
                                     </td>
                                     <td>
+                                        <div className="date-cell">
+                                            {user.createdAt ? user.createdAt.toDate().toLocaleDateString() : '---'}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div className="usage-cell">
+                                            {user.totalMinutes ? (
+                                                <span>
+                                                    {Math.floor(user.totalMinutes / 60)}h {user.totalMinutes % 60}m
+                                                </span>
+                                            ) : (
+                                                <span>&lt; 5m</span>
+                                            )}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div className="last-active-cell">
+                                            {user.lastActive ? (
+                                                <span title={user.lastActive.toDate().toLocaleString()}>
+                                                    {formatRelativeTime(user.lastActive.toDate())}
+                                                </span>
+                                            ) : (
+                                                <span className="never-seen">Never</span>
+                                            )}
+                                        </div>
+                                    </td>
+                                    <td>
                                         <div className="user-actions-btns">
                                             {user.status === 'banned' || user.status === 'suspended' ? (
                                                 <button className="unban-btn" onClick={() => handleAction(user, 'activate')}>
@@ -133,7 +174,7 @@ const AdminUsersPage = () => {
                                 </tr>
                             )) : (
                                 <tr>
-                                    <td colSpan="3" className="no-users-row">{t('admin_users.no_users')}</td>
+                                    <td colSpan="6" className="no-users-row">{t('admin_users.no_users')}</td>
                                 </tr>
                             )}
                         </tbody>

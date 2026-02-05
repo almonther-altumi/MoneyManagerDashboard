@@ -111,6 +111,37 @@ th {
     letter-spacing: 1px;
 }
 
+th:nth-child(1) {
+    width: 30%;
+}
+
+/* User */
+th:nth-child(2) {
+    width: 12%;
+}
+
+/* Status */
+th:nth-child(3) {
+    width: 12%;
+}
+
+/* Joined */
+th:nth-child(4) {
+    width: 12%;
+}
+
+/* Usage */
+th:nth-child(5) {
+    width: 14%;
+}
+
+/* Last Active */
+th:nth-child(6) {
+    width: 20%;
+}
+
+/* Actions */
+
 td {
     padding: 16px 24px;
     border-top: 1px solid var(--border-muted);
@@ -171,6 +202,30 @@ td {
     font-size: 11px;
     color: var(--text-muted);
     margin-top: 4px;
+}
+
+.last-active-cell {
+    font-size: 13px;
+    color: var(--text);
+    font-weight: 500;
+}
+
+.never-seen {
+    color: var(--text-muted);
+    font-style: italic;
+    font-size: 12px;
+}
+
+.date-cell {
+    font-size: 13px;
+    color: var(--text);
+    opacity: 0.8;
+}
+
+.usage-cell {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--primary);
 }
 
 .user-actions-btns {

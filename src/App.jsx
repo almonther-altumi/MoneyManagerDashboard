@@ -27,10 +27,11 @@ const TermsOfService = lazy(() => import('./Pages/TermsOfService'));
 const PrivacyPolicy = lazy(() => import('./Pages/PrivacyPolicy'));
 const AdminNotificationsPage = lazy(() => import('./Pages/AdminNotificationsPage'));
 const AdminUsersPage = lazy(() => import('./Pages/AdminUsersPage'));
-import { doc, onSnapshot } from "firebase/firestore";
+import { doc, onSnapshot, getDoc, setDoc, serverTimestamp, increment } from "firebase/firestore";
 import { db } from "./firebase";
 import { ShieldAlert, LogOut } from 'lucide-react';
 import BudgetAlertManager from "./components/BudgetAlertManager";
+import Onboarding2 from './components/Onboarding2'
 
 
 export default function App() {
@@ -88,36 +89,70 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    let unsubscribeStatus = () => { };
-
     const unsubscribeAuth = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
-
-      if (currentUser) {
-        // Listen to user status in real-time
-        const userRef = doc(db, 'users', currentUser.uid);
-        unsubscribeStatus = onSnapshot(userRef, (doc) => {
-          if (doc.exists()) {
-            const data = doc.data();
-            if (data.status === 'banned' || data.status === 'suspended') {
-              setUserStatus({ status: data.status, reason: data.statusReason || data.suspensionReason });
-            } else {
-              setUserStatus(null);
-            }
-          }
-        });
-      } else {
-        setUserStatus(null);
-        unsubscribeStatus();
-      }
-
       setLoading(false);
     });
-    return () => {
-      unsubscribeAuth();
-      unsubscribeStatus();
-    };
+    return () => unsubscribeAuth();
   }, []);
+
+  useEffect(() => {
+    if (!user) {
+      setUserStatus(null);
+      return;
+    }
+
+    const userRef = doc(db, 'users', user.uid);
+
+    // Status Monitoring
+    const unsubscribeStatus = onSnapshot(userRef, (doc) => {
+      if (doc.exists()) {
+        const data = doc.data();
+        if (data.status === 'banned' || data.status === 'suspended') {
+          setUserStatus({ status: data.status, reason: data.statusReason || data.suspensionReason });
+        } else {
+          setUserStatus(null);
+        }
+      }
+    });
+
+    // Activity Tracking
+    const trackActivity = async () => {
+      try {
+        const userSnap = await getDoc(userRef);
+        const updateData = {
+          lastActive: serverTimestamp(),
+          email: user.email,
+          displayName: user.displayName || 'No Name'
+        };
+        if (!userSnap.exists()) {
+          updateData.createdAt = serverTimestamp();
+          updateData.totalMinutes = 0;
+        }
+        await setDoc(userRef, updateData, { merge: true });
+      } catch (e) {
+        console.error("Activity tracking failed", e);
+      }
+    };
+    trackActivity();
+
+    // Duration Tracking (Every 5 mins)
+    const durationInterval = setInterval(async () => {
+      try {
+        await setDoc(userRef, {
+          totalMinutes: increment(5),
+          lastActive: serverTimestamp()
+        }, { merge: true });
+      } catch (e) {
+        console.warn("Duration sync failed", e);
+      }
+    }, 5 * 60 * 1000);
+
+    return () => {
+      unsubscribeStatus();
+      clearInterval(durationInterval);
+    };
+  }, [user]);
 
   const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
 
@@ -193,6 +228,9 @@ export default function App() {
           </div>
         </FinancialProvider>
       </BrowserRouter>
+
+      {/* First-time onboarding */}
+      <Onboarding2 onFinish={() => {}} />
 
       <style>{`
         .app-root {

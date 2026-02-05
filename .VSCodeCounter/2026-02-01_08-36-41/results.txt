@@ -1,0 +1,181 @@
+Date : 2026-02-01 08:36:41
+Directory : c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard
+Total : 116 files,  17151 codes, 508 comments, 1758 blanks, all 19417 lines
+
+Languages
++----------------+------------+------------+------------+------------+------------+
+| language       | files      | code       | comment    | blank      | total      |
++----------------+------------+------------+------------+------------+------------+
+| JavaScript JSX |         61 |      6,261 |        371 |        817 |      7,449 |
+| JSON           |          6 |      5,314 |          0 |          3 |      5,317 |
+| PostCSS        |         33 |      5,141 |        125 |        850 |      6,116 |
+| JavaScript     |          8 |        175 |          7 |         30 |        212 |
+| Markdown       |          3 |        155 |          0 |         43 |        198 |
+| HTML           |          2 |         69 |          4 |         13 |         86 |
+| XML            |          3 |         36 |          1 |          2 |         39 |
++----------------+------------+------------+------------+------------+------------+
+
+Directories
++---------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                                                            | files      | code       | comment    | blank      | total      |
++---------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                                                               |        116 |     17,151 |        508 |      1,758 |     19,417 |
+| . (Files)                                                                                                                       |          9 |      4,722 |          5 |         52 |      4,779 |
+| .github                                                                                                                         |          1 |         35 |          0 |         11 |         46 |
+| public                                                                                                                          |          4 |         48 |          1 |          1 |         50 |
+| src                                                                                                                             |        102 |     12,346 |        502 |      1,694 |     14,542 |
+| src (Files)                                                                                                                     |          6 |        663 |         21 |        101 |        785 |
+| src\Pages                                                                                                                       |         14 |      2,110 |         74 |        269 |      2,453 |
+| src\Styles                                                                                                                      |          1 |         76 |          4 |         10 |         90 |
+| src\Styles\PagesStyle                                                                                                           |          1 |         76 |          4 |         10 |         90 |
+| src\assets                                                                                                                      |          1 |          5 |          0 |          1 |          6 |
+| src\components                                                                                                                  |         74 |      8,480 |        393 |      1,276 |     10,149 |
+| src\components (Files)                                                                                                          |          8 |        807 |         12 |        110 |        929 |
+| src\components\DebtsPageComponents                                                                                              |          5 |        519 |         24 |         82 |        625 |
+| src\components\ExpensePageComponents                                                                                            |          1 |        274 |          0 |         35 |        309 |
+| src\components\HomePageComponents                                                                                               |         12 |      1,479 |        243 |        189 |      1,911 |
+| src\components\HomePageComponents (Files)                                                                                       |          8 |        989 |         20 |        122 |      1,131 |
+| src\components\HomePageComponents\RightBar                                                                                      |          4 |        490 |        223 |         67 |        780 |
+| src\components\Icons                                                                                                            |         16 |         97 |          3 |          9 |        109 |
+| src\components\Icons (Files)                                                                                                    |          8 |         37 |          1 |          3 |         41 |
+| src\components\Icons\Header_Icons                                                                                               |          4 |         56 |          2 |          6 |         64 |
+| src\components\Icons\Profit_Icons                                                                                               |          4 |          4 |          0 |          0 |          4 |
+| src\components\IncomePageComponents                                                                                             |          1 |        356 |          0 |         40 |        396 |
+| src\components\ReportsPageComponents                                                                                            |          2 |        188 |          9 |         29 |        226 |
+| src\components\Styles                                                                                                           |         29 |      4,760 |        102 |        782 |      5,644 |
+| src\components\Styles (Files)                                                                                                   |         11 |      1,981 |         62 |        339 |      2,382 |
+| src\components\Styles\AnotherPageStyle                                                                                          |          2 |        287 |          2 |         41 |        330 |
+| src\components\Styles\DebtsPageStyles                                                                                           |          6 |      1,059 |         25 |        166 |      1,250 |
+| src\components\Styles\ExpensePageStyles                                                                                         |          1 |          0 |          0 |          1 |          1 |
+| src\components\Styles\HomePageStyles                                                                                            |          6 |        978 |          0 |        156 |      1,134 |
+| src\components\Styles\IncomePageStyles                                                                                          |          1 |         24 |          2 |          4 |         30 |
+| src\components\Styles\ReportsPageStyles                                                                                         |          1 |        142 |          4 |         23 |        169 |
+| src\components\Styles\SettingsPageStyles                                                                                        |          1 |        289 |          7 |         52 |        348 |
+| src\contexts                                                                                                                    |          1 |        113 |          7 |         19 |        139 |
+| src\hooks                                                                                                                       |          2 |         29 |          0 |          8 |         37 |
+| src\locales                                                                                                                     |          2 |        817 |          0 |          0 |        817 |
+| src\security                                                                                                                    |          1 |         53 |          3 |         10 |         66 |
++---------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++---------------------------------------------------------------------------------------------------------------------------------+----------------+------------+------------+------------+------------+
+| filename                                                                                                                        | language       | code       | comment    | blank      | total      |
++---------------------------------------------------------------------------------------------------------------------------------+----------------+------------+------------+------------+------------+
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\.github\copilot-instructions.md                                  | Markdown       |         35 |          0 |         11 |         46 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\README.md                                                        | Markdown       |         69 |          0 |         21 |         90 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\eslint.config.js                                                 | JavaScript     |         28 |          0 |          2 |         30 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\implementation.md                                                | Markdown       |         51 |          0 |         11 |         62 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\index.html                                                       | HTML           |         68 |          4 |         13 |         85 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\package-lock.json                                                | JSON           |      4,432 |          0 |          1 |      4,433 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\package.json                                                     | JSON           |         41 |          0 |          1 |         42 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\public\googled9b3a66721e114b1.html                               | HTML           |          1 |          0 |          0 |          1 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\public\manifest.json                                             | JSON           |         16 |          0 |          0 |         16 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\public\sitemap.xml                                               | XML            |         27 |          0 |          1 |         28 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\public\websiteIcon.svg                                           | XML            |          4 |          1 |          0 |          5 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\src\App.css                                                      | PostCSS        |         37 |          0 |          6 |         43 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\src\App.jsx                                                      | JavaScript JSX |        394 |         12 |         47 |        453 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\src\Pages\AdminNotificationsPage.jsx                             | JavaScript JSX |        187 |          3 |         24 |        214 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\src\Pages\AdminUsersPage.jsx                                     | JavaScript JSX |        196 |          0 |         20 |        216 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\src\Pages\DebtsPage.jsx                                          | JavaScript JSX |        349 |         13 |         29 |        391 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\src\Pages\ExpensePage.jsx                                        | JavaScript JSX |         94 |          2 |         17 |        113 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\src\Pages\HomePage.jsx                                           | JavaScript JSX |         78 |          9 |         14 |        101 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\src\Pages\IncomePage.jsx                                         | JavaScript JSX |         94 |          3 |         16 |        113 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\src\Pages\LandingPage.jsx                                        | JavaScript JSX |        257 |          9 |         19 |        285 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\src\Pages\LoginPage.jsx                                          | JavaScript JSX |         96 |          0 |         14 |        110 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\src\Pages\NotFoundPage.jsx                                       | JavaScript JSX |         44 |          0 |          4 |         48 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\src\Pages\PrivacyPolicy.jsx                                      | JavaScript JSX |         45 |          0 |         11 |         56 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\src\Pages\ReportProblemPage.jsx                                  | JavaScript JSX |        118 |          9 |         19 |        146 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\src\Pages\ReportsPage.jsx                                        | JavaScript JSX |        299 |         15 |         48 |        362 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\src\Pages\SettingsPage.jsx                                       | JavaScript JSX |        204 |         11 |         22 |        237 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\src\Pages\TermsOfService.jsx                                     | JavaScript JSX |         49 |          0 |         12 |         61 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\src\Styles\PagesStyle\NotFoundPageStyle.css                      | PostCSS        |         76 |          4 |         10 |         90 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\src\assets\unknownUser.svg                                       | XML            |          5 |          0 |          1 |          6 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\src\components\BudgetAlertManager.jsx                            | JavaScript JSX |         44 |          1 |         10 |         55 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\src\components\DebtsPageComponents\AddDebtModal.jsx              | JavaScript JSX |         80 |          1 |         11 |         92 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\src\components\DebtsPageComponents\ConfirmationModal.jsx         | JavaScript JSX |         32 |          0 |          5 |         37 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\src\components\DebtsPageComponents\DebtCard.jsx                  | JavaScript JSX |         72 |          5 |         12 |         89 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\src\components\DebtsPageComponents\DebtHistoryModal.jsx          | JavaScript JSX |        176 |          4 |         23 |        203 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\src\components\DebtsPageComponents\DebtsTable.jsx                | JavaScript JSX |        159 |         14 |         31 |        204 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\src\components\ExpensePageComponents\ExpenseTable.jsx            | JavaScript JSX |        274 |          0 |         35 |        309 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\src\components\HomePageComponents\BillsList.jsx                  | JavaScript JSX |         44 |          1 |          9 |         54 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\src\components\HomePageComponents\EditableStatCard.jsx           | JavaScript JSX |        119 |          0 |         10 |        129 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\src\components\HomePageComponents\MyCards.jsx                    | JavaScript JSX |        272 |          2 |         23 |        297 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\src\components\HomePageComponents\RecentTransactions.jsx         | JavaScript JSX |         56 |          1 |          4 |         61 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\src\components\HomePageComponents\RightBar\CurrencyRates.jsx     | JavaScript JSX |          0 |        210 |         26 |        236 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\src\components\HomePageComponents\RightBar\MonthlySpending.jsx   | JavaScript JSX |        226 |          0 |         16 |        242 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\src\components\HomePageComponents\RightBar\RightSidebar.css      | PostCSS        |         86 |         13 |         14 |        113 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\src\components\HomePageComponents\RightBar\dreamGoals.jsx        | JavaScript JSX |        178 |          0 |         11 |        189 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\src\components\HomePageComponents\UpcomingPayments.jsx           | JavaScript JSX |        254 |          6 |         27 |        287 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\src\components\HomePageComponents\analytics.jsx                  | JavaScript JSX |        125 |          0 |         21 |        146 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\src\components\HomePageComponents\quickActionsBar.jsx            | JavaScript JSX |         12 |          2 |          3 |         17 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\src\components\HomePageComponents\quickInfo.jsx                  | JavaScript JSX |        107 |          8 |         25 |        140 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\src\components\Icons\BugIcon.jsx                                 | JavaScript JSX |         26 |          1 |          3 |         30 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\src\components\Icons\CloseSideBarIcon.jsx                        | JavaScript JSX |          1 |          0 |          0 |          1 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\src\components\Icons\CustomersIcon.jsx                           | JavaScript JSX |          1 |          0 |          0 |          1 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\src\components\Icons\ExpenseIcon.jsx                             | JavaScript JSX |          1 |          0 |          0 |          1 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\src\components\Icons\Header_Icons\AccountIcon.jsx                | JavaScript JSX |          1 |          0 |          0 |          1 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\src\components\Icons\Header_Icons\EmailIcon.jsx                  | JavaScript JSX |         20 |          0 |          3 |         23 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\src\components\Icons\Header_Icons\NotificationIcon.jsx           | JavaScript JSX |          1 |          0 |          0 |          1 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\src\components\Icons\Header_Icons\ThemeIcon.jsx                  | JavaScript JSX |         34 |          2 |          3 |         39 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\src\components\Icons\HomeIcon.jsx                                | JavaScript JSX |          5 |          0 |          0 |          5 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\src\components\Icons\IncomeIcon.jsx                              | JavaScript JSX |          1 |          0 |          0 |          1 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\src\components\Icons\Profit_Icons\DollarIcon.jsx                 | JavaScript JSX |          1 |          0 |          0 |          1 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\src\components\Icons\Profit_Icons\YearlyIncomeIcone.jsx          | JavaScript JSX |          1 |          0 |          0 |          1 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\src\components\Icons\Profit_Icons\bankIcon.jsx                   | JavaScript JSX |          1 |          0 |          0 |          1 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\src\components\Icons\Profit_Icons\walletIcon.jsx                 | JavaScript JSX |          1 |          0 |          0 |          1 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\src\components\Icons\ReportIcon.jsx                              | JavaScript JSX |          1 |          0 |          0 |          1 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\src\components\Icons\SettingsIcon.jsx                            | JavaScript JSX |          1 |          0 |          0 |          1 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\src\components\IncomePageComponents\IncomeTable.jsx              | JavaScript JSX |        356 |          0 |         40 |        396 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\src\components\Notification.jsx                                  | JavaScript JSX |        156 |          5 |         17 |        178 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\src\components\NotificationMenu.jsx                              | JavaScript JSX |         86 |          0 |         10 |         96 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\src\components\Onboarding.jsx                                    | JavaScript JSX |        105 |          0 |         16 |        121 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\src\components\Onboarding2.jsx                                   | JavaScript JSX |        179 |          0 |         19 |        198 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\src\components\ReportsPageComponents\ReportPDF.jsx               | JavaScript JSX |         46 |          5 |         13 |         64 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\src\components\ReportsPageComponents\ReportsCharts.jsx           | JavaScript JSX |        142 |          4 |         16 |        162 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\src\components\Styles\AdminNotificationsStyle.css                | PostCSS        |        191 |          0 |         32 |        223 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\src\components\Styles\AdminUsersStyle.css                        | PostCSS        |        297 |          7 |         54 |        358 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\src\components\Styles\AnotherPageStyle\LegalPages.css            | PostCSS        |         58 |          0 |         10 |         68 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\src\components\Styles\AnotherPageStyle\LoginPageStyle.css        | PostCSS        |        229 |          2 |         31 |        262 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\src\components\Styles\BillsListStyle.css                         | PostCSS        |        113 |          3 |         17 |        133 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\src\components\Styles\DebtsPageStyles\AddDebtModalStyle.css      | PostCSS        |         87 |          0 |         11 |         98 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\src\components\Styles\DebtsPageStyles\ConfirmationModalStyle.css | PostCSS        |         93 |          0 |         13 |        106 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\src\components\Styles\DebtsPageStyles\DebtCardStyle.css          | PostCSS        |        163 |          2 |         27 |        192 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\src\components\Styles\DebtsPageStyles\DebtHistoryModalStyle.css  | PostCSS        |        264 |          9 |         40 |        313 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\src\components\Styles\DebtsPageStyles\DebtsPageStyle.css         | PostCSS        |        226 |          2 |         38 |        266 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\src\components\Styles\DebtsPageStyles\DebtsTableStyle.css        | PostCSS        |        226 |         12 |         37 |        275 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\src\components\Styles\ExpensePageStyles\ExpensePageStyle.css     | PostCSS        |          0 |          0 |          1 |          1 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\src\components\Styles\HomePageStyles\HomePageStyle.css           | PostCSS        |        146 |          0 |         24 |        170 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\src\components\Styles\HomePageStyles\MyCardsStyle.css            | PostCSS        |        153 |          0 |         26 |        179 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\src\components\Styles\HomePageStyles\RecentTransactionsStyle.css | PostCSS        |        158 |          0 |         26 |        184 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\src\components\Styles\HomePageStyles\UpcomingPaymentsStyle.css   | PostCSS        |        403 |          0 |         63 |        466 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\src\components\Styles\HomePageStyles\analyticsStyle.css          | PostCSS        |         42 |          0 |          6 |         48 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\src\components\Styles\HomePageStyles\quickInfoStyle.css          | PostCSS        |         76 |          0 |         11 |         87 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\src\components\Styles\IncomePageStyles\IncomePageStyle.css       | PostCSS        |         24 |          2 |          4 |         30 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\src\components\Styles\LandingPageStyle.css                       | PostCSS        |        460 |         15 |         81 |        556 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\src\components\Styles\NotificationMenuStyle.css                  | PostCSS        |        175 |         10 |         28 |        213 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\src\components\Styles\ReportProblemPage.css                      | PostCSS        |         41 |          0 |          7 |         48 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\src\components\Styles\ReportsPageStyles\ReportPageStyle.css      | PostCSS        |        142 |          4 |         23 |        169 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\src\components\Styles\SettingsPageStyles\SettingsPageStyle.css   | PostCSS        |        289 |          7 |         52 |        348 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\src\components\Styles\SharedManagementPage.css                   | PostCSS        |        137 |          3 |         20 |        160 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\src\components\Styles\TableStyle.css                             | PostCSS        |        228 |         11 |         36 |        275 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\src\components\Styles\headerStyle.css                            | PostCSS        |        226 |          4 |         42 |        272 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\src\components\Styles\sideBarStyle.css                           | PostCSS        |        113 |          9 |         21 |        143 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\src\components\Styles\tipBox.css                                 | PostCSS        |          0 |          0 |          1 |          1 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\src\components\TipBox.jsx                                        | JavaScript JSX |         10 |          0 |          5 |         15 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\src\components\header.jsx                                        | JavaScript JSX |        136 |          5 |         25 |        166 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\src\components\sideBar.jsx                                       | JavaScript JSX |         91 |          1 |          8 |        100 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\src\contexts\FinancialContext.jsx                                | JavaScript JSX |        113 |          7 |         19 |        139 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\src\firebase.js                                                  | JavaScript     |         16 |          3 |          4 |         23 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\src\hooks\useFinancialData.js                                    | JavaScript     |         10 |          0 |          3 |         13 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\src\hooks\useNotification.js                                     | JavaScript     |         19 |          0 |          5 |         24 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\src\i18n.js                                                      | JavaScript     |         24 |          0 |          4 |         28 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\src\index.css                                                    | PostCSS        |        182 |          6 |         38 |        226 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\src\locales\ar.json                                              | JSON           |        407 |          0 |          0 |        407 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\src\locales\en.json                                              | JSON           |        410 |          0 |          0 |        410 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\src\main.jsx                                                     | JavaScript JSX |         10 |          0 |          2 |         12 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\src\security\rateLimiter.js                                      | JavaScript     |         53 |          3 |         10 |         66 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\vercel.json                                                      | JSON           |          8 |          0 |          1 |          9 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\vite.config.js                                                   | JavaScript     |         18 |          1 |          1 |         20 |
+| c:\Users\Almonther\Documents\My_Projects\MoneyManagerDashboard\vitest.config.js                                                 | JavaScript     |          7 |          0 |          1 |          8 |
+| Total                                                                                                                           |                |     17,151 |        508 |      1,758 |     19,417 |
++---------------------------------------------------------------------------------------------------------------------------------+----------------+------------+------------+------------+------------+

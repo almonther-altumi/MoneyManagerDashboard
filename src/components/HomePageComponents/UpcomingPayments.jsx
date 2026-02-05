@@ -239,11 +239,11 @@ const UpcomingPayments = ({ debts = [], onDataChange }) => {
                                 <label>{t('upcoming.description')}</label>
                                 <input
                                     type="text"
-                                    placeholder="e.g. Monthly Rent"
+                                    placeholder={t('upcoming.placeholder_description')}
                                     required
                                     value={newData.name}
                                     onChange={e => setNewData({ ...newData, name: e.target.value })}
-                                    autoFocus
+                                autoFocus
                                 />
                             </div>
                             <div className="input-row">
