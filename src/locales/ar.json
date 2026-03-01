@@ -246,6 +246,42 @@
         "retention_efficiency": "كفاءة الاحتفاظ",
         "capital_preservation_rate": "معدل الحفاظ على رأس المال",
         "download_statement": "تحميل الكشف",
+        "insights": {
+            "title": "رؤى استراتيجية",
+            "top_spending": "أكثر شهر صرفاً",
+            "top_income": "أكثر شهر دخلاً",
+            "remaining_balance": "الرصيد المتبقي",
+            "location_snapshot": "ملخص الموقع",
+            "location_loading": "جارٍ تحديد الموقع...",
+            "location_denied": "لم يتم منح إذن الموقع",
+            "location_unavailable": "تعذر تحديد الموقع",
+            "location_unsupported": "الموقع غير مدعوم",
+            "location_ready": "تم التحقق من الموقع",
+            "location_coords": "الإحداثيات",
+            "location_accuracy": "الدقة",
+            "location_timezone": "المنطقة الزمنية",
+            "location_locale": "اللغة/المنطقة",
+            "coordinates_unknown": "غير متاح",
+            "no_data": "لا توجد بيانات بعد"
+        },
+        "investment": {
+            "title": "اقتراح الاستثمار",
+            "disclaimer": "لأغراض معلوماتية فقط.",
+            "stabilize_title": "ثبّت التدفق النقدي أولاً",
+            "stabilize_body": "مصاريفك أعلى من دخلك. ركّز على خفض النفقات المتكررة وبناء احتياطي لشهر واحد قبل الاستثمار.",
+            "buffer_title": "ابنِ احتياطي سيولة",
+            "buffer_body": "الادخار منخفض. ابدأ بحساب ادخار عالي العائد حتى تصل لاحتياطي طوارئ 3-6 أشهر.",
+            "balanced_title": "محفظة مؤشرات متوازنة",
+            "balanced_body": "مع فائض ثابت، الاستثمار في محفظة مؤشرات متنوعة مع تحويل شهري تلقائي خيار قوي، مع الحفاظ على احتياطي الطوارئ.",
+            "growth_title": "استراتيجية نمو أساسية",
+            "growth_body": "ادخارك قوي. حافظ على أساس متنوع، ثم أضف نسبة نمو صغيرة مع إبقاء احتياطي 6 أشهر."
+        },
+        "charts": {
+            "monthly_income": "الدخل الشهري",
+            "monthly_expense": "المصروفات الشهرية",
+            "monthly_performance": "الأداء الشهري",
+            "generating": "جاري توليد الرسم..."
+        },
         "filters": {
             "date_desc": "التاريخ تنازلي",
             "date_asc": "التاريخ تصاعدي",
@@ -312,7 +348,10 @@
         "important": "هام",
         "more": "إشعارات أخرى",
         "uploaded": "قام برفع:",
-        "no_notifications": "لا توجد إشعارات"
+        "no_notifications": "لا توجد إشعارات",
+        "welcome": "أهلًا! تم تجهيز مساحة عملك.",
+        "offline": "أنت غير متصل بالإنترنت. قد تتعطل بعض المزايا.",
+        "online": "تم الاتصال بالإنترنت من جديد."
     },
     "admin": {
         "title": "إرسال تنبيهات",

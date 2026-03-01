@@ -1,53 +1,79 @@
 :root {
   /* hsl (fallback color - Light Mode) */
-  --bg-dark: hsl(220 59% 91%);
-  --bg: hsl(220 100% 97%);
-  --bg-light: hsl(220 100% 100%);
-  --text: hsl(226 85% 7%);
-  --text-muted: hsl(220 26% 31%);
-  --highlight: hsl(220 100% 100%);
-  --border: hsl(220 19% 53%);
-  --border-muted: hsl(220 27% 65%);
-  --primary: hsl(221 49% 33%);
-  --secondary: hsl(44 100% 14%);
-  --danger: hsl(9 21% 41%);
-  --warning: hsl(52 23% 34%);
-  --success: hsl(147 19% 36%);
-  --info: hsl(217 22% 41%);
+  --bg-dark: hsl(30 12% 90%);
+  --bg: hsl(30 20% 96%);
+  --bg-light: hsl(30 20% 99%);
+  --text: hsl(220 12% 18%);
+  --text-muted: hsl(220 8% 45%);
+  --highlight: hsl(30 20% 99%);
+  --border: hsl(220 10% 78%);
+  --border-muted: hsl(220 12% 86%);
+  --muted-border: hsl(220 12% 86%);
+  --primary: hsl(210 22% 32%);
+  --secondary: hsl(28 25% 40%);
+  --danger: hsl(0 30% 45%);
+  --warning: hsl(32 35% 50%);
+  --success: hsl(145 20% 38%);
+  --info: hsl(210 18% 46%);
 
   /* Premium Glass Variables (Light Mode) */
-  --glass-bg: rgba(255, 255, 255, 0.75);
-  --glass-border: rgba(0, 0, 0, 0.08);
-  --glass-text: #1a1a1a;
-  --glass-text-muted: rgba(0, 0, 0, 0.5);
-  --glass-row-hover: rgba(0, 0, 0, 0.04);
-  --glass-input-hover: rgba(0, 0, 0, 0.03);
+  --glass-bg: rgba(255, 255, 255, 0.78);
+  --glass-border: rgba(15, 23, 42, 0.08);
+  --glass-text: #1f2933;
+  --glass-text-muted: rgba(31, 41, 51, 0.55);
+  --glass-row-hover: rgba(31, 41, 51, 0.05);
+  --glass-input-hover: rgba(31, 41, 51, 0.04);
+
+  /* Chart (Light Mode) */
+  --chart-line-1: hsl(210 22% 38%);
+  --chart-line-2: hsl(210 18% 55%);
+  --chart-fill-1-start: rgba(92, 112, 138, 0.35);
+  --chart-fill-1-end: rgba(92, 112, 138, 0.03);
+  --chart-fill-2-start: rgba(130, 146, 168, 0.22);
+  --chart-fill-2-end: rgba(130, 146, 168, 0.03);
+  --chart-grid: rgba(148, 163, 184, 0.35);
+  --chart-axis: hsl(220 8% 45%);
+  --chart-tooltip-bg: rgba(15, 23, 42, 0.9);
+  --chart-tooltip-text: #f8fafc;
 }
 
 .dark-mode {
   /* hsl (fallback color - Dark Mode) */
-  --bg-dark: hsl(228 79% 2%);
-  --bg: hsl(222 55% 5%);
-  --bg-light: hsl(220 35% 10%);
-  --text: hsl(220 100% 98%);
-  --text-muted: hsl(220 35% 73%);
-  --highlight: hsl(220 20% 42%);
-  --border: hsl(220 26% 31%);
-  --border-muted: hsl(220 37% 20%);
-  --primary: hsl(220 78% 76%);
-  --secondary: hsl(40 53% 60%);
-  --danger: hsl(9 26% 64%);
-  --warning: hsl(52 19% 57%);
-  --success: hsl(146 17% 59%);
-  --info: hsl(217 28% 65%);
+  --bg-dark: hsl(222 18% 10%);
+  --bg: hsl(222 16% 12%);
+  --bg-light: hsl(222 14% 16%);
+  --text: hsl(210 20% 92%);
+  --text-muted: hsl(210 10% 70%);
+  --highlight: hsl(210 14% 24%);
+  --border: hsl(220 10% 28%);
+  --border-muted: hsl(220 9% 22%);
+  --muted-border: hsl(220 9% 22%);
+  --primary: hsl(210 22% 70%);
+  --secondary: hsl(28 20% 60%);
+  --danger: hsl(0 25% 62%);
+  --warning: hsl(32 25% 60%);
+  --success: hsl(145 18% 55%);
+  --info: hsl(210 16% 60%);
 
   /* Premium Glass Variables (Dark Mode) */
-  --glass-bg: rgba(18, 18, 24, 0.7);
+  --glass-bg: rgba(20, 24, 29, 0.75);
   --glass-border: rgba(255, 255, 255, 0.08);
-  --glass-text: #ffffff;
-  --glass-text-muted: rgba(255, 255, 255, 0.5);
-  --glass-row-hover: rgba(255, 255, 255, 0.06);
-  --glass-input-hover: rgba(255, 255, 255, 0.05);
+  --glass-text: #f1f5f9;
+  --glass-text-muted: rgba(241, 245, 249, 0.6);
+  --glass-row-hover: rgba(255, 255, 255, 0.05);
+  --glass-input-hover: rgba(255, 255, 255, 0.04);
+
+  /* Chart (Dark Mode) */
+  --chart-line-1: hsl(210 25% 72%);
+  --chart-line-2: hsl(210 18% 60%);
+  --chart-fill-1-start: rgba(162, 185, 212, 0.35);
+  --chart-fill-1-end: rgba(162, 185, 212, 0.04);
+  --chart-fill-2-start: rgba(140, 160, 184, 0.22);
+  --chart-fill-2-end: rgba(140, 160, 184, 0.04);
+  --chart-grid: rgba(148, 163, 184, 0.2);
+  --chart-axis: hsl(210 10% 70%);
+  --chart-tooltip-bg: rgba(15, 23, 42, 0.95);
+  --chart-tooltip-text: #f8fafc;
 }
 
 * {
@@ -70,12 +96,12 @@ html {
 
 a {
   font-weight: 500;
-  color: var(--highlight);
+  color: var(--primary);
   text-decoration: inherit;
 }
 
 a:hover {
-  color: #565667;
+  color: var(--text);
 }
 
 body {

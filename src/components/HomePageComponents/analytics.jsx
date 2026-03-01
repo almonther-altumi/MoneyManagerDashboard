@@ -1,5 +1,5 @@
 import { Line } from "react-chartjs-2";
-import { useMemo } from "react";
+import { useMemo, useEffect, useState } from "react";
 import { auth } from '../../firebase';
 import '../Styles/HomePageStyles/analyticsStyle.css';
 import { useTranslation } from "react-i18next";
@@ -28,8 +28,52 @@ ChartJS.register(
 function Analytics({ data }) {
   const { t } = useTranslation();
   const { income = [], expenses = [] } = data || {};
+  const [themeKey, setThemeKey] = useState(0);
 
   const labels = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+  useEffect(() => {
+    const handleTheme = () => setThemeKey((prev) => prev + 1);
+    window.addEventListener('theme_update', handleTheme);
+    window.addEventListener('storage', handleTheme);
+    return () => {
+      window.removeEventListener('theme_update', handleTheme);
+      window.removeEventListener('storage', handleTheme);
+    };
+  }, []);
+
+  const chartTheme = useMemo(() => {
+    if (typeof window === 'undefined') {
+      return {
+        line1: '#5b61f6',
+        line2: '#7a84f7',
+        fill1Start: 'rgba(91, 97, 246, 0.35)',
+        fill1End: 'rgba(91, 97, 246, 0.02)',
+        fill2Start: 'rgba(122, 132, 247, 0.25)',
+        fill2End: 'rgba(122, 132, 247, 0.02)',
+        grid: 'rgba(148, 163, 184, 0.35)',
+        axis: '#6b7280',
+        tooltipBg: 'rgba(15, 23, 42, 0.9)',
+        tooltipText: '#f8fafc'
+      };
+    }
+
+    const styles = getComputedStyle(document.documentElement);
+    const get = (name, fallback) => styles.getPropertyValue(name).trim() || fallback;
+
+    return {
+      line1: get('--chart-line-1', '#5b61f6'),
+      line2: get('--chart-line-2', '#7a84f7'),
+      fill1Start: get('--chart-fill-1-start', 'rgba(91, 97, 246, 0.35)'),
+      fill1End: get('--chart-fill-1-end', 'rgba(91, 97, 246, 0.02)'),
+      fill2Start: get('--chart-fill-2-start', 'rgba(122, 132, 247, 0.25)'),
+      fill2End: get('--chart-fill-2-end', 'rgba(122, 132, 247, 0.02)'),
+      grid: get('--chart-grid', 'rgba(148, 163, 184, 0.35)'),
+      axis: get('--chart-axis', '#6b7280'),
+      tooltipBg: get('--chart-tooltip-bg', 'rgba(15, 23, 42, 0.9)'),
+      tooltipText: get('--chart-tooltip-text', '#f8fafc')
+    };
+  }, [themeKey]);
 
   const chartData = useMemo(() => {
     const incomeByMonth = new Array(12).fill(0);
@@ -51,38 +95,50 @@ function Analytics({ data }) {
         {
           label: t('home.analytics.income'),
           data: incomeByMonth,
-          borderColor: "#1d7db9",
+          borderColor: chartTheme.line1,
+          borderWidth: 3,
           fill: true,
-          tension: 0.45,
-          pointRadius: 3,
-          pointHoverRadius: 6,
+          tension: 0.5,
+          pointRadius: 0,
+          pointHoverRadius: 5,
+          pointHitRadius: 14,
+          borderCapStyle: 'round',
+          borderJoinStyle: 'round',
           backgroundColor: (context) => {
-            const ctx = context.chart.ctx;
-            const gradient = ctx.createLinearGradient(0, 0, 0, 300);
-            gradient.addColorStop(0, "rgba(29,151,185,0.4)");
-            gradient.addColorStop(1, "rgba(29,151,185,0.05)");
+            const { chart } = context;
+            const { ctx, chartArea } = chart;
+            if (!chartArea) return chartTheme.fill1Start;
+            const gradient = ctx.createLinearGradient(0, chartArea.top, 0, chartArea.bottom);
+            gradient.addColorStop(0, chartTheme.fill1Start);
+            gradient.addColorStop(1, chartTheme.fill1End);
             return gradient;
           }
         },
         {
           label: t('home.analytics.expense'),
           data: expenseByMonth,
-          borderColor: "#ea4335",
+          borderColor: chartTheme.line2,
+          borderWidth: 2.5,
           fill: true,
-          tension: 0.45,
-          pointRadius: 3,
-          pointHoverRadius: 6,
+          tension: 0.5,
+          pointRadius: 0,
+          pointHoverRadius: 4,
+          pointHitRadius: 12,
+          borderCapStyle: 'round',
+          borderJoinStyle: 'round',
           backgroundColor: (context) => {
-            const ctx = context.chart.ctx;
-            const gradient = ctx.createLinearGradient(0, 0, 0, 300);
-            gradient.addColorStop(0, "rgba(234,67,53,0.4)");
-            gradient.addColorStop(1, "rgba(234,67,53,0.05)");
+            const { chart } = context;
+            const { ctx, chartArea } = chart;
+            if (!chartArea) return chartTheme.fill2Start;
+            const gradient = ctx.createLinearGradient(0, chartArea.top, 0, chartArea.bottom);
+            gradient.addColorStop(0, chartTheme.fill2Start);
+            gradient.addColorStop(1, chartTheme.fill2End);
             return gradient;
           }
         }
       ]
     };
-  }, [income, expenses, t]);
+  }, [income, expenses, t, chartTheme]);
 
   const options = {
     responsive: true,
@@ -90,25 +146,40 @@ function Analytics({ data }) {
     interaction: { mode: 'index', intersect: false },
     plugins: {
       legend: {
-        position: 'top',
-        labels: {
-          usePointStyle: true,
-          boxWidth: 8
-        }
+        display: false
       },
       tooltip: {
-        backgroundColor: 'rgba(32,33,36,0.9)',
-        cornerRadius: 8
+        backgroundColor: chartTheme.tooltipBg,
+        cornerRadius: 10,
+        titleColor: chartTheme.tooltipText,
+        bodyColor: chartTheme.tooltipText,
+        padding: 10,
+        displayColors: false
       }
     },
     scales: {
       y: {
-        grid: { color: '#f1f3f4' },
-        ticks: { font: { size: 11 } }
+        grid: {
+          color: chartTheme.grid,
+          drawBorder: false
+        },
+        ticks: {
+          font: { size: 11, weight: 500 },
+          color: chartTheme.axis,
+          padding: 6
+        }
       },
       x: {
         grid: { display: false },
-        ticks: { font: { size: 11 } }
+        ticks: {
+          font: { size: 11, weight: 500 },
+          color: chartTheme.axis
+        }
+      }
+    },
+    elements: {
+      line: {
+        tension: 0.5
       }
     }
   };

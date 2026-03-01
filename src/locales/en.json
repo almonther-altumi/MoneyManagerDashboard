@@ -287,6 +287,42 @@
         "retention_efficiency": "Retention Efficiency",
         "capital_preservation_rate": "Capital Preservation Rate",
         "download_statement": "Download Statement",
+        "insights": {
+            "title": "Strategic Insights",
+            "top_spending": "Top Spending Month",
+            "top_income": "Top Income Month",
+            "remaining_balance": "Remaining Balance",
+            "location_snapshot": "Location Snapshot",
+            "location_loading": "Resolving location...",
+            "location_denied": "Location access not granted",
+            "location_unavailable": "Location unavailable",
+            "location_unsupported": "Geolocation not supported",
+            "location_ready": "Location verified",
+            "location_coords": "Coordinates",
+            "location_accuracy": "Accuracy",
+            "location_timezone": "Time Zone",
+            "location_locale": "Locale",
+            "coordinates_unknown": "Not available",
+            "no_data": "No data yet"
+        },
+        "investment": {
+            "title": "Investment Suggestion",
+            "disclaimer": "For informational purposes only.",
+            "stabilize_title": "Stabilize Cash Flow First",
+            "stabilize_body": "Your expenses exceed income. Prioritize reducing recurring outflows and building a one-month cash buffer before investing.",
+            "buffer_title": "Build a Liquid Buffer",
+            "buffer_body": "Savings are thin. Consider a high-yield savings or money market fund until you reach a 3-6 month emergency reserve.",
+            "balanced_title": "Balanced Index Core",
+            "balanced_body": "With steady surplus, a diversified index portfolio with automatic monthly contributions is a strong baseline. Keep an emergency buffer intact.",
+            "growth_title": "Growth-Core Strategy",
+            "growth_body": "You're saving aggressively. Maintain a diversified index core, then add a small growth allocation while preserving a 6-month reserve."
+        },
+        "charts": {
+            "monthly_income": "Monthly Income",
+            "monthly_expense": "Monthly Expenses",
+            "monthly_performance": "Monthly Performance",
+            "generating": "Generating chart..."
+        },
         "filters": {
             "date_desc": "Date Descending",
             "date_asc": "Date Ascending",
@@ -315,7 +351,10 @@
         "important": "Important",
         "more": "More notifications",
         "uploaded": "uploaded:",
-        "no_notifications": "No notifications found"
+        "no_notifications": "No notifications found",
+        "welcome": "Welcome! Your workspace is ready.",
+        "offline": "You're offline. Some features may be unavailable.",
+        "online": "You're back online."
     },
     "admin": {
         "title": "Push Notifications",

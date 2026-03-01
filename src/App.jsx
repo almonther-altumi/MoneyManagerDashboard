@@ -1,6 +1,6 @@
 
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase";
 import { useTranslation } from "react-i18next";
@@ -32,6 +32,8 @@ import { db } from "./firebase";
 import { ShieldAlert, LogOut } from 'lucide-react';
 import BudgetAlertManager from "./components/BudgetAlertManager";
 import Onboarding2 from './components/Onboarding2'
+import Notification from "./components/Notification";
+import { useNotification } from "./hooks/useNotification";
 
 
 export default function App() {
@@ -39,12 +41,50 @@ export default function App() {
   const [userStatus, setUserStatus] = useState(null); // {status, reason}
   const [loading, setLoading] = useState(true);
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-  const { i18n } = useTranslation();
+  const { i18n, t } = useTranslation();
+  const { notification, showNotification, hideNotification } = useNotification();
+  const welcomeShownRef = useRef(false);
+  const wasOfflineRef = useRef(false);
 
   useEffect(() => {
     document.dir = i18n.language === 'ar' ? 'rtl' : 'ltr';
     document.documentElement.lang = i18n.language;
   }, [i18n.language]);
+
+  useEffect(() => {
+    if (loading) return;
+    if (welcomeShownRef.current) return;
+    welcomeShownRef.current = true;
+    showNotification(t('notifications.welcome'), 'info');
+  }, [loading, showNotification, t]);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return undefined;
+
+    const handleOffline = () => {
+      wasOfflineRef.current = true;
+      showNotification(t('notifications.offline'), 'warning');
+    };
+
+    const handleOnline = () => {
+      if (wasOfflineRef.current) {
+        showNotification(t('notifications.online'), 'success');
+        wasOfflineRef.current = false;
+      }
+    };
+
+    window.addEventListener('offline', handleOffline);
+    window.addEventListener('online', handleOnline);
+
+    if (navigator && !navigator.onLine) {
+      handleOffline();
+    }
+
+    return () => {
+      window.removeEventListener('offline', handleOffline);
+      window.removeEventListener('online', handleOnline);
+    };
+  }, [showNotification, t]);
 
   // Theme Management
   useEffect(() => {
@@ -186,6 +226,12 @@ export default function App() {
       <BrowserRouter>
         <FinancialProvider>
           <BudgetAlertManager />
+          <Notification
+            show={notification.show}
+            message={notification.message}
+            type={notification.type}
+            onClose={hideNotification}
+          />
           {user && (
             <>
               <SideBar user={user} isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />

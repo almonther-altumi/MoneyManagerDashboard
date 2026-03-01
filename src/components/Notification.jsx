@@ -3,30 +3,25 @@ import { createPortal } from "react-dom";
 
 const COLORS = {
   success: {
-    bg: "linear-gradient(135deg, #10b981, #059669)",
-    iconBg: "rgba(255,255,255,0.2)",
+    accent: "var(--success, #16a34a)",
   },
   error: {
-    bg: "linear-gradient(135deg, #ef4444, #dc2626)",
-    iconBg: "rgba(255,255,255,0.25)",
+    accent: "var(--danger, #ef4444)",
   },
   warning: {
-    bg: "linear-gradient(135deg, #f59e0b, #d97706)",
-    iconBg: "rgba(255,255,255,0.25)",
+    accent: "var(--warning, #f59e0b)",
   },
   info: {
-    bg: "linear-gradient(135deg, #3b82f6, #2563eb)",
-    iconBg: "rgba(255,255,255,0.25)",
+    accent: "var(--primary, #2563eb)",
   },
 };
 
 const Notification = ({ show, message, type = "info", onClose }) => {
   const [visible, setVisible] = useState(show);
 
-
   const handleClose = () => {
     setVisible(false);
-    setTimeout(onClose, 250); // wait for exit animation
+    setTimeout(onClose, 250);
   };
 
   useEffect(() => {
@@ -35,47 +30,54 @@ const Notification = ({ show, message, type = "info", onClose }) => {
       const timer = setTimeout(() => handleClose(), 3000);
       return () => clearTimeout(timer);
     }
+    return undefined;
   }, [show]);
 
-  
   if (!show && !visible) return null;
 
   const style = COLORS[type] || COLORS.info;
+  const isRtl = typeof document !== "undefined" && document.documentElement.dir === "rtl";
 
   const jsx = (
     <>
       <div
+        className="notification-toast"
         style={{
           position: "fixed",
-          top: "24px",
-          left: "50%",
-          transform: "translateX(-50%)",
-          background: style.bg,
-          color: "#fff",
-          padding: "16px 20px",
+          bottom: "24px",
+          left: isRtl ? "auto" : "24px",
+          right: isRtl ? "24px" : "auto",
+          background: "var(--bg-light)",
+          color: "var(--text)",
+          padding: "12px 14px",
           borderRadius: "14px",
-          boxShadow: "0 20px 40px rgba(0,0,0,0.25)",
+          border: "1px solid var(--border-muted)",
+          borderLeft: !isRtl ? `3px solid ${style.accent}` : undefined,
+          borderRight: isRtl ? `3px solid ${style.accent}` : undefined,
+          boxShadow: "0 16px 32px rgba(0,0,0,0.2)",
           zIndex: 100000,
           display: "flex",
           alignItems: "center",
-          gap: "14px",
-          minWidth: "320px",
-          maxWidth: "520px",
-          fontSize: "15px",
-          fontWeight: 500,
-          backdropFilter: "blur(12px)",
+          gap: "12px",
+          minWidth: "240px",
+          maxWidth: "calc(100vw - 48px)",
+          fontSize: "14px",
+          fontWeight: 600,
+          backdropFilter: "blur(10px)",
+          direction: isRtl ? "rtl" : "ltr",
           animation: visible
             ? "notifIn 0.3s ease-out forwards"
             : "notifOut 0.25s ease-in forwards",
+          overflow: "hidden",
         }}
       >
-        {/* Icon */}
         <div
           style={{
-            width: "42px",
-            height: "42px",
-            borderRadius: "50%",
-            background: style.iconBg,
+            width: "38px",
+            height: "38px",
+            borderRadius: "12px",
+            background: "var(--bg)",
+            border: "1px solid var(--border-muted)",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
@@ -83,11 +85,11 @@ const Notification = ({ show, message, type = "info", onClose }) => {
           }}
         >
           <svg
-            width="22"
-            height="22"
+            width="20"
+            height="20"
             viewBox="0 0 24 24"
             fill="none"
-            stroke="white"
+            stroke={style.accent}
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -97,75 +99,86 @@ const Notification = ({ show, message, type = "info", onClose }) => {
           </svg>
         </div>
 
-        {/* Message */}
-        <div style={{ flex: 1, lineHeight: 1.5 }}>{message}</div>
+        <div style={{ flex: 1, lineHeight: 1.45 }}>{message}</div>
 
-        {/* Close */}
         <button
-  onClick={handleClose}
-  style={{
-    background: "rgba(255, 255, 255, 0.26)",
-    border: "none",
-    width: "32px",
-    height: "32px",
-    borderRadius: "50%",
-    cursor: "pointer",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    padding: 0,
-  }}
->
-  <span
-    style={{
-      lineHeight: 1,
-      fontSize: "20px",
-      fontWeight: 600,
-      transform: "translateY(-1px)",
-    }}
-  >
-    ×
-  </span>
-</button>
-
-        {/* Progress bar */}
-        {/* Progress overlay */}
-        <div
+          type="button"
+          className="notification-close"
+          aria-label="Close notification"
+          onClick={handleClose}
+          style={{
+            background: "var(--bg)",
+            border: "1px solid var(--border-muted)",
+            width: "30px",
+            height: "30px",
+            borderRadius: "10px",
+            cursor: "pointer",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: 0,
+            fontFamily: "inherit",
+          }}
+        >
+          <span
             style={{
-                position: "absolute",
-                inset: 0,
-                background: "rgba(255,255,255,0.12)",
-                animation: "progressOverlay 3s linear forwards",
-                pointerEvents: "none",
-                borderRadius: "14px",
+              lineHeight: 1,
+              fontSize: "16px",
+              fontWeight: 700,
+              color: "var(--text)",
             }}
-        />
+          >
+            x
+          </span>
+        </button>
 
+        <div
+          style={{
+            position: "absolute",
+            left: 0,
+            right: 0,
+            bottom: 0,
+            height: "2px",
+            background: "rgba(15, 23, 42, 0.08)",
+            borderRadius: "0 0 14px 14px",
+            overflow: "hidden",
+            pointerEvents: "none",
+          }}
+        >
           <div
             style={{
               height: "100%",
-              background: "#fff",
+              width: "100%",
+              background: style.accent,
+              transformOrigin: isRtl ? "right" : "left",
               animation: "progress 3s linear forwards",
             }}
           />
         </div>
+      </div>
 
       <style>{`
+        .notification-close:hover {
+          transform: none !important;
+          box-shadow: none !important;
+          border-color: var(--border-muted) !important;
+          background: var(--bg) !important;
+        }
+
         @keyframes notifIn {
-          from { opacity: 0; transform: translate(-50%, -16px); }
-          to { opacity: 1; transform: translate(-50%, 0); }
+          from { opacity: 0; transform: translateY(16px); }
+          to { opacity: 1; transform: translateY(0); }
         }
 
         @keyframes notifOut {
-          from { opacity: 1; transform: translate(-50%, 0); }
-          to { opacity: 0; transform: translate(-50%, -16px); }
+          from { opacity: 1; transform: translateY(0); }
+          to { opacity: 0; transform: translateY(16px); }
         }
 
-        @keyframes progressOverlay {
-            from { clip-path: inset(0 0 0 0); }
-            to { clip-path: inset(0 100% 0 0); }
+        @keyframes progress {
+          from { transform: scaleX(1); }
+          to { transform: scaleX(0); }
         }
-
       `}</style>
     </>
   );
