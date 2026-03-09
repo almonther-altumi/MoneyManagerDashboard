@@ -3,6 +3,7 @@ import '../components/Styles/ReportsPageStyles/ReportPageStyle.css';
 import { jsPDF } from "jspdf";
 import html2canvas from 'html2canvas';
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 
 import { Line } from "react-chartjs-2";
 import {
@@ -229,6 +230,17 @@ const ReportPDFTemplate = ({ pdfTemplateRef, t, i18n, reportData, formatCurrency
 function ReportsPage() {
   const { t, i18n } = useTranslation();
   const { income: rawIncomeData, expenses: rawExpenseData } = useFinancialData();
+  const navigate = useNavigate();
+
+  const [subscriptionStatus, setSubscriptionStatus] = useState(() => {
+    if (typeof window === 'undefined') return 'inactive';
+    try {
+      return localStorage.getItem('mm_subscription_status') || 'inactive';
+    } catch (e) {
+      return 'inactive';
+    }
+  });
+  const isSubscribed = subscriptionStatus === 'active';
 
   const [sortOrder, setSortOrder] = useState('dateDesc');
   const [chartImage, setChartImage] = useState(null);
@@ -314,6 +326,23 @@ function ReportsPage() {
       }
     );
   }, [formatUtcOffset]);
+
+  React.useEffect(() => {
+    if (typeof window === 'undefined') return undefined;
+    const syncSubscription = () => {
+      try {
+        setSubscriptionStatus(localStorage.getItem('mm_subscription_status') || 'inactive');
+      } catch (e) {
+        setSubscriptionStatus('inactive');
+      }
+    };
+    window.addEventListener('storage', syncSubscription);
+    window.addEventListener('subscription_update', syncSubscription);
+    return () => {
+      window.removeEventListener('storage', syncSubscription);
+      window.removeEventListener('subscription_update', syncSubscription);
+    };
+  }, []);
 
   React.useEffect(() => {
     if (typeof window === 'undefined') return undefined;
@@ -520,6 +549,73 @@ function ReportsPage() {
       body: t('reports.investment.growth_body')
     };
   }, [reportData.netSavings, reportData.savingsRate, t]);
+
+  const premiumMetrics = React.useMemo(() => {
+    const expenseTotals = reportData.expenseList.reduce((acc, item) => {
+      const key = item.category || t('reports.premium.uncategorized');
+      acc[key] = (acc[key] || 0) + (Number(item.amount) || 0);
+      return acc;
+    }, {});
+
+    const topCategoryEntry = Object.entries(expenseTotals).sort((a, b) => b[1] - a[1])[0];
+    const topCategoryName = topCategoryEntry ? topCategoryEntry[0] : t('reports.insights.no_data');
+    const topCategoryAmount = topCategoryEntry ? topCategoryEntry[1] : 0;
+    const topCategoryShare = reportData.totalExpenses > 0
+      ? Math.round((topCategoryAmount / reportData.totalExpenses) * 100)
+      : 0;
+
+    const activeMonths = reportData.monthlyIncome.map((income, idx) => (
+      income > 0 || reportData.monthlyExpenses[idx] > 0
+    ));
+    let lastActiveIndex = -1;
+    for (let i = activeMonths.length - 1; i >= 0; i -= 1) {
+      if (activeMonths[i]) {
+        lastActiveIndex = i;
+        break;
+      }
+    }
+    const endIndex = lastActiveIndex === -1 ? 11 : lastActiveIndex;
+    const startIndex = Math.max(0, endIndex - 2);
+    const recentNet = monthlyNet.slice(startIndex, endIndex + 1);
+    const projectedNet = recentNet.length
+      ? Math.round(recentNet.reduce((sum, value) => sum + value, 0) / recentNet.length)
+      : 0;
+
+    const netSeries = monthlyNet.filter((_, idx) => activeMonths[idx]);
+    const mean = netSeries.length
+      ? netSeries.reduce((sum, value) => sum + value, 0) / netSeries.length
+      : 0;
+    const variance = netSeries.length
+      ? netSeries.reduce((sum, value) => sum + Math.pow(value - mean, 2), 0) / netSeries.length
+      : 0;
+    const stdDev = Math.sqrt(variance);
+    const avgAbs = netSeries.length
+      ? netSeries.reduce((sum, value) => sum + Math.abs(value), 0) / netSeries.length
+      : 0;
+    const stabilityScore = avgAbs > 0
+      ? Math.max(0, Math.min(100, Math.round(100 - (stdDev / avgAbs) * 100)))
+      : 0;
+
+    const expenseMonths = reportData.monthlyExpenses.filter(value => value > 0);
+    const avgMonthlyExpense = expenseMonths.length
+      ? expenseMonths.reduce((sum, value) => sum + value, 0) / expenseMonths.length
+      : 0;
+    const reserveTarget = Math.round(avgMonthlyExpense * 3);
+
+    const maxExpense = expenseMonths.length ? Math.max(...expenseMonths) : 0;
+    const anomalyScore = avgMonthlyExpense > 0
+      ? Math.min(200, Math.round((maxExpense / avgMonthlyExpense) * 100))
+      : 0;
+
+    return {
+      topCategoryName,
+      topCategoryShare,
+      projectedNet,
+      stabilityScore,
+      reserveTarget,
+      anomalyScore
+    };
+  }, [monthlyNet, reportData, t]);
 
   const buildChartImage = React.useCallback(() => {
     if (typeof document === 'undefined') return null;
@@ -751,6 +847,22 @@ function ReportsPage() {
     }
   }), []);
 
+  const renderPremiumLock = () => (
+    <div className="premium-lock-overlay">
+      <div className="premium-lock-card">
+        <span className="premium-badge premium-fire">{t('subscription.badge')}</span>
+        <h5>{t('reports.premium.locked_title')}</h5>
+        <p>{t('reports.premium.locked_body')}</p>
+        <button
+          className="premium-cta-btn premium-fire"
+          onClick={() => navigate('/subscription')}
+        >
+          {t('reports.premium.cta')}
+        </button>
+      </div>
+    </div>
+  );
+
   return (
     <div className="reports-page-root" ref={reportRef}>
       <ReportPDFTemplate
@@ -773,51 +885,111 @@ function ReportsPage() {
             <p>{t('reports.intro')}</p>
           </div>
 
-          <div className="reports-date-filter">
-            <select value={sortOrder} onChange={e => setSortOrder(e.target.value)}>
-              <option value="dateDesc">{t('reports.filters.date_desc')}</option>
-              <option value="dateAsc">{t('reports.filters.date_asc')}</option>
-              <option value="amountAsc">{t('reports.filters.amount_asc')}</option>
-              <option value="amountDesc">{t('reports.filters.amount_desc')}</option>
-            </select>
+          <div className="reports-header-actions">
+            <div
+              className="reports-date-filter hint"
+              data-hint={t('reports.hints.sorting')}
+              tabIndex="0"
+            >
+              <select value={sortOrder} onChange={e => setSortOrder(e.target.value)}>
+                <option value="dateDesc">{t('reports.filters.date_desc')}</option>
+                <option value="dateAsc">{t('reports.filters.date_asc')}</option>
+                <option value="amountAsc">{t('reports.filters.amount_asc')}</option>
+                <option value="amountDesc">{t('reports.filters.amount_desc')}</option>
+              </select>
+            </div>
+            {isSubscribed ? (
+              <span className="premium-badge premium-fire">
+                {`${t('subscription.active')} • ${t('subscription.plan_name')}`}
+              </span>
+            ) : (
+              <button
+                className="premium-cta-btn premium-fire"
+                onClick={() => navigate('/subscription')}
+              >
+                {t('reports.premium.cta')}
+              </button>
+            )}
           </div>
         </header>
 
         <div className="reports-stats-row">
           <div className="stat-card">
-            <span className="label">{t('reports.gross_liquidity')}</span>
+            <span
+              className="label hint hint-btn"
+              data-hint={t('reports.hints.gross_liquidity')}
+              tabIndex="0"
+            >
+              {t('reports.gross_liquidity')}
+            </span>
             <span className="amount income">{formatCurrency(reportData.totalIncome)}</span>
           </div>
           <div className="stat-card">
-            <span className="label">{t('reports.total_expenditure')}</span>
+            <span
+              className="label hint hint-btn"
+              data-hint={t('reports.hints.total_expenditure')}
+              tabIndex="0"
+            >
+              {t('reports.total_expenditure')}
+            </span>
             <span className="amount expense">{formatCurrency(reportData.totalExpenses)}</span>
           </div>
           <div className="stat-card">
-            <span className="label">{t('reports.net_retained_capital')}</span>
+            <span
+              className="label hint hint-btn"
+              data-hint={t('reports.hints.net_retained_capital')}
+              tabIndex="0"
+            >
+              {t('reports.net_retained_capital')}
+            </span>
             <span className="amount balance">{formatCurrency(reportData.netSavings)}</span>
           </div>
         </div>
 
         <div className="reports-insights-grid">
           <div className="insight-card">
-            <span className="insight-label">{t('reports.insights.top_spending')}</span>
+            <span
+              className="insight-label hint hint-btn"
+              data-hint={t('reports.hints.top_spending')}
+              tabIndex="0"
+            >
+              {t('reports.insights.top_spending')}
+            </span>
             <div className="insight-value">{reportData.topExpenseMonth}</div>
             <div className="insight-meta negative">{formatCurrency(reportData.topExpenseAmount)}</div>
           </div>
           <div className="insight-card">
-            <span className="insight-label">{t('reports.insights.top_income')}</span>
+            <span
+              className="insight-label hint hint-btn"
+              data-hint={t('reports.hints.top_income')}
+              tabIndex="0"
+            >
+              {t('reports.insights.top_income')}
+            </span>
             <div className="insight-value">{reportData.topIncomeMonth}</div>
             <div className="insight-meta positive">{formatCurrency(reportData.topIncomeAmount)}</div>
           </div>
           <div className="insight-card">
-            <span className="insight-label">{t('reports.insights.remaining_balance')}</span>
+            <span
+              className="insight-label hint hint-btn"
+              data-hint={t('reports.hints.remaining_balance')}
+              tabIndex="0"
+            >
+              {t('reports.insights.remaining_balance')}
+            </span>
             <div className={`insight-value ${reportData.netSavings < 0 ? 'negative' : 'positive'}`}>
               {formatCurrency(reportData.netSavings)}
             </div>
             <div className="insight-sub">{t('reports.net_retained_capital')}</div>
           </div>
           <div className="insight-card location-card">
-            <span className="insight-label">{t('reports.insights.location_snapshot')}</span>
+            <span
+              className="insight-label hint hint-btn"
+              data-hint={t('reports.hints.location_snapshot')}
+              tabIndex="0"
+            >
+              {t('reports.insights.location_snapshot')}
+            </span>
             <div className="location-status">
               {locationInfo.status === 'loading' && t('reports.insights.location_loading')}
               {locationInfo.status === 'denied' && t('reports.insights.location_denied')}
@@ -850,17 +1022,170 @@ function ReportsPage() {
 
         <div className="reports-investment-card">
           <div>
-            <h3>{t('reports.investment.title')}</h3>
+            <div className="investment-header">
+              <h3>{t('reports.investment.title')}</h3>
+              <span
+                className="hint hint-icon"
+                data-hint={t('reports.hints.investment_suggestion')}
+                tabIndex="0"
+              >
+                ?
+              </span>
+            </div>
             <p className="investment-title">{investmentSuggestion.title}</p>
             <p className="investment-body">{investmentSuggestion.body}</p>
           </div>
           <div className="investment-disclaimer">{t('reports.investment.disclaimer')}</div>
         </div>
 
+        <section className="reports-premium-section">
+          <div className="premium-section-header">
+            <div>
+              <span className="premium-badge premium-fire">{t('subscription.badge')}</span>
+              <h3>{t('reports.premium.title')}</h3>
+              <p>{t('reports.premium.subtitle')}</p>
+            </div>
+            {isSubscribed ? (
+              <span className="premium-badge premium-fire">{t('subscription.active')}</span>
+            ) : (
+              <button
+                className="premium-cta-btn premium-fire"
+                onClick={() => navigate('/subscription')}
+              >
+                {t('reports.premium.cta')}
+              </button>
+            )}
+          </div>
+
+          <div className="premium-grid">
+            <div className={`premium-card ${isSubscribed ? '' : 'is-locked'}`}>
+              <div className="premium-card-header">
+                <div className="premium-card-title">
+                  <span className="premium-badge premium-fire premium-mini">{t('subscription.badge')}</span>
+                  <h4>{t('reports.premium.cards.forecast_title')}</h4>
+                </div>
+            <span
+              className="premium-chip hint"
+              data-hint={t('reports.hints.premium_forecast')}
+              tabIndex="0"
+            >
+              {t('reports.premium.labels.next_month')}
+            </span>
+              </div>
+              <div className="premium-card-body">
+                <div className={`premium-value ${premiumMetrics.projectedNet < 0 ? 'negative' : 'positive'}`}>
+                  {formatCurrency(premiumMetrics.projectedNet)}
+                </div>
+                <div className="premium-meta">{t('reports.premium.cards.forecast_desc')}</div>
+              </div>
+              {!isSubscribed && renderPremiumLock()}
+            </div>
+
+            <div className={`premium-card ${isSubscribed ? '' : 'is-locked'}`}>
+              <div className="premium-card-header">
+                <div className="premium-card-title">
+                  <span className="premium-badge premium-fire premium-mini">{t('subscription.badge')}</span>
+                  <h4>{t('reports.premium.cards.concentration_title')}</h4>
+                </div>
+                <span
+                  className="premium-chip hint"
+                  data-hint={t('reports.hints.premium_concentration')}
+                  tabIndex="0"
+                >
+                  {t('reports.premium.labels.top_category')}
+                </span>
+              </div>
+              <div className="premium-card-body">
+                <div className="premium-value">{premiumMetrics.topCategoryShare}%</div>
+                <div className="premium-meta">
+                  {premiumMetrics.topCategoryName}
+                </div>
+              </div>
+              {!isSubscribed && renderPremiumLock()}
+            </div>
+
+            <div className={`premium-card ${isSubscribed ? '' : 'is-locked'}`}>
+              <div className="premium-card-header">
+                <div className="premium-card-title">
+                  <span className="premium-badge premium-fire premium-mini">{t('subscription.badge')}</span>
+                  <h4>{t('reports.premium.cards.volatility_title')}</h4>
+                </div>
+                <span
+                  className="premium-chip hint"
+                  data-hint={t('reports.hints.premium_volatility')}
+                  tabIndex="0"
+                >
+                  {t('reports.premium.labels.volatility_score')}
+                </span>
+              </div>
+              <div className="premium-card-body">
+                <div className={`premium-value ${premiumMetrics.stabilityScore < 50 ? 'negative' : 'positive'}`}>
+                  {premiumMetrics.stabilityScore}%
+                </div>
+                <div className="premium-meta">{t('reports.premium.cards.volatility_desc')}</div>
+              </div>
+              {!isSubscribed && renderPremiumLock()}
+            </div>
+
+            <div className={`premium-card ${isSubscribed ? '' : 'is-locked'}`}>
+              <div className="premium-card-header">
+                <div className="premium-card-title">
+                  <span className="premium-badge premium-fire premium-mini">{t('subscription.badge')}</span>
+                  <h4>{t('reports.premium.cards.reserve_title')}</h4>
+                </div>
+                <span
+                  className="premium-chip hint"
+                  data-hint={t('reports.hints.premium_reserve')}
+                  tabIndex="0"
+                >
+                  {t('reports.premium.labels.reserve_target')}
+                </span>
+              </div>
+              <div className="premium-card-body">
+                <div className="premium-value">{formatCurrency(premiumMetrics.reserveTarget)}</div>
+                <div className="premium-meta">{t('reports.premium.cards.reserve_desc')}</div>
+              </div>
+              {!isSubscribed && renderPremiumLock()}
+            </div>
+
+            <div className={`premium-card ${isSubscribed ? '' : 'is-locked'}`}>
+              <div className="premium-card-header">
+                <div className="premium-card-title">
+                  <span className="premium-badge premium-fire premium-mini">{t('subscription.badge')}</span>
+                  <h4>{t('reports.premium.cards.anomaly_title')}</h4>
+                </div>
+                <span
+                  className="premium-chip hint"
+                  data-hint={t('reports.hints.premium_anomaly')}
+                  tabIndex="0"
+                >
+                  {t('reports.premium.labels.anomaly_index')}
+                </span>
+              </div>
+              <div className="premium-card-body">
+                <div className={`premium-value ${premiumMetrics.anomalyScore >= 140 ? 'negative' : 'positive'}`}>
+                  {premiumMetrics.anomalyScore}%
+                </div>
+                <div className="premium-meta">{t('reports.premium.cards.anomaly_desc')}</div>
+              </div>
+              {!isSubscribed && renderPremiumLock()}
+            </div>
+          </div>
+        </section>
+
         <div className="charts-grid">
           <div className="chart-card">
             <div className="chart-card-header">
-              <h3>{t('reports.capital_trajectory')}</h3>
+              <div className="chart-title">
+                <h3>{t('reports.capital_trajectory')}</h3>
+                <span
+                  className="hint hint-icon"
+                  data-hint={t('reports.hints.capital_trajectory')}
+                  tabIndex="0"
+                >
+                  ?
+                </span>
+              </div>
               {isMobile && (
                 <div className="chart-toggle">
                   <button
@@ -886,13 +1211,33 @@ function ReportsPage() {
           </div>
 
           <div className="chart-card">
-            <h3>{t('reports.retention_efficiency')}</h3>
+            <div className="chart-title">
+              <h3>{t('reports.retention_efficiency')}</h3>
+              <span
+                className="hint hint-icon"
+                data-hint={t('reports.hints.retention_efficiency')}
+                tabIndex="0"
+              >
+                ?
+              </span>
+            </div>
             <div className="metric-radial">
               <div className="metric-value">{formatPercent(reportData.savingsRate)}</div>
-              <p className="metric-label">{t('reports.capital_preservation_rate')}</p>
+              <p
+                className="metric-label hint hint-btn"
+                data-hint={t('reports.hints.capital_preservation_rate')}
+                tabIndex="0"
+              >
+                {t('reports.capital_preservation_rate')}
+              </p>
             </div>
             <div className="chart-actions">
-              <button className="export-btn-luxury" onClick={downloadPDF} data-html2canvas-ignore>
+              <button
+                className="export-btn-luxury hint"
+                data-hint={t('reports.hints.download_statement')}
+                onClick={downloadPDF}
+                data-html2canvas-ignore
+              >
                 {t('reports.download_statement')}
               </button>
             </div>

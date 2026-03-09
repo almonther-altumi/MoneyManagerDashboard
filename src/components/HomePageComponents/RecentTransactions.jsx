@@ -28,7 +28,16 @@ function RecentTransactions({ income = [], expenses = [] }) {
     return (
         <section className="transactions-card">
             <div className="card-header">
-                <h3>{t('home.transactions.title')}</h3>
+                <div className="hint-title">
+                    <h3>{t('home.transactions.title')}</h3>
+                    <span
+                        className="hint hint-icon"
+                        data-hint={t('home.hints.recent_transactions')}
+                        tabIndex="0"
+                    >
+                        ?
+                    </span>
+                </div>
                 <button className="view-all-btn" onClick={() => navigate('/income')}>{t('home.transactions.view_all')}</button>
             </div>
 

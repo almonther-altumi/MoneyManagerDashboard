@@ -6,6 +6,19 @@
     align-items: flex-start;
 }
 
+.section-header-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.is-loading-internal {
+    opacity: 0.6;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
 .my-cards-section h3 {
     margin: 0;
     font-size: 13px;
@@ -16,65 +29,124 @@
 }
 
 .card-container {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 18px;
     width: 100%;
+    align-items: start;
 }
 
 .credit-card {
     position: relative;
     width: 100%;
-    max-width: 380px;
-    height: 180px;
-    border-radius: 20px;
-    padding: 24px;
+    min-height: 180px;
+    border-radius: 22px;
+    padding: 22px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    color: white;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-    transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    color: #fff;
+    background: var(--card-bg, linear-gradient(135deg, #0f172a 0%, #020617 100%));
+    box-shadow: 0 18px 40px rgba(2, 6, 23, 0.35);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
     overflow: hidden;
     cursor: pointer;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.12);
     box-sizing: border-box;
 }
 
-.visa-card {
-    background: linear-gradient(135deg, #1A1F2C 0%, #0a0c0f 100%);
+.credit-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(600px circle at -20% -20%, rgba(255, 255, 255, 0.18), transparent 55%);
+    opacity: 0.6;
 }
 
-.master-card {
-    background: linear-gradient(135deg, #1A73E8 0%, #000000 100%);
+.credit-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(120deg, transparent 0%, rgba(255, 255, 255, 0.08) 45%, transparent 70%);
+    opacity: 0.4;
+}
+
+.credit-card > * {
+    position: relative;
+    z-index: 1;
+}
+
+.credit-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 22px 50px rgba(2, 6, 23, 0.45);
+}
+
+.card-editing {
+    min-height: 220px;
 }
 
 .card-top {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.card-brand {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.card-brand-text {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1.4px;
+    opacity: 0.75;
+    font-weight: 700;
+}
+
+.card-label {
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: 0.2px;
+}
+
+.editable-field {
+    cursor: pointer;
+    padding: 2px 6px;
+    border-radius: 6px;
+    transition: background 0.2s;
+}
+
+.editable-field:hover {
+    background: rgba(255, 255, 255, 0.12);
+}
+
+.pencil-hint {
+    font-size: 10px;
+    opacity: 0;
+    transition: 0.2s;
+    margin-inline-start: 4px;
+}
+
+.credit-card:hover .pencil-hint {
+    opacity: 1;
 }
 
 .card-chip {
-    width: 38px;
-    height: 28px;
-    background: linear-gradient(135deg, #D4AF37 0%, #F9D423 100%);
-    border-radius: 5px;
-}
-
-.card-type {
-    font-weight: 900;
-    font-size: 16px;
-    letter-spacing: -0.5px;
-    opacity: 0.9;
+    width: 42px;
+    height: 30px;
+    background: linear-gradient(135deg, var(--card-accent, #f5c542) 0%, #fff4b0 100%);
+    border-radius: 8px;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
 }
 
 .card-number {
     display: flex;
     align-items: center;
     gap: 10px;
-    margin: 12px 0;
+    margin: 10px 0;
 }
 
 .card-number .stars {
@@ -84,22 +156,17 @@
     margin: 0;
 }
 
-.editable-field {
-    font-size: 16px;
-    letter-spacing: 1px;
-    font-weight: 700;
-}
-
 .card-bottom {
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
+    gap: 12px;
 }
 
 .card-holder span,
 .card-expiry span {
     display: block;
-    font-size: 8px;
+    font-size: 9px;
     text-transform: uppercase;
     letter-spacing: 1px;
     margin-bottom: 2px;
@@ -113,13 +180,121 @@
     font-weight: 700;
 }
 
+.card-expiry h5 {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.card-inline-input {
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    color: #fff;
+    border-radius: 8px;
+    padding: 3px 8px;
+    outline: none;
+    font-family: inherit;
+    font-size: 12px;
+}
+
+.label-input {
+    width: 160px;
+}
+
+.pin-input {
+    width: 70px;
+    text-align: center;
+    font-weight: 700;
+}
+
+.name-input {
+    width: 140px;
+}
+
+.expiry-input {
+    width: 60px;
+    text-align: center;
+}
+
+.card-theme-picker {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.card-theme-title {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    opacity: 0.7;
+    font-weight: 700;
+}
+
+.theme-swatch-row {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.theme-swatch {
+    width: 22px;
+    height: 22px;
+    border-radius: 7px;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    background: var(--swatch-bg);
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.theme-swatch.active {
+    outline: 2px solid rgba(255, 255, 255, 0.9);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+}
+
+.card-actions-floated {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    display: flex;
+    gap: 8px;
+    z-index: 2;
+}
+
+.card-actions-floated button {
+    width: 30px;
+    height: 30px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+    font-size: 14px;
+    transition: transform 0.2s;
+}
+
+.card-actions-floated button:hover {
+    transform: scale(1.08);
+}
+
+.save-btn {
+    background: rgba(16, 185, 129, 0.9);
+    color: white;
+}
+
+.cancel-btn {
+    background: rgba(239, 68, 68, 0.9);
+    color: white;
+}
+
 @media screen and (max-width: 1200px) {
     .card-container {
-        justify-content: flex-start;
-    }
-
-    .credit-card {
-        max-width: 350px;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
     }
 }
 
@@ -129,14 +304,16 @@
     }
 
     .card-container {
-        flex-direction: column;
-        align-items: center;
+        grid-template-columns: 1fr;
     }
 
     .credit-card {
-        height: 140px;
-        max-width: 300px;
-        padding: 16px;
+        min-height: 170px;
+        padding: 18px;
+    }
+
+    .card-editing {
+        min-height: 220px;
     }
 
     .card-number .stars,
@@ -145,24 +322,28 @@
     }
 
     .card-chip {
-        width: 32px;
+        width: 34px;
         height: 24px;
+    }
+
+    .card-theme-picker {
+        flex-direction: column;
+        align-items: flex-start;
     }
 }
 
 @media screen and (max-width: 480px) {
     .credit-card {
-        max-width: 280px;
-        height: 130px;
-        padding: 14px;
+        min-height: 160px;
+        padding: 16px;
     }
 
     .card-number {
         margin: 8px 0;
     }
 
-    .card-type {
-        font-size: 14px;
+    .card-brand-text {
+        font-size: 10px;
     }
 
     .card-holder h5,
@@ -173,7 +354,10 @@
 
 @media screen and (max-width: 360px) {
     .credit-card {
-        max-width: 260px;
-        height: 120px;
+        padding: 14px;
+    }
+
+    .label-input {
+        width: 120px;
     }
 }

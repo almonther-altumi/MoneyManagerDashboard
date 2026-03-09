@@ -1,7 +1,15 @@
 
 import React, { useState } from 'react';
 
-const EditableStatCard = ({ label, value, trend, onSave, prefix = "$", color = "var(--primary)" }) => {
+const EditableStatCard = ({
+    label,
+    value,
+    trend,
+    onSave,
+    prefix = "$",
+    color = "var(--primary)",
+    labelHint
+}) => {
     const [isEditing, setIsEditing] = useState(false);
     const [tempValue, setTempValue] = useState(value);
 
@@ -16,8 +24,14 @@ const EditableStatCard = ({ label, value, trend, onSave, prefix = "$", color = "
     };
 
     return (
-        <div className="stat-card" style={{ position: 'relative', overflow: 'hidden' }}>
-            <span className="label" style={{ color: 'var(--text-muted)' }}>{label}</span>
+        <div className="stat-card" style={{ position: 'relative', overflow: 'visible' }}>
+            <span
+                className={`label${labelHint ? ' hint hint-btn' : ''}`}
+                style={{ color: 'var(--text-muted)' }}
+                {...(labelHint ? { 'data-hint': labelHint, tabIndex: 0 } : {})}
+            >
+                {label}
+            </span>
 
             {isEditing ? (
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px', margin: '8px 0' }}>

@@ -225,6 +225,13 @@
     transition: all 0.2s;
 }
 
+.payment-actions-row {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
 .mark-settled-btn:hover {
     background: var(--highlight);
     border-color: var(--secondary);
@@ -373,8 +380,22 @@
 
 .modal-form .input-row {
     display: grid;
-    grid-template-columns: 1.2fr 1fr;
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
     gap: 12px;
+    align-items: end;
+}
+
+.modal-form .input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+}
+
+.modal-form .input-group label {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-muted);
 }
 
 .modal-form input {
@@ -386,6 +407,8 @@
     font-size: 14px;
     font-weight: 700;
     outline: none;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .commit-btn {
@@ -462,5 +485,92 @@
 
     .payment-details p {
         font-size: 11px;
+    }
+}
+
+@media (max-width: 520px) {
+    .upcoming-payments-card {
+        padding: 16px;
+        border-radius: 20px;
+    }
+
+    .payments-header {
+        align-items: stretch;
+        gap: 12px;
+    }
+
+    .header-info p {
+        font-size: 9px;
+        letter-spacing: 0.3px;
+    }
+
+    .header-actions-group {
+        width: 100%;
+        justify-content: space-between;
+        gap: 8px;
+        padding: 6px;
+        border-radius: 12px;
+        background: var(--bg-light);
+        border: 1px solid var(--border-muted);
+    }
+
+    .view-all-text-btn {
+        flex: 1;
+        text-align: center;
+        padding: 8px 10px;
+        border-radius: 10px;
+        border: 1px solid var(--border-muted);
+        background: var(--bg);
+        font-size: 10px;
+    }
+
+    .add-schedule-btn {
+        width: 34px;
+        height: 34px;
+        border-radius: 10px;
+        font-size: 14px;
+    }
+
+    .payment-timeline-item {
+        gap: 12px;
+    }
+
+    .payment-content {
+        padding-bottom: 16px;
+        gap: 12px;
+    }
+
+    .payment-main-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    .payment-finance {
+        width: 100%;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        text-align: start;
+        gap: 10px;
+    }
+
+    .payment-val {
+        font-size: 14px;
+    }
+
+    .status-pill {
+        align-self: center;
+        padding: 3px 8px;
+        font-size: 9px;
+    }
+
+    .payment-actions-row {
+        width: 100%;
+    }
+
+    .mark-settled-btn {
+        flex: 1;
+        justify-content: center;
     }
 }

@@ -17,6 +17,7 @@
         "debts": "Debts",
         "management": "Management",
         "reports": "Reports",
+        "subscription": "Subscription",
         "settings": "Settings",
         "reportProplems": "Report A Problem",
         "admin": "Admin Panel",
@@ -29,8 +30,13 @@
             "expenditure_control": "Expenditure Control",
             "liability_management": "Liability Management",
             "fiscal_synthesis": "Fiscal Synthesis",
+            "subscription": "Monthly Subscription",
             "global_preferences": "Global Preferences",
             "default": "Money Manager"
+        },
+        "hints": {
+            "notifications": "Latest news and alerts.",
+            "theme_toggle": "Switch between light and dark mode."
         },
         "role_beta": "Beta",
         "role_developer": "Developer",
@@ -42,7 +48,20 @@
         "title": "Capital Aspirations",
         "car": "Premium Segment Vehicle",
         "house": "Primary Estate Acquisition",
-        "complete": "Complete"
+        "complete": "Complete",
+        "add_goal": "Add Goal",
+        "goal_name": "Goal name",
+        "current_amount": "Current amount",
+        "target_amount": "Target amount",
+        "monthly_amount": "Monthly contribution",
+        "estimate_text": "Estimated date: {{date}} if you save {{amount}}/month.",
+        "estimate_unavailable": "Add a monthly amount to estimate the date.",
+        "goal_achieved": "Goal achieved",
+        "unnamed_goal": "New Goal",
+        "save": "Save",
+        "cancel": "Cancel",
+        "edit": "Edit",
+        "delete": "Delete"
     },
     "monthly_spending": {
         "title": "Monthly Spending",
@@ -54,7 +73,18 @@
     "my_cards": {
         "title": "My Cards",
         "card_holder": "Card Holder",
-        "expires": "Expires"
+        "expires": "Expires",
+        "default_visa": "Visa Card",
+        "default_master": "Mastercard",
+        "label_placeholder": "Card nickname",
+        "card_color": "Card color",
+        "themes": {
+            "midnight": "Midnight",
+            "ocean": "Ocean",
+            "violet": "Violet",
+            "emerald": "Emerald",
+            "sunset": "Sunset"
+        }
     },
     "upcoming": {
         "title": "Future Obligations",
@@ -75,7 +105,10 @@
         "status_urgent": "Urgent",
         "status_pending": "Pending",
         "status_scheduled": "Scheduled",
-        "placeholder_description": "e.g. Monthly Rent"
+        "placeholder_description": "e.g. Monthly Rent",
+        "hints": {
+            "add_schedule": "Add a new upcoming payment."
+        }
     },
     "bills": {
         "upcoming_payments": "Upcoming Payments",
@@ -105,7 +138,15 @@
         "placeholder_amount": "0.00",
         "placeholder_source": "e.g. Salary, Freelance",
         "load_more": "Load More",
-        "loading": "Loading..."
+        "loading": "Loading...",
+        "filter_search": "Search",
+        "filter_category": "Filter by category",
+        "filter_method": "Filter by method",
+        "filter_date_from": "From date",
+        "filter_date_to": "To date",
+        "clear_filters": "Clear filters",
+        "empty_filtered": "No results match your filters.",
+        "sort_label": "Sort by"
     },
     "login": {
         "welcome_back": "Welcome Back",
@@ -152,6 +193,33 @@
             "view_all": "View All",
             "no_transactions": "No transactions found",
             "status_completed": "Completed"
+        },
+        "hints": {
+            "executive_overview": "Quick summary of your overall financial position.",
+            "recent_transactions": "Latest income and expense entries.",
+            "upcoming_payments": "Upcoming obligations and their due dates.",
+            "my_cards": "Saved card details at a glance.",
+            "premium_hub": "Premium insights and automation tools."
+        },
+        "premium": {
+            "title": "Premium Command Center",
+            "subtitle": "Executive signals and automation for your daily overview.",
+            "cta": "Unlock Premium",
+            "locked_title": "Premium Dashboard Locked",
+            "locked_body": "Upgrade to access cashflow radar, alerts, and automation.",
+            "cards": {
+                "radar_title": "Cashflow Radar",
+                "radar_desc": "Net balance across your latest activity",
+                "signals_title": "Activity Signals",
+                "signals_desc": "Transactions tracked this period",
+                "queue_title": "Obligation Queue",
+                "queue_desc": "Active obligations and due items"
+            },
+            "labels": {
+                "net": "Net",
+                "signals": "Signals",
+                "queue": "Queue"
+            }
         }
     },
     "settings": {
@@ -202,7 +270,105 @@
         "commit_preferences": "Commit Preferences",
         "save_success": "Settings saved successfully",
         "save_error": "Error saving settings",
-        "committing_changes": "Committing..."
+        "committing_changes": "Committing...",
+        "premium": {
+            "title": "Premium Controls",
+            "subtitle": "Exclusive switches for automation, alerts, and support.",
+            "cta": "Unlock Premium",
+            "locked_title": "Premium Settings Locked",
+            "locked_body": "Subscribe to enable advanced controls.",
+            "controls": {
+                "auto_exports": "Auto-export reports",
+                "auto_exports_desc": "Send monthly reports to your email automatically.",
+                "priority_support": "Priority support channel",
+                "priority_support_desc": "Get faster responses from the team.",
+                "advanced_alerts": "Advanced anomaly alerts",
+                "advanced_alerts_desc": "Extra alerts for unusual spending patterns."
+            }
+        }
+    },
+    "subscription": {
+        "badge": "Premium",
+        "title": "Monthly Subscription",
+        "subtitle": "Unlock premium insights, forecasts, and automation across your workspace.",
+        "plan_name": "Monthly Plan",
+        "price": "$6.99",
+        "price_suffix": "per month",
+        "billing_note": "Cancel anytime. No hidden fees.",
+        "cta_subscribe": "Start Monthly Plan",
+        "cta_manage": "Manage Subscription",
+        "cta_cancel": "Cancel Plan",
+        "active": "Active",
+        "inactive": "Inactive",
+        "renews_on": "Renews on",
+        "calculation_disclaimer": "Note: We are not responsible for any calculation errors.",
+        "features_title": "What's included",
+        "features": {
+            "premium_insights": "Premium insights, forecasts, and heatmaps",
+            "export_suite": "Advanced export suite (PDF, CSV, Excel)",
+            "priority_alerts": "Priority alerts for anomalies and spikes",
+            "smart_budgets": "Smart budgets with proactive suggestions",
+            "automation": "Automations for recurring entries and reminders",
+            "support": "Priority support and roadmap access"
+        },
+        "payment": {
+            "title": "Complete Your Subscription",
+            "methods": {
+                "card": "Card",
+                "bank": "Bank Transfer"
+            },
+            "email": "Billing Email",
+            "email_placeholder": "name@example.com",
+            "card_number": "Card Number",
+            "card_name": "Cardholder Name",
+            "card_name_placeholder": "e.g. Sara Ahmed",
+            "card_expiry": "Expiry",
+            "card_cvv": "CVV",
+            "bank_note": "Transfer from your bank and include the reference code so we can match your payment.",
+            "cancel": "Cancel",
+            "pay_now": "Pay Now",
+            "errors": {
+                "email": "Please enter a valid billing email.",
+                "card": "Please complete all card details.",
+                "bank": "Please provide the sender name and transfer date."
+            },
+            "bank_reference": "Reference code",
+            "bank_details": {
+                "title": "Bank transfer details",
+                "bank_name_label": "Bank",
+                "bank_name_value": "Maghreb Financial Bank",
+                "account_name_label": "Account name",
+                "account_name_value": "Money Manager Holdings",
+                "iban_label": "IBAN",
+                "iban_value": "LY38 0123 0000 0000 0000 0000 001",
+                "swift_label": "SWIFT",
+                "swift_value": "MAGHLYLT",
+                "branch_label": "Branch",
+                "branch_value": "Tripoli Central"
+            },
+            "bank_steps": {
+                "title": "Steps",
+                "step_1": "Use the reference code in the transfer description.",
+                "step_2": "Transfers are confirmed within 1?2 business days.",
+                "step_3": "Need help? Contact premium support."
+            },
+            "bank_fields": {
+                "sender": "Sender name",
+                "sender_placeholder": "Name on the bank account",
+                "transfer_date": "Transfer date",
+                "transaction_id": "Transaction ID (optional)",
+                "transaction_placeholder": "e.g. TRX-938412"
+            },
+            "submit_transfer": "Submit Transfer"
+        },
+        "highlights": {
+            "forecast_title": "Forecast Intelligence",
+            "forecast_body": "Predict next-month cash flow with adaptive projections.",
+            "anomaly_title": "Anomaly Radar",
+            "anomaly_body": "Spot unusual spending patterns in real time.",
+            "export_title": "Executive Exports",
+            "export_body": "Generate branded statements for stakeholders."
+        }
     },
     "income": {
         "status_label": "Analyzing Liquidity",
@@ -215,7 +381,14 @@
         "transaction_history": "Transaction History",
         "real_time": "Real-time",
         "based_on_goals": "Based on quarterly goals",
-        "your_comparison": "Your Comparison"
+        "your_comparison": "Your Comparison",
+        "hints": {
+            "overview": "Overview of your income streams and performance.",
+            "monthly_total": "Total income recorded in the current period.",
+            "projected_revenue": "Target monthly income you can adjust.",
+            "growth_rate": "Month-over-month income change.",
+            "add_source": "Add a new income entry."
+        }
     },
     "expense": {
         "status_label": "Auditing Expenditure",
@@ -228,7 +401,14 @@
         "ledger_details": "Ledger Details",
         "optimized": "Optimized",
         "fixed_infra": "Fixed infrastructure",
-        "budget_adherence": "Budget Adherence"
+        "budget_adherence": "Budget Adherence",
+        "hints": {
+            "overview": "Overview of your spending and efficiency.",
+            "total_burn_rate": "Total expenses for the current period.",
+            "recurring_overheads": "Estimated recurring monthly costs you can adjust.",
+            "efficiency": "How closely spending aligns with the budget.",
+            "record_outflow": "Add a new expense entry."
+        }
     },
     "debts": {
         "status_label": "Evaluating Obligations",
@@ -237,6 +417,12 @@
         "total_liabilities": "Total Liabilities",
         "monthly_strategy": "Monthly Strategy",
         "settled_assets": "Settlement Progress",
+        "hints": {
+            "overview": "Overview of your liabilities and repayment progress.",
+            "total_liabilities": "Outstanding balance across all debts.",
+            "monthly_strategy": "Monthly repayment target you can adjust.",
+            "settled_assets": "Overall payoff progress."
+        },
         "edit_total": "Edit Total Debt",
         "save_new_total": "Save New Total",
         "register_liability": "Register Liability",
@@ -274,7 +460,28 @@
         "delete_entire": "Delete Entire Debt",
         "delete_payment_title": "Delete Payment?",
         "delete_payment_msg": "Are you sure you want to remove this payment record? The amount will be added back to the remaining debt.",
-        "delete_payment_confirm": "Delete Payment"
+        "delete_payment_confirm": "Delete Payment",
+        "premium": {
+            "title": "Debt Optimizer Suite",
+            "subtitle": "Advanced strategies and paydown insights for subscribers.",
+            "cta": "Unlock Premium",
+            "locked_title": "Premium Tools Locked",
+            "locked_body": "Subscribe to unlock payoff timelines and smart alerts.",
+            "cards": {
+                "timeline_title": "Payoff Timeline",
+                "timeline_desc": "Estimated months to clear all debts",
+                "priority_title": "Priority Target",
+                "priority_desc": "Largest remaining balance to focus on",
+                "momentum_title": "Momentum Score",
+                "momentum_desc": "Overall repayment progress",
+                "no_data": "Add debts to see estimates"
+            },
+            "labels": {
+                "timeline": "Months",
+                "priority": "Focus",
+                "momentum": "Progress"
+            }
+        }
     },
     "reports": {
         "title": "Fiscal Reports",
@@ -322,6 +529,53 @@
             "monthly_expense": "Monthly Expenses",
             "monthly_performance": "Monthly Performance",
             "generating": "Generating chart..."
+        },
+        "premium": {
+            "title": "Premium Intelligence",
+            "subtitle": "Advanced insights reserved for the monthly plan.",
+            "cta": "View Monthly Plan",
+            "locked_title": "Premium Feature Locked",
+            "locked_body": "Subscribe to unlock forecasts, heatmaps, and anomaly alerts.",
+            "uncategorized": "Uncategorized",
+            "cards": {
+                "forecast_title": "Cashflow Forecast",
+                "forecast_desc": "Projected net balance for next month",
+                "concentration_title": "Spending Concentration",
+                "concentration_desc": "Top category share of total expenses",
+                "volatility_title": "Stability Index",
+                "volatility_desc": "Volatility across recent months",
+                "reserve_title": "Safety Buffer",
+                "reserve_desc": "Suggested 3‑month expense reserve",
+                "anomaly_title": "Anomaly Radar",
+                "anomaly_desc": "Peak month versus average expenses"
+            },
+            "labels": {
+                "next_month": "Next month",
+                "top_category": "Top category",
+                "volatility_score": "Score",
+                "reserve_target": "3‑month target",
+                "anomaly_index": "Index"
+            }
+        },
+        "hints": {
+            "gross_liquidity": "Total income recorded for the selected period.",
+            "total_expenditure": "Total expenses recorded for the selected period.",
+            "net_retained_capital": "Income minus expenses for the period.",
+            "capital_preservation_rate": "Savings rate as a percentage of income.",
+            "top_spending": "Month with the highest expenses.",
+            "top_income": "Month with the highest income.",
+            "remaining_balance": "Net savings after expenses.",
+            "location_snapshot": "Your locale and time zone used in the report.",
+            "premium_forecast": "Projected net balance for next month.",
+            "premium_concentration": "Share of spending in the top category.",
+            "premium_volatility": "How much expenses fluctuate month to month.",
+            "premium_reserve": "Suggested 3-month expense buffer.",
+            "premium_anomaly": "Peak month compared to average spending.",
+            "sorting": "Sort the report by date or amount.",
+            "capital_trajectory": "Monthly net balance trend across the year.",
+            "retention_efficiency": "How efficiently income was converted into savings.",
+            "download_statement": "Export a PDF snapshot of this report.",
+            "investment_suggestion": "Personalized suggestion based on recent performance."
         },
         "filters": {
             "date_desc": "Date Descending",

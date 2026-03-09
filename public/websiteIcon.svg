@@ -1,5 +1,18 @@
-<svg  xmlns="http://www.w3.org/2000/svg" width="64" height="64"  
-fill="#d9c76bff" viewBox="0 0 24 24" >
-<!--Boxicons v3.0.6 https://boxicons.com | License  https://docs.boxicons.com/free-->
-<path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2m0 2v2H4V6zM4 18v-6h16v6z"></path><path d="M6 14h6v2H6z"></path>
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#0EA5A4" />
+      <stop offset="1" stop-color="#2563EB" />
+    </linearGradient>
+    <linearGradient id="wallet" x1="14" y1="22" x2="50" y2="46" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#F8FAFC" />
+      <stop offset="1" stop-color="#E2E8F0" />
+    </linearGradient>
+  </defs>
+  <rect x="4" y="4" width="56" height="56" rx="16" fill="url(#bg)" />
+  <rect x="14" y="22" width="36" height="24" rx="7" fill="url(#wallet)" />
+  <path d="M14 30H50" stroke="#E2E8F0" stroke-width="2" />
+  <circle cx="44" cy="34" r="4" fill="#10B981" />
+  <circle cx="44" cy="34" r="2" fill="#ECFDF3" />
+  <rect x="14" y="22" width="36" height="24" rx="7" stroke="#F1F5F9" stroke-width="2" />
 </svg>

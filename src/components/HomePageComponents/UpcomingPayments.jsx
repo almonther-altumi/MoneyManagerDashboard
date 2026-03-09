@@ -151,12 +151,28 @@ const UpcomingPayments = ({ debts = [], onDataChange }) => {
         <section className="upcoming-payments-card">
             <div className="payments-header">
                 <div className="header-info">
-                    <h3>{t('upcoming.title')}</h3>
+                    <div className="hint-title">
+                        <h3>{t('upcoming.title')}</h3>
+                        <span
+                            className="hint hint-icon"
+                            data-hint={t('home.hints.upcoming_payments')}
+                            tabIndex="0"
+                        >
+                            ?
+                        </span>
+                    </div>
                     <p>{t('upcoming.subtitle')}</p>
                 </div>
                 <div className="header-actions-group">
                     <button className="view-all-text-btn" onClick={() => navigate('/debts')}>{t('upcoming.view_all')}</button>
-                    <button className="add-schedule-btn" title="Add Schedule" onClick={() => setIsModalOpen(true)}>+</button>
+                    <button
+                        className="add-schedule-btn hint"
+                        data-hint={t('upcoming.hints.add_schedule')}
+                        onClick={() => setIsModalOpen(true)}
+                        aria-label={t('upcoming.hints.add_schedule')}
+                    >
+                        +
+                    </button>
                 </div>
             </div>
 
@@ -185,7 +201,7 @@ const UpcomingPayments = ({ debts = [], onDataChange }) => {
                                     </div>
                                 </div>
 
-                                <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+                                <div className="payment-actions-row">
                                     {
                                         (() => {
                                             const isUpdating = updatingIds.includes(item.id);

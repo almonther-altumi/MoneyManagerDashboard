@@ -9,9 +9,13 @@ import { doc, getDoc, setDoc, updateDoc, deleteDoc } from "firebase/firestore";
 import { auth, db } from "../firebase";
 import { useTranslation } from 'react-i18next';
 import { useFinancialData } from '../hooks/useFinancialData';
+import { useNavigate } from 'react-router-dom';
+import { useSubscriptionStatus } from '../hooks/useSubscriptionStatus';
 
 function DebtsPage() {
     const { t } = useTranslation();
+    const navigate = useNavigate();
+    const isSubscribed = useSubscriptionStatus();
     const { debts, refreshData, loading } = useFinancialData();
     const [monthlyRepayment, setMonthlyRepayment] = useState(2400);
     const [selectedDebt, setSelectedDebt] = useState(null);
@@ -50,6 +54,26 @@ function DebtsPage() {
         const overallProgress = totalInitial > 0 ? (totalPaid / totalInitial) * 100 : 0;
         return { totalRemaining, totalPaid, overallProgress: Math.round(overallProgress) };
     })();
+
+    const hasDebtData = debtStats.totalRemaining > 0 && monthlyRepayment > 0;
+    const payoffMonths = hasDebtData ? Math.ceil(debtStats.totalRemaining / monthlyRepayment) : null;
+    const topDebtName = sortedDebts[0]?.name || null;
+
+    const renderSubscriberLock = () => (
+        <div className="subscriber-lock-overlay">
+            <div className="subscriber-lock-card">
+                <span className="premium-badge premium-fire">{t('subscription.badge')}</span>
+                <h5>{t('debts.premium.locked_title')}</h5>
+                <p>{t('debts.premium.locked_body')}</p>
+                <button
+                    className="subscriber-cta-btn premium-fire"
+                    onClick={() => navigate('/subscription')}
+                >
+                    {t('debts.premium.cta')}
+                </button>
+            </div>
+        </div>
+    );
 
     const handleCardClick = (debt) => {
         setSelectedDebt(debt);
@@ -175,31 +199,124 @@ function DebtsPage() {
         <div className="debts-page-root">
             <div className="debts-content-centered">
                 <header className="debts-header">
-                    <h2>{t('debts.title')}</h2>
+                    <div className="hint-title">
+    <h2>{t('debts.title')}</h2>
+    <span
+        className="hint hint-icon"
+        data-hint={t('debts.hints.overview')}
+        tabIndex="0"
+    >
+        ?
+    </span>
+</div>
                     <p>{t('debts.intro')}</p>
                 </header>
 
                 <div className="debts-stats-row">
                     <div className="stat-card">
-                        <span className="label">{t('debts.total_liabilities')}</span>
+                        <span
+    className="label hint hint-btn"
+    data-hint={t('debts.hints.total_liabilities')}
+    tabIndex="0"
+>
+    {t('debts.total_liabilities')}
+</span>
                         <span className="amount">${debtStats.totalRemaining.toLocaleString()}</span>
                         <span className="trend">{t('debts.remaining_balance')}</span>
                     </div>
                     <EditableStatCard
                         label={t('debts.monthly_strategy')}
+                        labelHint={t('debts.hints.monthly_strategy')}
                         value={monthlyRepayment}
                         trend={t('debts.settlement_target')}
                         onSave={handleSaveRepayment}
                         color="var(--secondary)"
                     />
                     <div className="stat-card">
-                        <span className="label">{t('debts.settled_assets')}</span>
+                        <span
+    className="label hint hint-btn"
+    data-hint={t('debts.hints.settled_assets')}
+    tabIndex="0"
+>
+    {t('debts.settled_assets')}
+</span>
                         <span className="amount">{debtStats.overallProgress}%</span>
                         <div className="progress-bar-mini">
                             <div className="progress-fill" style={{ width: `${debtStats.overallProgress}%` }}></div>
                         </div>
                     </div>
                 </div>
+
+                <section className="subscriber-section debts-subscriber-section">
+                    <div className="subscriber-section-header">
+                        <div>
+                            <span className="premium-badge premium-fire">{t('subscription.badge')}</span>
+                            <h3>{t('debts.premium.title')}</h3>
+                            <p>{t('debts.premium.subtitle')}</p>
+                        </div>
+                        {isSubscribed ? (
+                            <span className="premium-badge premium-fire">{t('subscription.active')}</span>
+                        ) : (
+                            <button
+                                className="subscriber-cta-btn premium-fire"
+                                onClick={() => navigate('/subscription')}
+                            >
+                                {t('debts.premium.cta')}
+                            </button>
+                        )}
+                    </div>
+
+                    <div className="subscriber-grid">
+                        <div className={`subscriber-card ${isSubscribed ? '' : 'is-locked'}`}>
+                            <div className="subscriber-card-header">
+                                <div className="subscriber-card-title">
+                                    <span className="premium-badge premium-fire subscriber-mini">{t('subscription.badge')}</span>
+                                    <h4>{t('debts.premium.cards.timeline_title')}</h4>
+                                </div>
+                                <span className="subscriber-chip">{t('debts.premium.labels.timeline')}</span>
+                            </div>
+                            <div className="subscriber-card-body">
+                                <div className="subscriber-value">{payoffMonths ?? '--'}</div>
+                                <div className="subscriber-meta">
+                                    {payoffMonths ? t('debts.premium.cards.timeline_desc') : t('debts.premium.cards.no_data')}
+                                </div>
+                            </div>
+                            {!isSubscribed && renderSubscriberLock()}
+                        </div>
+
+                        <div className={`subscriber-card ${isSubscribed ? '' : 'is-locked'}`}>
+                            <div className="subscriber-card-header">
+                                <div className="subscriber-card-title">
+                                    <span className="premium-badge premium-fire subscriber-mini">{t('subscription.badge')}</span>
+                                    <h4>{t('debts.premium.cards.priority_title')}</h4>
+                                </div>
+                                <span className="subscriber-chip">{t('debts.premium.labels.priority')}</span>
+                            </div>
+                            <div className="subscriber-card-body">
+                                <div className="subscriber-value">{topDebtName || '--'}</div>
+                                <div className="subscriber-meta">
+                                    {topDebtName ? t('debts.premium.cards.priority_desc') : t('debts.premium.cards.no_data')}
+                                </div>
+                            </div>
+                            {!isSubscribed && renderSubscriberLock()}
+                        </div>
+
+                        <div className={`subscriber-card ${isSubscribed ? '' : 'is-locked'}`}>
+                            <div className="subscriber-card-header">
+                                <div className="subscriber-card-title">
+                                    <span className="premium-badge premium-fire subscriber-mini">{t('subscription.badge')}</span>
+                                    <h4>{t('debts.premium.cards.momentum_title')}</h4>
+                                </div>
+                                <span className="subscriber-chip">{t('debts.premium.labels.momentum')}</span>
+                            </div>
+                            <div className="subscriber-card-body">
+                                <div className="subscriber-value">{debtStats.overallProgress}%</div>
+                                <div className="subscriber-meta">{t('debts.premium.cards.momentum_desc')}</div>
+                            </div>
+                            {!isSubscribed && renderSubscriberLock()}
+                        </div>
+                    </div>
+                </section>
 
                 <div className="debts-view-container">
                     <div className="section-header-grid">

@@ -18,6 +18,14 @@ const IncomeTable = forwardRef((props, ref) => {
     const [loadingMore, setLoadingMore] = useState(false);
     const [hasMore, setHasMore] = useState(true);
     const [isInitialLoading, setIsInitialLoading] = useState(true);
+    const [filters, setFilters] = useState({
+        query: "",
+        category: "",
+        method: "",
+        dateFrom: "",
+        dateTo: ""
+    });
+    const [sortOrder, setSortOrder] = useState("dateDesc");
 
     const [isAddingNew, setIsAddingNew] = useState(false);
     const [newRowData, setNewRowData] = useState({
@@ -38,6 +46,88 @@ const IncomeTable = forwardRef((props, ref) => {
     });
 
     const inputRefs = useRef({});
+
+    const normalizeText = (value) => String(value || "").toLowerCase();
+
+    const parseRowDate = (value) => {
+        if (!value) return null;
+        try {
+            if (value.toDate) return value.toDate();
+            const d = new Date(value);
+            return isNaN(d.getTime()) ? null : d;
+        } catch {
+            return null;
+        }
+    };
+
+    const handleFilterChange = (field) => (e) => {
+        setFilters(prev => ({ ...prev, [field]: e.target.value }));
+    };
+
+    const clearFilters = () => {
+        setFilters({ query: "", category: "", method: "", dateFrom: "", dateTo: "" });
+    };
+
+    const hasFilters = Object.values(filters).some((value) => String(value).trim() !== "");
+    const queryFilter = filters.query.trim().toLowerCase();
+    const categoryFilter = filters.category.trim().toLowerCase();
+    const methodFilter = filters.method.trim().toLowerCase();
+    const fromDate = filters.dateFrom ? new Date(filters.dateFrom) : null;
+    const toDate = filters.dateTo ? new Date(filters.dateTo) : null;
+    if (fromDate) fromDate.setHours(0, 0, 0, 0);
+    if (toDate) toDate.setHours(23, 59, 59, 999);
+
+    const categoryOptions = Array.from(new Set(
+        incomeData.map(item => (item.category || "General").toString().trim()).filter(Boolean)
+    )).sort((a, b) => a.localeCompare(b));
+
+    const methodOptions = Array.from(new Set(
+        incomeData.map(item => (item.paymentMethod || "Bank").toString().trim()).filter(Boolean)
+    )).sort((a, b) => a.localeCompare(b));
+
+    const filteredIncomeData = incomeData.filter((income) => {
+        const title = normalizeText(income.title);
+        const category = normalizeText(income.category || "General");
+        const method = normalizeText(income.paymentMethod || "Bank");
+
+        if (queryFilter) {
+            const haystack = `${title} ${category} ${method}`;
+            if (!haystack.includes(queryFilter)) return false;
+        }
+
+        if (categoryFilter && !category.includes(categoryFilter)) return false;
+        if (methodFilter && !method.includes(methodFilter)) return false;
+
+        if (fromDate || toDate) {
+            const rowDate = parseRowDate(income.date);
+            if (!rowDate) return false;
+            if (fromDate && rowDate < fromDate) return false;
+            if (toDate && rowDate > toDate) return false;
+        }
+
+        return true;
+    });
+
+    const getSortDate = (row) => {
+        const rowDate = parseRowDate(row.date);
+        return rowDate ? rowDate.getTime() : 0;
+    };
+
+    const getSortAmount = (row) => Number(row.amount) || 0;
+
+    const sortedIncomeData = [...filteredIncomeData].sort((a, b) => {
+        switch (sortOrder) {
+            case "dateAsc":
+                return getSortDate(a) - getSortDate(b);
+            case "amountAsc":
+                return getSortAmount(a) - getSortAmount(b);
+            case "amountDesc":
+                return getSortAmount(b) - getSortAmount(a);
+            case "dateDesc":
+            default:
+                return getSortDate(b) - getSortDate(a);
+        }
+    });
 
     const fetchInitialData = async () => {
         const user = auth.currentUser;
@@ -261,6 +351,91 @@ const IncomeTable = forwardRef((props, ref) => {
             />
 
             <div className="table-wrapper">
+                <div className="table-filters">
+                    <div className="filter-group">
+                        <input
+                            className="filter-input"
+                            type="text"
+                            placeholder={t('table.filter_search')}
+                            aria-label={t('table.filter_search')}
+                            value={filters.query}
+                            onChange={handleFilterChange('query')}
+                        />
+                    </div>
+                    <div className="filter-group">
+                        <input
+                            className="filter-input"
+                            type="text"
+                            list="income-category-list"
+                            placeholder={t('table.filter_category')}
+                            aria-label={t('table.filter_category')}
+                            value={filters.category}
+                            onChange={handleFilterChange('category')}
+                        />
+                        <datalist id="income-category-list">
+                            {categoryOptions.map((option) => (
+                                <option key={option} value={option} />
+                            ))}
+                        </datalist>
+                    </div>
+                    <div className="filter-group">
+                        <input
+                            className="filter-input"
+                            type="text"
+                            list="income-method-list"
+                            placeholder={t('table.filter_method')}
+                            aria-label={t('table.filter_method')}
+                            value={filters.method}
+                            onChange={handleFilterChange('method')}
+                        />
+                        <datalist id="income-method-list">
+                            {methodOptions.map((option) => (
+                                <option key={option} value={option} />
+                            ))}
+                        </datalist>
+                    </div>
+                    <div className="filter-group">
+                        <input
+                            className="filter-input"
+                            type="date"
+                            aria-label={t('table.filter_date_from')}
+                            value={filters.dateFrom}
+                            onChange={handleFilterChange('dateFrom')}
+                        />
+                    </div>
+                    <div className="filter-group">
+                        <input
+                            className="filter-input"
+                            type="date"
+                            aria-label={t('table.filter_date_to')}
+                            value={filters.dateTo}
+                            onChange={handleFilterChange('dateTo')}
+                        />
+                    </div>
+                    <div className="filter-group">
+                        <select
+                            className="filter-select"
+                            value={sortOrder}
+                            onChange={(e) => setSortOrder(e.target.value)}
+                            aria-label={t('table.sort_label')}
+                        >
+                            <option value="dateDesc">{t('reports.filters.date_desc')}</option>
+                            <option value="dateAsc">{t('reports.filters.date_asc')}</option>
+                            <option value="amountAsc">{t('reports.filters.amount_asc')}</option>
+                            <option value="amountDesc">{t('reports.filters.amount_desc')}</option>
+                        </select>
+                    </div>
+                    <div className="filter-actions">
+                        <button
+                            className="filter-clear-btn"
+                            onClick={clearFilters}
+                            disabled={!hasFilters}
+                        >
+                            {t('table.clear_filters')}
+                        </button>
+                    </div>
+                </div>
+
                 <table className="luxury-table">
                     <thead>
                         <tr>
@@ -335,17 +510,17 @@ const IncomeTable = forwardRef((props, ref) => {
                             </tr>
                         )}
 
-                        {incomeData.length === 0 && !isAddingNew && !isInitialLoading && (
+                        {sortedIncomeData.length === 0 && !isAddingNew && !isInitialLoading && (
                             <tr>
                                 <td colSpan="6" className="empty-table-message">
                                     <div className="empty-state-content" style={{ textAlign: 'center', padding: '40px', color: 'var(--text-muted)' }}>
-                                        <p>{t('table.empty_income')}</p>
+                                        <p>{hasFilters ? t('table.empty_filtered') : t('table.empty_income')}</p>
                                     </div>
                                 </td>
                             </tr>
                         )}
 
-                        {incomeData.map((income) => (
+                        {sortedIncomeData.map((income) => (
                             <tr key={income.id}>
                                 {editingId === income.id ? (
                                     <>

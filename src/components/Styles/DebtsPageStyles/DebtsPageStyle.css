@@ -234,6 +234,10 @@
     gap: 8px;
 }
 
+.debts-subscriber-section {
+    margin-bottom: 32px;
+}
+
 [dir="rtl"] .debts-header {
     text-align: right;
 }

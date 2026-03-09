@@ -18,6 +18,7 @@ const ExpensePage = lazy(() => import('./Pages/ExpensePage'));
 const DebtsPage = lazy(() => import('./Pages/DebtsPage'));
 const ReportsPage = lazy(() => import('./Pages/ReportsPage'));
 const SettingsPage = lazy(() => import('./Pages/SettingsPage'));
+const SubscriptionPage = lazy(() => import('./Pages/SubscriptionPage'));
 const NotFoundPage = lazy(() => import('./Pages/NotFoundPage'));
 const HomePage = lazy(() => import('./Pages/HomePage'));
 const LoginPage = lazy(() => import('./Pages/LoginPage'));
@@ -257,6 +258,7 @@ export default function App() {
                   <Route path="/expense" element={user ? <ExpensePage /> : <Navigate to="/login" />} />
                   <Route path="/debts" element={user ? <DebtsPage /> : <Navigate to="/login" />} />
                   <Route path="/reports" element={user ? <ReportsPage /> : <Navigate to="/login" />} />
+                  <Route path="/subscription" element={user ? <SubscriptionPage /> : <Navigate to="/login" />} />
                   <Route path="/settings" element={user ? <SettingsPage /> : <Navigate to="/login" />} />
                   <Route path="/report-problem" element={user ? <ReportProblemPage /> : <Navigate to="/login" />} />
                   <Route path="/admin/notifications" element={user && user.email === 'monthertumi2025@gmail.com' ? <AdminNotificationsPage /> : <Navigate to="/" />} />
@@ -275,8 +277,8 @@ export default function App() {
         </FinancialProvider>
       </BrowserRouter>
 
-      {/* First-time onboarding */}
-      <Onboarding2 onFinish={() => {}} />
+      {/* First-time onboarding (only for authenticated app pages) */}
+      {user && <Onboarding2 onFinish={() => {}} />}
 
       <style>{`
         .app-root {
@@ -364,11 +366,7 @@ const LoadingScreen = () => {
       gap: '24px'
     }}>
       <div className="loader-logo">
-        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-          <path d="M12 2L2 7L12 12L22 7L12 2Z" strokeLinecap="round" strokeLinejoin="round" />
-          <path d="M2 17L12 22L22 17" strokeLinecap="round" strokeLinejoin="round" />
-          <path d="M2 12L12 17L22 12" strokeLinecap="round" strokeLinejoin="round" />
-        </svg>
+        <img src="/websiteIcon.svg" alt="Money Manager" />
       </div>
 
       <div className="loader-text-container">
@@ -384,8 +382,15 @@ const LoadingScreen = () => {
 
       <style>{`
                 .loader-logo {
-                    color: var(--primary);
+                    width: 64px;
+                    height: 64px;
                     animation: floatLogo 3s ease-in-out infinite;
+                }
+
+                .loader-logo img {
+                    width: 100%;
+                    height: 100%;
+                    display: block;
                 }
 
                 .loader-text-container {
@@ -416,7 +421,7 @@ const LoadingScreen = () => {
 
                 @keyframes floatLogo {
                     0% { transform: translateY(0px); opacity: 0.8; }
-                    50% { transform: translateY(-10px); opacity: 1; filter: drop-shadow(0 0 15px rgba(59, 130, 246, 0.5)); }
+                    50% { transform: translateY(-10px); opacity: 1; filter: drop-shadow(0 8px 18px rgba(59, 130, 246, 0.45)); }
                     100% { transform: translateY(0px); opacity: 0.8; }
                 }
             `}</style>

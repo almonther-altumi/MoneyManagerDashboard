@@ -69,25 +69,47 @@ function IncomePage() {
 
             <div className="income-content-centered">
                 <header className="income-header">
-                    <h2>{t('income.title')}</h2>
+                    <div className="hint-title">
+                        <h2>{t('income.title')}</h2>
+                        <span
+                            className="hint hint-icon"
+                            data-hint={t('income.hints.overview')}
+                            tabIndex="0"
+                        >
+                            ?
+                        </span>
+                    </div>
                     <p>{t('income.intro')}</p>
                 </header>
 
                 <div className="income-stats-row">
                     <div className="stat-card">
-                        <span className="label">{t('income.monthly_total')}</span>
+                        <span
+                            className="label hint hint-btn"
+                            data-hint={t('income.hints.monthly_total')}
+                            tabIndex="0"
+                        >
+                            {t('income.monthly_total')}
+                        </span>
                         <span className="amount">${totalIncome.toLocaleString()}</span>
-                        <span className="trend-up">▲ {t('income.real_time')}</span>
+                        <span className="trend-up">â–² {t('income.real_time')}</span>
                     </div>
                     <EditableStatCard
                         label={t('income.projected_revenue')}
+                        labelHint={t('income.hints.projected_revenue')}
                         value={projectedIncome}
                         trend={t('income.based_on_goals')}
                         onSave={handleSaveProjectedIncome}
                         color="var(--secondary)"
                     />
                     <div className="stat-card">
-                        <span className="label">{t('income.growth_rate')}</span>
+                        <span
+                            className="label hint hint-btn"
+                            data-hint={t('income.hints.growth_rate')}
+                            tabIndex="0"
+                        >
+                            {t('income.growth_rate')}
+                        </span>
                         <span className="amount">0%</span>
                         <span className="trend">{t('income.your_comparison')}</span>
                     </div>
@@ -96,7 +118,11 @@ function IncomePage() {
                 <div className="income-table-container">
                     <div className="table-header">
                         <h3>{t('income.transaction_history')}</h3>
-                        <button className="add-btn-main" onClick={handleAddNewIncome}>
+                        <button
+                            className="add-btn-main hint"
+                            data-hint={t('income.hints.add_source')}
+                            onClick={handleAddNewIncome}
+                        >
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M12 5V19M5 12H19" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
                             </svg>

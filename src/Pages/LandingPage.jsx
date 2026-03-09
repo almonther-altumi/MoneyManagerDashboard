@@ -51,30 +51,17 @@ const LandingPage = () => {
                 {/* Navigation */}
                 <nav className="landing-nav">
                     <div className="nav-logo">
-                        <div style={{ display: 'flex', alignItems: 'center' }}>
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="32" height="32">
-                                <path d="M12 2L2 7L12 12L22 7L12 2Z" strokeLinecap="round" strokeLinejoin="round" />
-                                <path d="M2 17L12 22L22 17" strokeLinecap="round" strokeLinejoin="round" />
-                                <path d="M2 12L12 17L22 12" strokeLinecap="round" strokeLinejoin="round" />
-                            </svg>
+                        <div className="nav-logo-inner">
+                            <img src="/websiteIcon.svg" alt="Money Manager" />
                             <span>MoneyManager</span>
                         </div>
                     </div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+                    <div className="nav-actions">
                         {/* Theme Toggle */}
                         <button
                             onClick={toggleTheme}
-                            style={{
-                                background: 'transparent',
-                                border: '1px solid var(--border-muted)',
-                                padding: '8px',
-                                borderRadius: '50%',
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                color: 'var(--text)',
-                                cursor: 'pointer'
-                            }}
+                            className="theme-toggle-btn"
+                            aria-label="Toggle theme"
                         >
                             {isDarkMode ? (
                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>

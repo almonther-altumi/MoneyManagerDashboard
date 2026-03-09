@@ -17,6 +17,7 @@
         "debts": "الديون",
         "management": "إدارة",
         "reports": "التقارير",
+        "subscription": "الاشتراك",
         "settings": "الإعدادات",
         "reportProplems": "الأبلاغ عن مشكلة",
         "admin": "لوحة الإدارة",
@@ -29,8 +30,13 @@
             "expenditure_control": "مراقبة الإنفاق",
             "liability_management": "إدارة الالتزامات",
             "fiscal_synthesis": "التوليف المالي",
+            "subscription": "الاشتراك الشهري",
             "global_preferences": "التفضيلات العالمية",
             "default": "مدير الأموال"
+        },
+        "hints": {
+            "notifications": "آخر الأخبار والتنبيهات.",
+            "theme_toggle": "تبديل المظهر بين الفاتح والداكن."
         },
         "role_beta": "النسخة التجريبية",
         "role_developer": "مطور",
@@ -65,18 +71,69 @@
             "view_all": "عرض الكل",
             "no_transactions": "لا توجد معاملات",
             "status_completed": "مكتمل"
+        },
+        "hints": {
+            "executive_overview": "ملخص سريع لوضعك المالي العام.",
+            "recent_transactions": "آخر الحركات المسجلة للدخل والمصروفات.",
+            "upcoming_payments": "الالتزامات القادمة ومواعيدها.",
+            "my_cards": "بيانات بطاقاتك المحفوظة.",
+            "premium_hub": "تحليلات وميزات بريميوم المتقدمة."
+        },
+        "premium": {
+            "title": "مركز التحكم بريميوم",
+            "subtitle": "إشارات تنفيذية وأتمتة لملخصك اليومي.",
+            "cta": "ترقية إلى بريميوم",
+            "locked_title": "لوحة بريميوم مقفلة",
+            "locked_body": "قم بالترقية للوصول إلى رادار التدفق النقدي والتنبيهات والأتمتة.",
+            "cards": {
+                "radar_title": "رادار التدفق النقدي",
+                "radar_desc": "صافي الرصيد عبر أحدث نشاطاتك",
+                "signals_title": "إشارات النشاط",
+                "signals_desc": "المعاملات المتتبعة خلال هذه الفترة",
+                "queue_title": "قائمة الالتزامات",
+                "queue_desc": "الالتزامات النشطة والعناصر المستحقة"
+            },
+            "labels": {
+                "net": "الصافي",
+                "signals": "الإشارات",
+                "queue": "القائمة"
+            }
         }
     },
     "dream": {
         "title": "طموحات رأس المال",
         "car": "سيارة فاخرة",
         "house": "شراء عقار أساسي",
-        "complete": "مكتمل"
+        "complete": "مكتمل",
+        "add_goal": "إضافة هدف",
+        "goal_name": "اسم الهدف",
+        "current_amount": "المبلغ الحالي",
+        "target_amount": "المبلغ المستهدف",
+        "monthly_amount": "المساهمة الشهرية",
+        "estimate_text": "التاريخ المتوقع: {{date}} إذا التزمت بـ {{amount}} شهريًا.",
+        "estimate_unavailable": "أضف قيمة شهرية لحساب التاريخ المتوقع.",
+        "goal_achieved": "تم تحقيق الهدف",
+        "unnamed_goal": "هدف جديد",
+        "save": "حفظ",
+        "cancel": "إلغاء",
+        "edit": "تعديل",
+        "delete": "حذف"
     },
     "my_cards": {
         "title": "بطاقاتي",
         "card_holder": "حامل البطاقة",
-        "expires": "تنتهي في"
+        "expires": "تنتهي في",
+        "default_visa": "????? ????",
+        "default_master": "????? ????? ????",
+        "label_placeholder": "??? ???????",
+        "card_color": "??? ???????",
+        "themes": {
+            "midnight": "????? ?????",
+            "ocean": "??????",
+            "violet": "??????",
+            "emerald": "?????",
+            "sunset": "??????"
+        }
     },
     "upcoming": {
         "title": "الالتزامات المستقبلية",
@@ -97,7 +154,10 @@
         "status_urgent": "عاجل",
         "status_pending": "قيد الانتظار",
         "status_scheduled": "جدولة",
-        "placeholder_description": "مثال: إيجار شهري"
+        "placeholder_description": "مثال: إيجار شهري",
+        "hints": {
+            "add_schedule": "إضافة دفعة قادمة."
+        }
     },
     "bills": {
         "upcoming_payments": "المدفوعات القادمة",
@@ -127,7 +187,15 @@
         "placeholder_source": "مثلاً: راتب، عمل حر",
         "empty_debts": "لا توجد ديون نشطة حالياً. أضف ديناً لبدء تتبع عملية السداد.",
         "load_more": "تحميل المزيد",
-        "loading": "جاري التحميل..."
+        "loading": "جاري التحميل...",
+        "filter_search": "ابحث",
+        "filter_category": "تصفية حسب الفئة",
+        "filter_method": "تصفية حسب الوسيلة",
+        "filter_date_from": "من تاريخ",
+        "filter_date_to": "إلى تاريخ",
+        "clear_filters": "مسح عوامل التصفية",
+        "empty_filtered": "لا توجد نتائج تطابق عوامل التصفية.",
+        "sort_label": "ترتيب حسب"
     },
     "login": {
         "welcome_back": "مرحبًا بعودتك",
@@ -158,7 +226,14 @@
         "transaction_history": "سجل المعاملات",
         "real_time": "الوقت الحقيقي",
         "based_on_goals": "بناءً على الأهداف الفصلية",
-        "your_comparison": "مقارنتك"
+        "your_comparison": "مقارنتك",
+        "hints": {
+            "overview": "نظرة عامة على مصادر الدخل والأداء.",
+            "monthly_total": "إجمالي الدخل المسجل في الفترة الحالية.",
+            "projected_revenue": "هدف الدخل الشهري الذي يمكنك تعديله.",
+            "growth_rate": "معدل تغير الدخل شهريًا.",
+            "add_source": "إضافة دخل جديد."
+        }
     },
     "expense": {
         "status_label": "تدقيق المصروفات",
@@ -171,7 +246,14 @@
         "ledger_details": "تفاصيل السجل",
         "optimized": "محسن",
         "fixed_infra": "بنية تحتية ثابتة",
-        "budget_adherence": "الالتزام بالميزانية"
+        "budget_adherence": "الالتزام بالميزانية",
+        "hints": {
+            "overview": "نظرة عامة على الإنفاق والكفاءة.",
+            "total_burn_rate": "إجمالي المصروفات في الفترة الحالية.",
+            "recurring_overheads": "تقدير المصروفات الثابتة الشهري ويمكن تعديله.",
+            "efficiency": "مدى التزام الإنفاق بالميزانية.",
+            "record_outflow": "إضافة مصروف جديد."
+        }
     },
     "debts": {
         "status_label": "تقييم الالتزامات",
@@ -180,6 +262,12 @@
         "total_liabilities": "إجمالي الالتزامات",
         "monthly_strategy": "خطة السداد الشهرية",
         "settled_assets": "الأصول المسواة",
+        "hints": {
+            "overview": "نظرة عامة على الديون وتقدم السداد.",
+            "total_liabilities": "إجمالي الرصيد المتبقي للديون.",
+            "monthly_strategy": "قيمة السداد الشهرية المستهدفة ويمكن تعديلها.",
+            "settled_assets": "نسبة التقدم في سداد الديون."
+        },
         "edit_total": "تعديل إجمالي الدين",
         "save_new_total": "حفظ المبلغ الجديد",
         "register_liability": "تسجيل التزام",
@@ -217,7 +305,28 @@
         "delete_entire": "حذف الدين بالكامل",
         "delete_payment_title": "حذف الدفعة؟",
         "delete_payment_msg": "هل أنت متأكد من رغبتك في حذف سجل الدفع هذا؟ سيتم إضافة المبلغ مرة أخرى إلى الدين المتبقي.",
-        "delete_payment_confirm": "حذف الدفعة"
+        "delete_payment_confirm": "حذف الدفعة",
+        "premium": {
+            "title": "حزمة تحسين الديون",
+            "subtitle": "استراتيجيات متقدمة ورؤى للسداد للمشتركين.",
+            "cta": "ترقية إلى بريميوم",
+            "locked_title": "أدوات بريميوم مقفلة",
+            "locked_body": "اشترك لفتح جداول السداد والتنبيهات الذكية.",
+            "cards": {
+                "timeline_title": "جدول السداد",
+                "timeline_desc": "الأشهر المقدّرة لتصفية جميع الديون",
+                "priority_title": "الهدف ذو الأولوية",
+                "priority_desc": "أكبر رصيد متبقٍ للتركيز عليه",
+                "momentum_title": "مؤشر الزخم",
+                "momentum_desc": "التقدم العام في السداد",
+                "no_data": "أضف ديونًا لرؤية التقديرات"
+            },
+            "labels": {
+                "timeline": "الأشهر",
+                "priority": "التركيز",
+                "momentum": "التقدم"
+            }
+        }
     },
     "report": {
         "title": "الإبلاغ عن مشكلة",
@@ -282,6 +391,53 @@
             "monthly_performance": "الأداء الشهري",
             "generating": "جاري توليد الرسم..."
         },
+        "premium": {
+            "title": "ذكاء بريميوم",
+            "subtitle": "رؤى متقدمة مخصصة للاشتراك الشهري.",
+            "cta": "عرض الخطة الشهرية",
+            "locked_title": "ميزة مدفوعة",
+            "locked_body": "اشترك لفتح التوقعات والخرائط الحرارية والتنبيهات الذكية.",
+            "uncategorized": "بدون تصنيف",
+            "cards": {
+                "forecast_title": "توقع التدفق النقدي",
+                "forecast_desc": "صافي متوقع للشهر القادم",
+                "concentration_title": "تركيز المصروفات",
+                "concentration_desc": "نسبة أعلى فئة من إجمالي المصروفات",
+                "volatility_title": "مؤشر الاستقرار",
+                "volatility_desc": "قياس التذبذب خلال الأشهر الأخيرة",
+                "reserve_title": "احتياطي الأمان",
+                "reserve_desc": "احتياطي مقترح لمدة 3 أشهر",
+                "anomaly_title": "رادار الشذوذ",
+                "anomaly_desc": "أعلى شهر مقارنة بالمتوسط"
+            },
+            "labels": {
+                "next_month": "الشهر القادم",
+                "top_category": "أعلى فئة",
+                "volatility_score": "الدرجة",
+                "reserve_target": "هدف 3 أشهر",
+                "anomaly_index": "المؤشر"
+            }
+        },
+        "hints": {
+            "gross_liquidity": "إجمالي الدخل المسجل للفترة المحددة.",
+            "total_expenditure": "إجمالي المصروفات المسجلة للفترة المحددة.",
+            "net_retained_capital": "الدخل مطروحًا منه المصروفات للفترة.",
+            "capital_preservation_rate": "معدل الادخار كنسبة من الدخل.",
+            "top_spending": "الشهر ذو أعلى مصروفات.",
+            "top_income": "الشهر ذو أعلى دخل.",
+            "remaining_balance": "صافي الادخار بعد المصروفات.",
+            "location_snapshot": "إعدادات الموقع والمنطقة الزمنية المستخدمة في التقرير.",
+            "premium_forecast": "الرصيد الصافي المتوقع للشهر القادم.",
+            "premium_concentration": "نسبة الإنفاق في الفئة الأعلى.",
+            "premium_volatility": "مدى تذبذب المصروفات من شهر لآخر.",
+            "premium_reserve": "احتياطي مصروفات مقترح لثلاثة أشهر.",
+            "premium_anomaly": "الشهر الأعلى مقارنة بمتوسط الإنفاق.",
+            "sorting": "فرز التقرير حسب التاريخ أو المبلغ.",
+            "capital_trajectory": "اتجاه الرصيد الصافي الشهري خلال السنة.",
+            "retention_efficiency": "مدى كفاءة تحويل الدخل إلى ادخار.",
+            "download_statement": "تصدير نسخة PDF من هذا التقرير.",
+            "investment_suggestion": "اقتراح مخصص بناءً على الأداء الأخير."
+        },
         "filters": {
             "date_desc": "التاريخ تنازلي",
             "date_asc": "التاريخ تصاعدي",
@@ -334,6 +490,104 @@
             "privacy_stealth_mode_desc": "إخفاء الإجماليات الحساسة في نظرة عامة على لوحة المعلومات.",
             "authentication_lock": "قفل المصادقة",
             "authentication_lock_desc": "طلب إعادة المصادقة قبل عرض التحليلات العميقة."
+        },
+        "premium": {
+            "title": "عناصر تحكم بريميوم",
+            "subtitle": "مفاتيح حصرية للأتمتة والتنبيهات والدعم.",
+            "cta": "ترقية إلى بريميوم",
+            "locked_title": "إعدادات بريميوم مقفلة",
+            "locked_body": "اشترك لتفعيل عناصر التحكم المتقدمة.",
+            "controls": {
+                "auto_exports": "تصدير التقارير تلقائيًا",
+                "auto_exports_desc": "إرسال التقارير الشهرية إلى بريدك الإلكتروني تلقائيًا.",
+                "priority_support": "قناة دعم أولوية",
+                "priority_support_desc": "احصل على ردود أسرع من الفريق.",
+                "advanced_alerts": "تنبيهات شذوذ متقدمة",
+                "advanced_alerts_desc": "تنبيهات إضافية لأنماط إنفاق غير معتادة."
+            }
+        }
+    },
+    "subscription": {
+        "badge": "بريميوم",
+        "title": "الاشتراك الشهري",
+        "subtitle": "افتح تحليلات وتوقعات متقدمة عبر جميع أقسامك.",
+        "plan_name": "الخطة الشهرية",
+        "price": "$6.99",
+        "price_suffix": "شهرياً",
+        "billing_note": "يمكنك الإلغاء في أي وقت. بدون رسوم مخفية.",
+        "cta_subscribe": "ابدأ الاشتراك الشهري",
+        "cta_manage": "إدارة الاشتراك",
+        "cta_cancel": "إلغاء الخطة",
+        "active": "نشط",
+        "inactive": "غير نشط",
+        "renews_on": "يتجدد في",
+        "calculation_disclaimer": "ملاحظة: نحن غير مسؤولين عن أي أخطاء في الحسابات.",
+        "features_title": "المزايا المتضمنة",
+        "features": {
+            "premium_insights": "تحليلات وتوقعات متقدمة وخرائط حرارية",
+            "export_suite": "حزمة تصدير متقدمة (PDF، CSV، Excel)",
+            "priority_alerts": "تنبيهات أولوية للتقلبات والارتفاعات",
+            "smart_budgets": "ميزانيات ذكية مع اقتراحات استباقية",
+            "automation": "أتمتة للمدخلات المتكررة والتذكيرات",
+            "support": "دعم أولوية والوصول لخريطة التطوير"
+        },
+        "payment": {
+            "title": "إتمام الاشتراك",
+            "methods": {
+                "card": "بطاقة",
+                "bank": "تحويل بنكي"
+            },
+            "email": "بريد الفوترة",
+            "email_placeholder": "name@example.com",
+            "card_number": "رقم البطاقة",
+            "card_name": "اسم حامل البطاقة",
+            "card_name_placeholder": "مثال: سارة أحمد",
+            "card_expiry": "الانتهاء",
+            "card_cvv": "CVV",
+            "bank_note": "حوّل من بنكك وأدرج رمز المرجع لنتمكن من مطابقة دفعتك.",
+            "cancel": "إلغاء",
+            "pay_now": "ادفع الآن",
+            "errors": {
+                "email": "يرجى إدخال بريد فوترة صحيح.",
+                "card": "يرجى إكمال بيانات البطاقة.",
+                "bank": "يرجى إدخال اسم المرسل وتاريخ التحويل."
+            },
+            "bank_reference": "رمز المرجع",
+            "bank_details": {
+                "title": "تفاصيل التحويل البنكي",
+                "bank_name_label": "البنك",
+                "bank_name_value": "مصرف المغرب المالي",
+                "account_name_label": "اسم الحساب",
+                "account_name_value": "Money Manager Holdings",
+                "iban_label": "رقم الآيبان",
+                "iban_value": "LY38 0123 0000 0000 0000 0000 001",
+                "swift_label": "رمز SWIFT",
+                "swift_value": "MAGHLYLT",
+                "branch_label": "الفرع",
+                "branch_value": "طرابلس المركز"
+            },
+            "bank_steps": {
+                "title": "الخطوات",
+                "step_1": "استخدم رمز المرجع في وصف التحويل.",
+                "step_2": "تؤكد التحويلات خلال 1-2 يوم عمل.",
+                "step_3": "تحتاج مساعدة؟ تواصل مع دعم بريميوم."
+            },
+            "bank_fields": {
+                "sender": "اسم المرسل",
+                "sender_placeholder": "الاسم في الحساب البنكي",
+                "transfer_date": "تاريخ التحويل",
+                "transaction_id": "رقم العملية (اختياري)",
+                "transaction_placeholder": "مثال: TRX-938412"
+            },
+            "submit_transfer": "إرسال التحويل"
+        },
+        "highlights": {
+            "forecast_title": "ذكاء التوقعات",
+            "forecast_body": "توقع التدفق النقدي للشهر القادم بنماذج متكيفة.",
+            "anomaly_title": "رادار الشذوذ",
+            "anomaly_body": "اكتشف أنماط الإنفاق غير المعتادة فوراً.",
+            "export_title": "تصدير تنفيذي",
+            "export_body": "إنشاء تقارير احترافية للمعنيين."
         }
     },
     "monthly_spending": {

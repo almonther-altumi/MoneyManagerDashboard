@@ -71,19 +71,20 @@
 .login-logo {
     width: 80px;
     height: 80px;
-    background: linear-gradient(135deg, var(--primary) 0%, var(--info) 100%);
+    background: transparent;
     border-radius: 22px;
     display: flex;
     align-items: center;
     justify-content: center;
     margin-bottom: 30px;
-    box-shadow: 0 10px 30px rgba(var(--primary-rgb), 0.3);
+    box-shadow: none;
 }
 
-.login-logo svg {
-    width: 40px;
-    height: 40px;
-    stroke: white;
+.login-logo img {
+    width: 80px;
+    height: 80px;
+    display: block;
+    filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.18));
 }
 
 .login-card h1 {

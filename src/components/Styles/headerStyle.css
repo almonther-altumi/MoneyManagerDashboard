@@ -45,6 +45,19 @@
     box-shadow: var(--shadow);
 }
 
+/* Keep header tooltips from clipping at the top edge */
+.main-header .hint::after {
+    top: calc(100% + 10px);
+    bottom: auto;
+    transform: translate(-50%, -6px);
+}
+
+.main-header .hint::before {
+    top: calc(100% + 2px);
+    bottom: auto;
+    border-color: transparent transparent var(--chart-tooltip-bg) transparent;
+}
+
 
 
 .divider {

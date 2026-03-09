@@ -8,9 +8,13 @@ import { useFinancialData } from '../hooks/useFinancialData';
 
 import { useNotification } from '../hooks/useNotification';
 import Notification from '../components/Notification';
+import { useNavigate } from 'react-router-dom';
+import { useSubscriptionStatus } from '../hooks/useSubscriptionStatus';
 
 function SettingsPage() {
     const { t, i18n } = useTranslation();
+    const navigate = useNavigate();
+    const isSubscribed = useSubscriptionStatus();
     const { settings: contextSettings, refreshData } = useFinancialData();
     const { notification, showNotification, hideNotification } = useNotification();
 
@@ -23,7 +27,10 @@ function SettingsPage() {
         dataSync: true,
         privacyMode: false,
         themeAuto: true,
-        securityLock: false
+        securityLock: false,
+        premiumAutoExports: false,
+        premiumPrioritySupport: false,
+        premiumAdvancedAlerts: false
     });
 
     // Sync from context to local state
@@ -98,6 +105,22 @@ function SettingsPage() {
     // or just show General if that's the current state. 
     // The original code had them commented out. I will keep them effectively available but maybe just 'general' is active.
 
+    const renderSubscriberLock = () => (
+        <div className="subscriber-lock-overlay">
+            <div className="subscriber-lock-card">
+                <span className="premium-badge premium-fire">{t('subscription.badge')}</span>
+                <h5>{t('settings.premium.locked_title')}</h5>
+                <p>{t('settings.premium.locked_body')}</p>
+                <button
+                    className="subscriber-cta-btn premium-fire"
+                    onClick={() => navigate('/subscription')}
+                >
+                    {t('settings.premium.cta')}
+                </button>
+            </div>
+        </div>
+    );
+
     return (
         <div className="luxury-settings-root">
             <Notification
@@ -156,6 +179,78 @@ function SettingsPage() {
                                             <span className="luxury-slider"></span>
                                         </label>
                                     </div>
+                                </div>
+
+                                <div className={`subscriber-section settings-subscriber-section ${isSubscribed ? '' : 'is-locked'}`}>
+                                    <div className="subscriber-section-header">
+                                        <div>
+                                            <span className="premium-badge premium-fire">{t('subscription.badge')}</span>
+                                            <h3>{t('settings.premium.title')}</h3>
+                                            <p>{t('settings.premium.subtitle')}</p>
+                                        </div>
+                                        {isSubscribed ? (
+                                            <span className="premium-badge premium-fire">{t('subscription.active')}</span>
+                                        ) : (
+                                            <button
+                                                className="subscriber-cta-btn premium-fire"
+                                                onClick={() => navigate('/subscription')}
+                                            >
+                                                {t('settings.premium.cta')}
+                                            </button>
+                                        )}
+                                    </div>
+
+                                    <div className="subscriber-blurable">
+                                        <div className="setting-group subscriber-settings-group">
+                                            <div className="luxury-setting-row">
+                                                <div className="info">
+                                                    <h4>{t('settings.premium.controls.auto_exports')}</h4>
+                                                    <p>{t('settings.premium.controls.auto_exports_desc')}</p>
+                                                </div>
+                                                <label className="luxury-toggle">
+                                                    <input
+                                                        type="checkbox"
+                                                        checked={localSettings.premiumAutoExports}
+                                                        onChange={(e) => handleChange('premiumAutoExports', e.target.checked)}
+                                                        disabled={!isSubscribed}
+                                                    />
+                                                    <span className="luxury-slider"></span>
+                                                </label>
+                                            </div>
+                                            <div className="luxury-setting-row">
+                                                <div className="info">
+                                                    <h4>{t('settings.premium.controls.priority_support')}</h4>
+                                                    <p>{t('settings.premium.controls.priority_support_desc')}</p>
+                                                </div>
+                                                <label className="luxury-toggle">
+                                                    <input
+                                                        type="checkbox"
+                                                        checked={localSettings.premiumPrioritySupport}
+                                                        onChange={(e) => handleChange('premiumPrioritySupport', e.target.checked)}
+                                                        disabled={!isSubscribed}
+                                                    />
+                                                    <span className="luxury-slider"></span>
+                                                </label>
+                                            </div>
+                                            <div className="luxury-setting-row">
+                                                <div className="info">
+                                                    <h4>{t('settings.premium.controls.advanced_alerts')}</h4>
+                                                    <p>{t('settings.premium.controls.advanced_alerts_desc')}</p>
+                                                </div>
+                                                <label className="luxury-toggle">
+                                                    <input
+                                                        type="checkbox"
+                                                        checked={localSettings.premiumAdvancedAlerts}
+                                                        onChange={(e) => handleChange('premiumAdvancedAlerts', e.target.checked)}
+                                                        disabled={!isSubscribed}
+                                                    />
+                                                    <span className="luxury-slider"></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {!isSubscribed && renderSubscriberLock()}
                                 </div>
                             </div>
                         )}

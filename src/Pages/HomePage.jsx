@@ -15,12 +15,48 @@ import Notification from '../components/Notification';
 
 import { useTranslation } from "react-i18next";
 import { useFinancialData } from '../hooks/useFinancialData';
+import { useNavigate } from 'react-router-dom';
+import { useSubscriptionStatus } from '../hooks/useSubscriptionStatus';
 
 const HomePage = () => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
+  const isSubscribed = useSubscriptionStatus();
 
   // Access global context data
   const { income, expenses, debts, refreshData, isDemoMode, toggleDemoMode } = useFinancialData();
+
+  const totalIncome = React.useMemo(
+    () => income.reduce((sum, item) => sum + Number(item.amount || 0), 0),
+    [income]
+  );
+  const totalExpenses = React.useMemo(
+    () => expenses.reduce((sum, item) => sum + Number(item.amount || 0), 0),
+    [expenses]
+  );
+  const netBalance = totalIncome - totalExpenses;
+  const activityCount = income.length + expenses.length;
+
+  const formatCurrency = (amount) => {
+    const absAmount = Math.abs(amount).toLocaleString();
+    return amount < 0 ? `-$${absAmount}` : `$${absAmount}`;
+  };
+
+  const renderSubscriberLock = () => (
+    <div className="subscriber-lock-overlay">
+      <div className="subscriber-lock-card">
+        <span className="premium-badge premium-fire">{t('subscription.badge')}</span>
+        <h5>{t('home.premium.locked_title')}</h5>
+        <p>{t('home.premium.locked_body')}</p>
+        <button
+          className="subscriber-cta-btn premium-fire"
+          onClick={() => navigate('/subscription')}
+        >
+          {t('home.premium.cta')}
+        </button>
+      </div>
+    </div>
+  );
 
   // Check if account is actually empty (no real data)
   const isEmptyAccount = income.length === 0 && expenses.length === 0 && debts.length === 0 && !isDemoMode;
@@ -67,7 +103,16 @@ const HomePage = () => {
         {/* Main Dashboard Workspace */}
         <div className="dashboard-content">
           <header className="dashboard-intro">
-            <h1>{t('home.executive_overview')}</h1>
+            <div className="hint-title">
+              <h1>{t('home.executive_overview')}</h1>
+              <span
+                className="hint hint-icon"
+                data-hint={t('home.hints.executive_overview')}
+                tabIndex="0"
+              >
+                ?
+              </span>
+            </div>
             <p>{t('home.global_financial_state')}</p>
           </header>
 
@@ -89,6 +134,84 @@ const HomePage = () => {
               <UpcomingPayments debts={financialData.debts} onDataChange={refreshData} />
             </div>
           </div>
+
+          <section className="subscriber-section dashboard-subscriber-section">
+            <div className="subscriber-section-header">
+              <div>
+                <span className="premium-badge premium-fire">{t('subscription.badge')}</span>
+                <div className="hint-title">
+                  <h3>{t('home.premium.title')}</h3>
+                  <span
+                    className="hint hint-icon"
+                    data-hint={t('home.hints.premium_hub')}
+                    tabIndex="0"
+                  >
+                    ?
+                  </span>
+                </div>
+                <p>{t('home.premium.subtitle')}</p>
+              </div>
+              {isSubscribed ? (
+                <span className="premium-badge premium-fire">{t('subscription.active')}</span>
+              ) : (
+                <button
+                  className="subscriber-cta-btn premium-fire"
+                  onClick={() => navigate('/subscription')}
+                >
+                  {t('home.premium.cta')}
+                </button>
+              )}
+            </div>
+
+            <div className="subscriber-grid">
+              <div className={`subscriber-card ${isSubscribed ? '' : 'is-locked'}`}>
+                <div className="subscriber-card-header">
+                  <div className="subscriber-card-title">
+                    <span className="premium-badge premium-fire subscriber-mini">{t('subscription.badge')}</span>
+                    <h4>{t('home.premium.cards.radar_title')}</h4>
+                  </div>
+                  <span className="subscriber-chip">{t('home.premium.labels.net')}</span>
+                </div>
+                <div className="subscriber-card-body">
+                  <div className={`subscriber-value ${netBalance >= 0 ? 'positive' : 'negative'}`}>
+                    {(income.length + expenses.length) > 0 ? formatCurrency(netBalance) : '--'}
+                  </div>
+                  <div className="subscriber-meta">{t('home.premium.cards.radar_desc')}</div>
+                </div>
+                {!isSubscribed && renderSubscriberLock()}
+              </div>
+
+              <div className={`subscriber-card ${isSubscribed ? '' : 'is-locked'}`}>
+                <div className="subscriber-card-header">
+                  <div className="subscriber-card-title">
+                    <span className="premium-badge premium-fire subscriber-mini">{t('subscription.badge')}</span>
+                    <h4>{t('home.premium.cards.signals_title')}</h4>
+                  </div>
+                  <span className="subscriber-chip">{t('home.premium.labels.signals')}</span>
+                </div>
+                <div className="subscriber-card-body">
+                  <div className="subscriber-value">{activityCount}</div>
+                  <div className="subscriber-meta">{t('home.premium.cards.signals_desc')}</div>
+                </div>
+                {!isSubscribed && renderSubscriberLock()}
+              </div>
+
+              <div className={`subscriber-card ${isSubscribed ? '' : 'is-locked'}`}>
+                <div className="subscriber-card-header">
+                  <div className="subscriber-card-title">
+                    <span className="premium-badge premium-fire subscriber-mini">{t('subscription.badge')}</span>
+                    <h4>{t('home.premium.cards.queue_title')}</h4>
+                  </div>
+                  <span className="subscriber-chip">{t('home.premium.labels.queue')}</span>
+                </div>
+                <div className="subscriber-card-body">
+                  <div className="subscriber-value">{debts.length}</div>
+                  <div className="subscriber-meta">{t('home.premium.cards.queue_desc')}</div>
+                </div>
+                {!isSubscribed && renderSubscriberLock()}
+              </div>
+            </div>
+          </section>
         </div>
 
         {/* Right Contextual Utilities */}

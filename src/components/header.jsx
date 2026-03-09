@@ -77,6 +77,7 @@ function Header({ user, toggleSidebar, isSidebarOpen }) {
             case "/expense": return t('header.titles.expenditure_control');
             case "/debts": return t('header.titles.liability_management');
             case "/reports": return t('header.titles.fiscal_synthesis');
+            case "/subscription": return t('header.titles.subscription');
             case "/settings": return t('header.titles.global_preferences');
             default: return t('header.titles.default');
         }
@@ -136,7 +137,12 @@ function Header({ user, toggleSidebar, isSidebarOpen }) {
 
             <nav className="header-actions">
                 <div className="notification-container">
-                    <button className="icon-btn theme-toggle" onClick={handleMailClick} title="App News">
+                    <button
+                        className="icon-btn theme-toggle hint"
+                        onClick={handleMailClick}
+                        data-hint={t('header.hints.notifications')}
+                        aria-label={t('header.hints.notifications')}
+                    >
                         <NotificationIcon width={iconSize} height={iconSize} />
                         {hasNotification && <span className="notification-pulse" />}
                     </button>
@@ -144,7 +150,12 @@ function Header({ user, toggleSidebar, isSidebarOpen }) {
                         <NotificationMenu user={user} onClose={() => setIsNotificationsOpen(false)} />
                     )}
                 </div>
-                <button className="icon-btn theme-toggle" onClick={toggleTheme} title={isDarkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}>
+                <button
+                    className="icon-btn theme-toggle hint"
+                    onClick={toggleTheme}
+                    data-hint={t('header.hints.theme_toggle')}
+                    aria-label={t('header.hints.theme_toggle')}
+                >
                     <ThemeIcon isDark={isDarkMode} width={iconSize} height={iconSize} />
                 </button>
 

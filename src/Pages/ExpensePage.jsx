@@ -68,25 +68,47 @@ function ExpensePage() {
 
             <div className="expense-content-centered">
                 <header className="expense-header">
-                    <h2>{t('expense.title')}</h2>
+                    <div className="hint-title">
+                        <h2>{t('expense.title')}</h2>
+                        <span
+                            className="hint hint-icon"
+                            data-hint={t('expense.hints.overview')}
+                            tabIndex="0"
+                        >
+                            ?
+                        </span>
+                    </div>
                     <p>{t('expense.intro')}</p>
                 </header>
 
                 <div className="expense-stats-row">
                     <div className="stat-card">
-                        <span className="label">{t('expense.total_burn_rate')}</span>
+                        <span
+                            className="label hint hint-btn"
+                            data-hint={t('expense.hints.total_burn_rate')}
+                            tabIndex="0"
+                        >
+                            {t('expense.total_burn_rate')}
+                        </span>
                         <span className="amount">${totalExpenses.toLocaleString()}</span>
-                        <span className="trend down">▼ {t('expense.optimized')}</span>
+                        <span className="trend down">??? {t('expense.optimized')}</span>
                     </div>
                     <EditableStatCard
                         label={t('expense.recurring_overheads')}
+                        labelHint={t('expense.hints.recurring_overheads')}
                         value={recurringBills}
                         trend={t('expense.fixed_infra')}
                         onSave={handleSaveRecurringBills}
                         color="var(--danger)"
                     />
                     <div className="stat-card">
-                        <span className="label">{t('expense.efficiency')}</span>
+                        <span
+                            className="label hint hint-btn"
+                            data-hint={t('expense.hints.efficiency')}
+                            tabIndex="0"
+                        >
+                            {t('expense.efficiency')}
+                        </span>
                         <span className="amount">0%</span>
                         <span className="trend">{t('expense.budget_adherence')}</span>
                     </div>
@@ -95,7 +117,11 @@ function ExpensePage() {
                 <div className="expense-table-container">
                     <div className="table-header">
                         <h3>{t('expense.ledger_details')}</h3>
-                        <button className="add-btn-expense" onClick={handleAddNewExpense}>
+                        <button
+    className="add-btn-expense hint"
+    data-hint={t('expense.hints.record_outflow')}
+    onClick={handleAddNewExpense}
+>
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M12 5V19M5 12H19" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
                             </svg>

@@ -226,6 +226,18 @@ input:checked+.luxury-slider:before {
     padding-top: 40px;
 }
 
+.settings-subscriber-section {
+    margin-top: 32px;
+}
+
+.settings-subscriber-section .subscriber-section-header h3 {
+    font-size: 18px;
+}
+
+.subscriber-settings-group .luxury-setting-row:last-child {
+    border-bottom: none;
+}
+
 .luxury-save-btn {
     padding: 16px 32px;
     background: var(--primary);

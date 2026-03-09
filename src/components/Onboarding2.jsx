@@ -8,7 +8,13 @@ const steps = [
         titleAr: 'افتح القائمة الجانبية',
         descEn: 'Use the menu to access all pages and sections.',
         descAr: 'من خلال القائمة تقدر توصل لكل الصفحات والأقسام بسهولة.',
-        selectors: ['.menu-toggle-btn', 'button[aria-label="Toggle Sidebar"]'],
+        selectors: [
+            '.menu-toggle-btn',
+            'button[aria-label="Toggle Sidebar"]',
+            '.sidebar-header',
+            '.close-sidebar-button',
+            '.sidebar'
+        ],
         preferredPlacement: 'bottom'
     },
     {

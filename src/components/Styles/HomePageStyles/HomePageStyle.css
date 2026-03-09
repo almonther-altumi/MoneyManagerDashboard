@@ -122,6 +122,10 @@
     min-width: 0;
 }
 
+.dashboard-subscriber-section {
+    margin-top: 8px;
+}
+
 @media (max-width: 1200px) {
     .dashboard-content {
         padding: 24px;
